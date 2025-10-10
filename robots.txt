@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # ✅ Sitemap for search engines
-Sitemap: https://mariaajames280.github.io/mariaajames280-blip/sitemap.xml
+Sitemap: https://mariaajames280-blip.github.io/Online-Web-Tool/sitemap.xml
