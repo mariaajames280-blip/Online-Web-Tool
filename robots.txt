@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# ✅ Sitemap for search engines
+Sitemap: https://mariaajames280.github.io/mariaajames280-blip/sitemap.xml
