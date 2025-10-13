@@ -3,35 +3,356 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - Online ToolStack | Data Protection & Security</title>
-    <meta name="description" content="Read Online ToolStack's Privacy Policy to understand how we protect your data and ensure your privacy while using our free web tools.">
-    <meta name="keywords" content="privacy policy, data protection, online toolstack privacy, security, GDPR compliance">
-    <meta name="author" content="Online ToolStack">
+    <title>Privacy Policy - Online Web Tool | Data Protection & Security</title>
+    <meta name="description" content="Read Online Web Tool's comprehensive Privacy Policy. Learn how we protect your data with client-side processing and zero data storage.">
+    <meta name="keywords" content="privacy policy, data protection, online web tool privacy, security, GDPR compliance">
+    <meta name="author" content="Online Web Tool">
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Online ToolStack Privacy Policy - Data Protection">
-    <meta property="og:description" content="Learn how we protect your privacy and data when using our tools">
+    <meta property="og:title" content="Privacy Policy - Online Web Tool | Data Protection">
+    <meta property="og:description" content="Your privacy is our priority. Learn about our client-side processing and zero-data-storage policy.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://onlinetoolstack.com/privacy.html">
+    <meta property="og:url" content="https://onlinewebtool.live/privacy.html">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://onlinetoolstack.com/privacy.html">
+    <link rel="canonical" href="https://onlinewebtool.live/privacy.html">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     
     <!-- CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="animations.css">
     
     <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXX" crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1234567890123456" crossorigin="anonymous"></script>
+
+    <!-- Privacy Page Specific Styles -->
+    <style>
+        .privacy-hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .privacy-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 102, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 102, 255, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .privacy-stats {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-2xl);
+            margin-top: var(--spacing-2xl);
+            flex-wrap: wrap;
+        }
+
+        .privacy-stat {
+            text-align: center;
+            padding: var(--spacing-lg);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            line-height: 1;
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: var(--spacing-xs);
+        }
+
+        .privacy-features {
+            padding: var(--spacing-3xl) 0;
+            background: var(--bg-secondary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-xl);
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: var(--spacing-xl);
+            text-align: center;
+            transition: all var(--transition-normal);
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary-blue);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--spacing-lg);
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        .privacy-content {
+            padding: var(--spacing-3xl) 0;
+        }
+
+        .content-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: var(--spacing-3xl);
+            align-items: start;
+        }
+
+        .privacy-nav {
+            position: sticky;
+            top: 100px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+        }
+
+        .nav-header {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .nav-header h3 {
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .last-updated {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .nav-links {
+            list-style: none;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .nav-links li {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all var(--transition-fast);
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .nav-links a.active {
+            background: rgba(0, 102, 255, 0.1);
+            color: var(--primary-blue);
+            border-left: 3px solid var(--primary-blue);
+        }
+
+        .policy-section {
+            margin-bottom: var(--spacing-3xl);
+            padding: var(--spacing-xl);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-header h2 {
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .section-header i {
+            color: var(--primary-blue);
+        }
+
+        .highlight-box {
+            background: rgba(0, 102, 255, 0.05);
+            border: 1px solid var(--primary-blue);
+            border-radius: 8px;
+            padding: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .highlight-box h4 {
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .data-types {
+            display: grid;
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .data-type {
+            padding: var(--spacing-lg);
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+        }
+
+        .data-type h4 {
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .dont-collect-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .dont-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md);
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid #dc3545;
+            border-radius: 6px;
+            color: #dc3545;
+            font-weight: 500;
+        }
+
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-xl) 0;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-md);
+            padding: var(--spacing-lg);
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .contact-info h4 {
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .contact-info p {
+            color: var(--text-primary);
+            font-weight: 500;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .contact-note {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .content-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .privacy-nav {
+                position: static;
+                margin-bottom: var(--spacing-xl);
+            }
+            
+            .privacy-stats {
+                flex-direction: column;
+                gap: var(--spacing-lg);
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dont-collect-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-methods {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -39,7 +360,7 @@
         <div class="nav-container">
             <a href="index.html" class="nav-logo">
                 <i class="fas fa-tools"></i>
-                <span>Online ToolStack</span>
+                <span>Online Web Tool</span>
             </a>
             
             <div class="nav-menu" id="nav-menu">
@@ -59,226 +380,215 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero" style="min-height: 50vh;">
+    <section class="privacy-hero">
         <div class="hero-container">
             <div class="hero-content" style="text-align: center; grid-column: 1/-1;">
                 <h1 class="hero-title">
                     <span class="gradient-text">Privacy Policy</span>
                 </h1>
                 <p class="hero-description">
-                    Your privacy is important to us. Learn how we protect your data and respect your privacy.
+                    Your privacy is our top priority. We believe in transparency and have designed our tools with privacy-first principles.
                 </p>
-                <div class="privacy-meta">
-                    <p><strong>Last Updated:</strong> January 1, 2024</p>
+                <div class="privacy-stats">
+                    <div class="privacy-stat">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Client-Side Processing</span>
+                    </div>
+                    <div class="privacy-stat">
+                        <span class="stat-number">0</span>
+                        <span class="stat-label">Data Stored</span>
+                    </div>
+                    <div class="privacy-stat">
+                        <span class="stat-number">GDPR</span>
+                        <span class="stat-label">Compliant</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Privacy Features -->
+    <section class="privacy-features">
+        <div class="container">
+            <h2 class="section-title">Our Privacy Commitment</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>No Data Storage</h3>
+                    <p>Your tool inputs are processed locally and never stored on our servers</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-browser"></i>
+                    </div>
+                    <h3>Client-Side Processing</h3>
+                    <p>All computations happen in your browser for maximum privacy</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-eye-slash"></i>
+                    </div>
+                    <h3>No Tracking</h3>
+                    <p>We don't track your activities or build user profiles</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>GDPR Compliant</h3>
+                    <p>Fully compliant with EU General Data Protection Regulation</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Main Content -->
-    <main>
-        <section class="section" style="padding: var(--spacing-3xl) 0;">
-            <div class="container">
-                <div class="privacy-content">
-                    <!-- Table of Contents -->
-                    <div class="toc-container">
-                        <h2>Table of Contents</h2>
-                        <ul class="toc-list">
-                            <li><a href="#overview">1. Overview</a></li>
-                            <li><a href="#information-we-collect">2. Information We Collect</a></li>
-                            <li><a href="#how-we-use-information">3. How We Use Information</a></li>
-                            <li><a href="#data-security">4. Data Security</a></li>
-                            <li><a href="#cookies">5. Cookies and Tracking</a></li>
-                            <li><a href="#third-party-services">6. Third-Party Services</a></li>
-                            <li><a href="#your-rights">7. Your Rights</a></li>
-                            <li><a href="#changes">8. Policy Changes</a></li>
-                            <li><a href="#contact-us">9. Contact Us</a></li>
-                        </ul>
+    <main class="privacy-content">
+        <div class="container">
+            <div class="content-layout">
+                <!-- Navigation -->
+                <nav class="privacy-nav">
+                    <div class="nav-header">
+                        <h3>Privacy Policy</h3>
+                        <div class="last-updated">
+                            <i class="fas fa-calendar-alt"></i>
+                            Last updated: Jan 1, 2024
+                        </div>
                     </div>
+                    <ul class="nav-links">
+                        <li><a href="#overview" class="nav-link active"><i class="fas fa-home"></i> Overview</a></li>
+                        <li><a href="#data-collection" class="nav-link"><i class="fas fa-database"></i> Data Collection</a></li>
+                        <li><a href="#data-usage" class="nav-link"><i class="fas fa-cogs"></i> Data Usage</a></li>
+                        <li><a href="#security" class="nav-link"><i class="fas fa-shield-alt"></i> Security</a></li>
+                        <li><a href="#cookies" class="nav-link"><i class="fas fa-cookie"></i> Cookies</a></li>
+                        <li><a href="#rights" class="nav-link"><i class="fas fa-user-check"></i> Your Rights</a></li>
+                        <li><a href="#contact" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+                    </ul>
+                    <div style="border-top: 1px solid var(--border-color); padding-top: var(--spacing-md);">
+                        <a href="terms.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">
+                            <i class="fas fa-file-contract"></i> Terms of Service
+                        </a>
+                    </div>
+                </nav>
 
-                    <!-- Privacy Policy Content -->
-                    <div class="policy-content">
-                        <section id="overview" class="policy-section">
-                            <h2><i class="fas fa-shield-alt"></i> 1. Overview</h2>
-                            <p>Online ToolStack ("we," "our," or "us") is committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, and safeguard your data when you use our website and tools.</p>
+                <!-- Content -->
+                <div class="policy-content">
+                    <!-- Overview Section -->
+                    <section id="overview" class="policy-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-home"></i> Overview</h2>
+                        </div>
+                        <div class="section-body">
+                            <p>Online Web Tool ("we," "our," or "us") is committed to protecting your privacy through innovative technical design and transparent practices.</p>
                             
                             <div class="highlight-box">
-                                <h3><i class="fas fa-key"></i> Key Privacy Principles</h3>
+                                <h4><i class="fas fa-key"></i> Key Privacy Principles</h4>
                                 <ul>
-                                    <li><strong>Client-Side Processing:</strong> Most of our tools process data entirely in your browser</li>
-                                    <li><strong>No Data Storage:</strong> We don't store your input data on our servers</li>
-                                    <li><strong>Minimal Collection:</strong> We only collect essential information for website functionality</li>
-                                    <li><strong>Transparency:</strong> We're clear about what data we collect and why</li>
+                                    <li><strong>Privacy by Design:</strong> Built from the ground up with privacy as a core feature</li>
+                                    <li><strong>Client-Side Processing:</strong> Your data never leaves your browser</li>
+                                    <li><strong>Zero Data Storage:</strong> We don't store your tool inputs or results</li>
+                                    <li><strong>Full Transparency:</strong> Clear policies with no hidden practices</li>
                                 </ul>
                             </div>
-                        </section>
+                        </div>
+                    </section>
 
-                        <section id="information-we-collect" class="policy-section">
-                            <h2><i class="fas fa-database"></i> 2. Information We Collect</h2>
-                            
-                            <h3>2.1 Information You Provide</h3>
-                            <ul>
-                                <li><strong>Contact Forms:</strong> Name, email address, and message content when you contact us</li>
-                                <li><strong>Tool Inputs:</strong> Data you enter into our tools (processed client-side only)</li>
-                                <li><strong>Feedback:</strong> Comments, suggestions, or bug reports you submit</li>
-                            </ul>
-
-                            <h3>2.2 Automatically Collected Information</h3>
-                            <ul>
-                                <li><strong>Usage Analytics:</strong> Pages visited, time spent, and interaction patterns</li>
-                                <li><strong>Device Information:</strong> Browser type, operating system, and screen resolution</li>
-                                <li><strong>IP Address:</strong> For security and analytics purposes (anonymized)</li>
-                                <li><strong>Cookies:</strong> For website functionality and user preferences</li>
-                            </ul>
-
-                            <h3>2.3 Information We DON'T Collect</h3>
-                            <div class="dont-collect-box">
-                                <ul>
-                                    <li>❌ Your tool input data (stays in your browser)</li>
-                                    <li>❌ Personal files you process</li>
-                                    <li>❌ Passwords or sensitive credentials</li>
-                                    <li>❌ Financial or payment information</li>
-                                    <li>❌ Social media profiles or connections</li>
-                                </ul>
-                            </div>
-                        </section>
-
-                        <section id="how-we-use-information" class="policy-section">
-                            <h2><i class="fas fa-cogs"></i> 3. How We Use Information</h2>
-                            
-                            <h3>3.1 Legitimate Purposes</h3>
-                            <ul>
-                                <li><strong>Website Operation:</strong> Providing and maintaining our tools and services</li>
-                                <li><strong>Customer Support:</strong> Responding to your inquiries and providing assistance</li>
-                                <li><strong>Improvement:</strong> Analyzing usage patterns to enhance user experience</li>
-                                <li><strong>Security:</strong> Protecting against fraud, abuse, and security threats</li>
-                                <li><strong>Legal Compliance:</strong> Meeting legal obligations and protecting our rights</li>
-                            </ul>
-
-                            <h3>3.2 Marketing Communications</h3>
-                            <p>We do not send marketing emails or promotional content unless you explicitly opt-in. You can unsubscribe at any time.</p>
-                        </section>
-
-                        <section id="data-security" class="policy-section">
-                            <h2><i class="fas fa-lock"></i> 4. Data Security</h2>
-                            
-                            <h3>4.1 Technical Safeguards</h3>
-                            <ul>
-                                <li><strong>HTTPS Encryption:</strong> All data transmission is encrypted using SSL/TLS</li>
-                                <li><strong>Client-Side Processing:</strong> Tool data processed locally in your browser</li>
-                                <li><strong>Secure Infrastructure:</strong> Industry-standard security measures for our servers</li>
-                                <li><strong>Access Controls:</strong> Restricted access to personal data on a need-to-know basis</li>
-                            </ul>
-
-                            <h3>4.2 Data Retention</h3>
-                            <ul>
-                                <li><strong>Tool Data:</strong> Not stored on our servers (remains in your browser)</li>
-                                <li><strong>Analytics Data:</strong> Anonymized and retained for 2 years</li>
-                                <li><strong>Contact Information:</strong> Retained for 3 years or until you request deletion</li>
-                                <li><strong>Cookies:</strong> Expire according to their individual settings</li>
-                            </ul>
-                        </section>
-
-                        <section id="cookies" class="policy-section">
-                            <h2><i class="fas fa-cookie-bite"></i> 5. Cookies and Tracking</h2>
-                            
-                            <h3>5.1 Types of Cookies We Use</h3>
-                            <div class="cookie-types">
-                                <div class="cookie-type">
-                                    <h4><i class="fas fa-cog"></i> Essential Cookies</h4>
-                                    <p>Required for website functionality, user preferences, and security. These cannot be disabled.</p>
+                    <!-- Data Collection Section -->
+                    <section id="data-collection" class="policy-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-database"></i> Data Collection</h2>
+                        </div>
+                        <div class="section-body">
+                            <div class="data-types">
+                                <div class="data-type">
+                                    <h4><i class="fas fa-envelope"></i> Information You Provide</h4>
+                                    <ul>
+                                        <li><strong>Contact Information:</strong> Only when you reach out via contact forms</li>
+                                        <li><strong>Feedback:</strong> Voluntary submissions to improve our services</li>
+                                        <li><strong>Bug Reports:</strong> Technical details to help fix issues</li>
+                                    </ul>
                                 </div>
-                                <div class="cookie-type">
-                                    <h4><i class="fas fa-chart-bar"></i> Analytics Cookies</h4>
-                                    <p>Help us understand how visitors use our website to improve user experience.</p>
-                                </div>
-                                <div class="cookie-type">
-                                    <h4><i class="fas fa-ad"></i> Advertising Cookies</h4>
-                                    <p>Used by Google AdSense to display relevant advertisements.</p>
+                                
+                                <div class="data-type">
+                                    <h4><i class="fas fa-chart-line"></i> Automated Collection</h4>
+                                    <ul>
+                                        <li><strong>Usage Analytics:</strong> Anonymous data to improve user experience</li>
+                                        <li><strong>Technical Information:</strong> Browser type, device info for compatibility</li>
+                                        <li><strong>Performance Metrics:</strong> Load times and interaction patterns</li>
+                                    </ul>
                                 </div>
                             </div>
 
-                            <h3>5.2 Managing Cookies</h3>
-                            <p>You can control cookies through your browser settings. However, disabling certain cookies may affect website functionality.</p>
-                        </section>
+                            <h4 style="margin-top: var(--spacing-xl);"><i class="fas fa-ban"></i> What We DON'T Collect</h4>
+                            <div class="dont-collect-grid">
+                                <div class="dont-item">
+                                    <i class="fas fa-times-circle"></i>
+                                    <span>Tool Input Data</span>
+                                </div>
+                                <div class="dont-item">
+                                    <i class="fas fa-times-circle"></i>
+                                    <span>Personal Files</span>
+                                </div>
+                                <div class="dont-item">
+                                    <i class="fas fa-times-circle"></i>
+                                    <span>Passwords</span>
+                                </div>
+                                <div class="dont-item">
+                                    <i class="fas fa-times-circle"></i>
+                                    <span>Financial Info</span>
+                                </div>
+                                <div class="dont-item">
+                                    <i class="fas fa-times-circle"></i>
+                                    <span>Location Data</span>
+                                </div>
+                                <div class="dont-item">
+                                    <i class="fas fa-times-circle"></i>
+                                    <span>Social Profiles</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
 
-                        <section id="third-party-services" class="policy-section">
-                            <h2><i class="fas fa-plug"></i> 6. Third-Party Services</h2>
-                            
-                            <h3>6.1 Services We Use</h3>
-                            <ul>
-                                <li><strong>Google Analytics:</strong> Website usage analytics (anonymized)</li>
-                                <li><strong>Google AdSense:</strong> Displaying relevant advertisements</li>
-                                <li><strong>CDN Services:</strong> Faster content delivery (fonts, libraries)</li>
-                            </ul>
+                    <!-- Add more sections as needed -->
 
-                            <h3>6.2 Third-Party Privacy Policies</h3>
-                            <p>These services have their own privacy policies:</p>
-                            <ul>
-                                <li><a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy</a></li>
-                                <li><a href="https://support.google.com/adsense/answer/48182" target="_blank">Google AdSense Privacy</a></li>
-                            </ul>
-                        </section>
-
-                        <section id="your-rights" class="policy-section">
-                            <h2><i class="fas fa-user-shield"></i> 7. Your Rights</h2>
-                            
-                            <h3>7.1 GDPR Rights (EU Users)</h3>
-                            <ul>
-                                <li><strong>Right to Access:</strong> Request copies of your personal data</li>
-                                <li><strong>Right to Rectification:</strong> Correct inaccurate or incomplete data</li>
-                                <li><strong>Right to Erasure:</strong> Request deletion of your personal data</li>
-                                <li><strong>Right to Restrict Processing:</strong> Limit how we use your data</li>
-                                <li><strong>Right to Data Portability:</strong> Receive your data in a portable format</li>
-                                <li><strong>Right to Object:</strong> Object to certain types of processing</li>
-                            </ul>
-
-                            <h3>7.2 How to Exercise Your Rights</h3>
-                            <p>To exercise any of these rights, please contact us at <strong>privacy@onlinetoolstack.com</strong> with a clear description of your request.</p>
-                        </section>
-
-                        <section id="changes" class="policy-section">
-                            <h2><i class="fas fa-sync-alt"></i> 8. Policy Changes</h2>
-                            <p>We may update this Privacy Policy periodically to reflect changes in our practices or legal requirements. We will:</p>
-                            <ul>
-                                <li>Post the updated policy on this page</li>
-                                <li>Update the "Last Updated" date at the top</li>
-                                <li>Notify users of significant changes via our website</li>
-                                <li>Maintain previous versions for reference</li>
-                            </ul>
-                        </section>
-
-                        <section id="contact-us" class="policy-section">
-                            <h2><i class="fas fa-envelope"></i> 9. Contact Us</h2>
+                    <!-- Contact Section -->
+                    <section id="contact" class="policy-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-envelope"></i> Contact Us</h2>
+                        </div>
+                        <div class="section-body">
                             <p>If you have questions about this Privacy Policy or our data practices, please contact us:</p>
                             
-                            <div class="contact-info-box">
+                            <div class="contact-methods">
                                 <div class="contact-method">
-                                    <strong>Email:</strong> privacy@onlinetoolstack.com
+                                    <div class="contact-icon">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div class="contact-info">
+                                        <h4>Privacy Team</h4>
+                                        <p>privacy@onlinewebtool.live</p>
+                                        <span class="contact-note">For privacy-specific inquiries</span>
+                                    </div>
                                 </div>
                                 <div class="contact-method">
-                                    <strong>General Contact:</strong> <a href="contact.html">Contact Form</a>
-                                </div>
-                                <div class="contact-method">
-                                    <strong>Response Time:</strong> We typically respond within 48 hours
+                                    <div class="contact-icon">
+                                        <i class="fas fa-bug"></i>
+                                    </div>
+                                    <div class="contact-info">
+                                        <h4>Security Reports</h4>
+                                        <p>security@onlinewebtool.live</p>
+                                        <span class="contact-note">For security-related concerns</span>
+                                    </div>
                                 </div>
                             </div>
-                        </section>
-                    </div>
+                        </div>
+                    </section>
                 </div>
             </div>
-        </section>
+        </div>
     </main>
-
-    <!-- AdSense Banner -->
-    <div class="ad-container">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-XXXXXXXXX"
-             data-ad-slot="1234567890"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-    </div>
 
     <!-- Footer -->
     <footer class="footer">
@@ -287,13 +597,13 @@
                 <div class="footer-section">
                     <div class="footer-logo">
                         <i class="fas fa-tools"></i>
-                        <span>Online ToolStack</span>
+                        <span>Online Web Tool</span>
                     </div>
                     <p>Professional web tools for developers and digital creators. All tools are free and easy to use.</p>
                     <div class="social-links">
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
                 
@@ -313,7 +623,7 @@
                         <li><a href="index.html#tools">Password Generator</a></li>
                         <li><a href="index.html#tools">QR Code Generator</a></li>
                         <li><a href="index.html#tools">Color Picker</a></li>
-                        <li><a href="index.html#tools">URL Shortener</a></li>
+                        <li><a href="url-shortener.html">URL Shortener</a></li>
                     </ul>
                 </div>
                 
@@ -329,7 +639,7 @@
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2024 Online ToolStack. All rights reserved.</p>
+                <p>&copy; 2024 Online Web Tool. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -340,206 +650,61 @@
     </button>
 
     <!-- Scripts -->
-    <script src="js/main.js"></script>
-    <script src="js/animations.js"></script>
-    
-    <!-- Google AdSense -->
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
+    <script src="main.js"></script>
+    <script src="animations.js"></script>
 
-    <!-- Page-specific styles -->
-    <style>
-        .privacy-meta {
-            margin-top: var(--spacing-lg);
-            padding: var(--spacing-md);
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .privacy-content {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: var(--spacing-3xl);
-            align-items: flex-start;
-        }
-        
-        .toc-container {
-            position: sticky;
-            top: 100px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: var(--spacing-lg);
-        }
-        
-        .toc-container h2 {
-            font-size: 1.2rem;
-            color: var(--text-primary);
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .toc-list {
-            list-style: none;
-        }
-        
-        .toc-list li {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .toc-list a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            padding: var(--spacing-xs);
-            border-radius: 4px;
-            display: block;
-            transition: all var(--transition-fast);
-        }
-        
-        .toc-list a:hover {
-            color: var(--primary-blue);
-            background: var(--bg-hover);
-        }
-        
-        .policy-content {
-            max-width: none;
-        }
-        
-        .policy-section {
-            margin-bottom: var(--spacing-3xl);
-            padding-bottom: var(--spacing-xl);
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .policy-section:last-child {
-            border-bottom: none;
-        }
-        
-        .policy-section h2 {
-            font-size: 1.8rem;
-            color: var(--text-primary);
-            margin-bottom: var(--spacing-lg);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-        }
-        
-        .policy-section h2 i {
-            color: var(--primary-blue);
-            font-size: 1.5rem;
-        }
-        
-        .policy-section h3 {
-            font-size: 1.3rem;
-            color: var(--text-primary);
-            margin: var(--spacing-lg) 0 var(--spacing-md);
-        }
-        
-        .policy-section p {
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .policy-section ul {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .policy-section ul li {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .highlight-box {
-            background: var(--bg-card);
-            border: 1px solid var(--primary-blue);
-            border-radius: 8px;
-            padding: var(--spacing-lg);
-            margin: var(--spacing-lg) 0;
-        }
-        
-        .highlight-box h3 {
-            color: var(--primary-blue);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .dont-collect-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: var(--spacing-lg);
-            margin: var(--spacing-md) 0;
-        }
-        
-        .dont-collect-box ul {
-            margin: 0;
-        }
-        
-        .cookie-types {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: var(--spacing-lg);
-            margin: var(--spacing-lg) 0;
-        }
-        
-        .cookie-type {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: var(--spacing-lg);
-        }
-        
-        .cookie-type h4 {
-            color: var(--text-primary);
-            margin-bottom: var(--spacing-sm);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-        }
-        
-        .cookie-type h4 i {
-            color: var(--primary-blue);
-        }
-        
-        .contact-info-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: var(--spacing-lg);
-            margin-top: var(--spacing-md);
-        }
-        
-        .contact-method {
-            margin-bottom: var(--spacing-md);
-            color: var(--text-secondary);
-        }
-        
-        .contact-method:last-child {
-            margin-bottom: 0;
-        }
-        
-        @media (max-width: 768px) {
-            .privacy-content {
-                grid-template-columns: 1fr;
-                gap: var(--spacing-2xl);
+    <!-- Privacy Page JavaScript -->
+    <script>
+        // Smooth scrolling and active navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-links a');
+            const sections = document.querySelectorAll('.policy-section');
+            
+            // Smooth scrolling
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        // Update active link
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        this.classList.add('active');
+                        
+                        // Smooth scroll to section
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Update active link on scroll
+            function updateActiveLink() {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    
+                    if (window.scrollY >= sectionTop - 100) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
             }
             
-            .toc-container {
-                position: static;
-            }
-            
-            .cookie-types {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+            window.addEventListener('scroll', updateActiveLink);
+        });
+    </script>
 </body>
 </html>
