@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator - ONLINE WEBTOOL</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo"><h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1></div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About Us</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+                <div class="hamburger"><span></span><span></span><span></span></div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="tool-page">
+        <div class="container">
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h1><i class="fas fa-birthday-cake"></i> Age Calculator</h1>
+                    <p>Calculate your exact age in years, months, and days</p>
+                </div>
+
+                <div class="tool-content">
+                    <div class="form-group">
+                        <label for="birthdate">Date of Birth</label>
+                        <input type="date" id="birthdate" max="">
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn-action btn-generate" onclick="calculateAge()">
+                            <i class="fas fa-calculator"></i> Calculate Age
+                        </button>
+                        <button class="btn-action btn-reset" onclick="resetForm()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+
+                    <div class="result-section hidden" id="resultSection">
+                        <div style="width: 100%; text-align: center;">
+                            <h3>Your Age:</h3>
+                            <div style="background: #fff; padding: 2rem; border-radius: 8px; border: 2px solid #000; margin: 1rem 0;">
+                                <h2 id="ageResult" style="font-size: 2rem; margin: 0;"></h2>
+                            </div>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                                <div style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #000;">
+                                    <h3 id="totalMonths" style="font-size: 1.5rem; margin: 0;"></h3>
+                                    <p style="margin: 0.5rem 0 0;">Total Months</p>
+                                </div>
+                                <div style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #000;">
+                                    <h3 id="totalWeeks" style="font-size: 1.5rem; margin: 0;"></h3>
+                                    <p style="margin: 0.5rem 0 0;">Total Weeks</p>
+                                </div>
+                                <div style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #000;">
+                                    <h3 id="totalDays" style="font-size: 1.5rem; margin: 0;"></h3>
+                                    <p style="margin: 0.5rem 0 0;">Total Days</p>
+                                </div>
+                                <div style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #000;">
+                                    <h3 id="totalHours" style="font-size: 1.5rem; margin: 0;"></h3>
+                                    <p style="margin: 0.5rem 0 0;">Total Hours</p>
+                                </div>
+                            </div>
+                            <div class="button-group" style="margin-top: 1rem;">
+                                <button class="btn-action btn-download" onclick="downloadResult()">
+                                    <i class="fas fa-download"></i> Download Result
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ONLINE WEBTOOL</h3>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Set max date to today
+        document.getElementById('birthdate').max = new Date().toISOString().split('T')[0];
+
+        function calculateAge() {
+            const birthdate = document.getElementById('birthdate').value;
+            if (!birthdate) {
+                showMessage('Please select your birth date', 'error');
+                return;
+            }
+
+            const birth = new Date(birthdate);
+            const today = new Date();
+
+            if (birth > today) {
+                showMessage('Birth date cannot be in the future', 'error');
+                return;
+            }
+
+            let years = today.getFullYear() - birth.getFullYear();
+            let months = today.getMonth() - birth.getMonth();
+            let days = today.getDate() - birth.getDate();
+
+            if (days < 0) {
+                months--;
+                const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+                days += prevMonth.getDate();
+            }
+
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            const totalDays = Math.floor((today - birth) / (1000 * 60 * 60 * 24));
+            const totalMonths = years * 12 + months;
+            const totalWeeks = Math.floor(totalDays / 7);
+            const totalHours = totalDays * 24;
+
+            document.getElementById('ageResult').textContent = 
+                `${years} Years, ${months} Months, ${days} Days`;
+            document.getElementById('totalMonths').textContent = totalMonths.toLocaleString();
+            document.getElementById('totalWeeks').textContent = totalWeeks.toLocaleString();
+            document.getElementById('totalDays').textContent = totalDays.toLocaleString();
+            document.getElementById('totalHours').textContent = totalHours.toLocaleString();
+            document.getElementById('resultSection').classList.remove('hidden');
+
+            showMessage('Age calculated successfully!', 'success');
+        }
+
+        function downloadResult() {
+            const birthdate = document.getElementById('birthdate').value;
+            const ageResult = document.getElementById('ageResult').textContent;
+            const totalMonths = document.getElementById('totalMonths').textContent;
+            const totalWeeks = document.getElementById('totalWeeks').textContent;
+            const totalDays = document.getElementById('totalDays').textContent;
+            const totalHours = document.getElementById('totalHours').textContent;
+
+            const content = `Age Calculation Result
+======================
+
+Birth Date: ${birthdate}
+Age: ${ageResult}
+
+Details:
+--------
+Total Months: ${totalMonths}
+Total Weeks: ${totalWeeks}
+Total Days: ${totalDays}
+Total Hours: ${totalHours}
+
+Generated by ONLINE WEBTOOL`;
+
+            downloadText('age-calculation.txt', content);
+            showMessage('Result downloaded successfully!', 'success');
+        }
+
+        function resetForm() {
+            document.getElementById('birthdate').value = '';
+            document.getElementById('resultSection').classList.add('hidden');
+            showMessage('Form reset successfully', 'info');
+        }
+    </script>
+</body>
+</html>
