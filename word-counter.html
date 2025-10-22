@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Counter - ONLINE WEBTOOL</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About Us</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+                <div class="hamburger"><span></span><span></span><span></span></div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="tool-page">
+        <div class="container">
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h1><i class="fas fa-calculator"></i> Word Counter</h1>
+                    <p>Count words, characters, sentences, and paragraphs</p>
+                </div>
+
+                <div class="tool-content">
+                    <div class="form-group">
+                        <label for="text">Enter Your Text</label>
+                        <textarea id="text" placeholder="Type or paste your text here..." rows="10" oninput="countWords()"></textarea>
+                    </div>
+
+                    <div class="result-section" style="display: block;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; text-align: center;">
+                            <div style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #000;">
+                                <h3 style="font-size: 2rem; margin: 0;" id="wordCount">0</h3>
+                                <p style="margin: 0.5rem 0 0;">Words</p>
+                            </div>
+                            <div style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #000;">
+                                <h3 style="font-size: 2rem; margin: 0;" id="charCount">0</h3>
+                                <p style="margin: 0.5rem 0 0;">Characters</p>
+                            </div>
+                            <div style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #000;">
+                                <h3 style="font-size: 2rem; margin: 0;" id="charNoSpaceCount">0</h3>
+                                <p style="margin: 0.5rem 0 0;">Chars (no spaces)</p>
+                            </div>
+                            <div style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #000;">
+                                <h3 style="font-size: 2rem; margin: 0;" id="sentenceCount">0</h3>
+                                <p style="margin: 0.5rem 0 0;">Sentences</p>
+                            </div>
+                            <div style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #000;">
+                                <h3 style="font-size: 2rem; margin: 0;" id="paragraphCount">0</h3>
+                                <p style="margin: 0.5rem 0 0;">Paragraphs</p>
+                            </div>
+                            <div style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #000;">
+                                <h3 style="font-size: 2rem; margin: 0;" id="readTime">0</h3>
+                                <p style="margin: 0.5rem 0 0;">Min Read Time</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn-action btn-reset" onclick="resetForm()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                        <button class="btn-action btn-download" onclick="downloadStats()">
+                            <i class="fas fa-download"></i> Download Stats
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ONLINE WEBTOOL</h3>
+                    <p>Your one-stop destination for free online tools</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="qr-generator.html">QR Code Generator</a></li>
+                        <li><a href="url-shortener.html">URL Shortener</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        function countWords() {
+            const text = document.getElementById('text').value;
+            
+            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+            const chars = text.length;
+            const charsNoSpace = text.replace(/\s/g, '').length;
+            const sentences = text.trim() ? text.split(/[.!?]+/).filter(s => s.trim()).length : 0;
+            const paragraphs = text.trim() ? text.split(/\n\n+/).filter(p => p.trim()).length : 0;
+            const readTime = Math.ceil(words / 200);
+
+            document.getElementById('wordCount').textContent = words;
+            document.getElementById('charCount').textContent = chars;
+            document.getElementById('charNoSpaceCount').textContent = charsNoSpace;
+            document.getElementById('sentenceCount').textContent = sentences;
+            document.getElementById('paragraphCount').textContent = paragraphs;
+            document.getElementById('readTime').textContent = readTime;
+        }
+
+        function resetForm() {
+            document.getElementById('text').value = '';
+            countWords();
+            showMessage('Form reset successfully', 'info');
+        }
+
+        function downloadStats() {
+            const text = document.getElementById('text').value;
+            const stats = `Text Statistics
+================
+
+Words: ${document.getElementById('wordCount').textContent}
+Characters: ${document.getElementById('charCount').textContent}
+Characters (no spaces): ${document.getElementById('charNoSpaceCount').textContent}
+Sentences: ${document.getElementById('sentenceCount').textContent}
+Paragraphs: ${document.getElementById('paragraphCount').textContent}
+Reading Time: ${document.getElementById('readTime').textContent} minutes
+
+Original Text:
+================
+${text}
+`;
+            downloadText('word-count-stats.txt', stats);
+            showMessage('Stats downloaded successfully!', 'success');
+        }
+    </script>
+</body>
+</html>
