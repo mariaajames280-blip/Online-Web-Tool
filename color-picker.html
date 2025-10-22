@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Picker - ONLINE WEBTOOL</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo"><h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1></div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About Us</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+                <div class="hamburger"><span></span><span></span><span></span></div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="tool-page">
+        <div class="container">
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h1><i class="fas fa-palette"></i> Color Picker</h1>
+                    <p>Pick colors and get HEX, RGB, and HSL values</p>
+                </div>
+
+                <div class="tool-content">
+                    <div class="form-group">
+                        <label>Pick a Color</label>
+                        <div style="display: flex; gap: 1rem; align-items: center;">
+                            <input type="color" id="colorPicker" value="#FFD700" 
+                                   style="width: 150px; height: 80px; border: 2px solid #000; cursor: pointer;"
+                                   onchange="updateColor()">
+                            <div style="flex: 1; padding: 2rem; border: 2px solid #000; border-radius: 8px; background: #fff;">
+                                <div id="colorPreview" style="width: 100%; height: 100px; border-radius: 8px; background: #FFD700;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>HEX</label>
+                        <input type="text" id="hexValue" value="#FFD700" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label>RGB</label>
+                        <input type="text" id="rgbValue" value="rgb(255, 215, 0)" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label>HSL</label>
+                        <input type="text" id="hslValue" value="hsl(51, 100%, 50%)" readonly>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn-action btn-copy" onclick="copyHex()">
+                            <i class="fas fa-copy"></i> Copy HEX
+                        </button>
+                        <button class="btn-action btn-copy" onclick="copyRgb()">
+                            <i class="fas fa-copy"></i> Copy RGB
+                        </button>
+                        <button class="btn-action btn-copy" onclick="copyHsl()">
+                            <i class="fas fa-copy"></i> Copy HSL
+                        </button>
+                        <button class="btn-action btn-download" onclick="downloadColors()">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                        <button class="btn-action btn-reset" onclick="resetForm()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ONLINE WEBTOOL</h3>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+
+        function rgbToHsl(r, g, b) {
+            r /= 255; g /= 255; b /= 255;
+            const max = Math.max(r, g, b), min = Math.min(r, g, b);
+            let h, s, l = (max + min) / 2;
+
+            if (max === min) {
+                h = s = 0;
+            } else {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                switch (max) {
+                    case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+                    case g: h = ((b - r) / d + 2) / 6; break;
+                    case b: h = ((r - g) / d + 4) / 6; break;
+                }
+            }
+
+            return {
+                h: Math.round(h * 360),
+                s: Math.round(s * 100),
+                l: Math.round(l * 100)
+            };
+        }
+
+        function updateColor() {
+            const hex = document.getElementById('colorPicker').value;
+            const rgb = hexToRgb(hex);
+            const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+
+            document.getElementById('hexValue').value = hex.toUpperCase();
+            document.getElementById('rgbValue').value = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+            document.getElementById('hslValue').value = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+            document.getElementById('colorPreview').style.background = hex;
+        }
+
+        function copyHex() {
+            copyToClipboard(document.getElementById('hexValue').value);
+        }
+
+        function copyRgb() {
+            copyToClipboard(document.getElementById('rgbValue').value);
+        }
+
+        function copyHsl() {
+            copyToClipboard(document.getElementById('hslValue').value);
+        }
+
+        function downloadColors() {
+            const content = `HEX: ${document.getElementById('hexValue').value}
+RGB: ${document.getElementById('rgbValue').value}
+HSL: ${document.getElementById('hslValue').value}`;
+            downloadText('color-values.txt', content);
+            showMessage('Color values downloaded!', 'success');
+        }
+
+        function resetForm() {
+            document.getElementById('colorPicker').value = '#FFD700';
+            updateColor();
+            showMessage('Form reset successfully', 'info');
+        }
+
+        // Initialize
+        updateColor();
+    </script>
+</body>
+</html>
