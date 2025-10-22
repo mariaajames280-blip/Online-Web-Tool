@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Percentage Calculator - ONLINE WEBTOOL</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo"><h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1></div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About Us</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+                <div class="hamburger"><span></span><span></span><span></span></div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="tool-page">
+        <div class="container">
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h1><i class="fas fa-percent"></i> Percentage Calculator</h1>
+                    <p>Calculate percentages, increases, and decreases</p>
+                </div>
+
+                <div class="tool-content">
+                    <h3>What is <input type="number" id="percent1" style="width: 100px; display: inline-block;" value="10">% of <input type="number" id="value1" style="width: 100px; display: inline-block;" value="100">?</h3>
+                    <div class="button-group">
+                        <button class="btn-action btn-generate" onclick="calculate1()">Calculate</button>
+                    </div>
+                    <div id="result1" style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #000; margin: 1rem 0; display: none;">
+                        <strong>Result:</strong> <span id="answer1"></span>
+                    </div>
+
+                    <hr style="margin: 2rem 0; border: 1px solid #000;">
+
+                    <h3><input type="number" id="value2" style="width: 100px; display: inline-block;" value="25"> is what % of <input type="number" id="total2" style="width: 100px; display: inline-block;" value="100">?</h3>
+                    <div class="button-group">
+                        <button class="btn-action btn-generate" onclick="calculate2()">Calculate</button>
+                    </div>
+                    <div id="result2" style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #000; margin: 1rem 0; display: none;">
+                        <strong>Result:</strong> <span id="answer2"></span>
+                    </div>
+
+                    <hr style="margin: 2rem 0; border: 1px solid #000;">
+
+                    <h3>Percentage Change from <input type="number" id="oldValue" style="width: 100px; display: inline-block;" value="100"> to <input type="number" id="newValue" style="width: 100px; display: inline-block;" value="120">?</h3>
+                    <div class="button-group">
+                        <button class="btn-action btn-generate" onclick="calculate3()">Calculate</button>
+                    </div>
+                    <div id="result3" style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #000; margin: 1rem 0; display: none;">
+                        <strong>Result:</strong> <span id="answer3"></span>
+                    </div>
+
+                    <hr style="margin: 2rem 0; border: 1px solid #000;">
+
+                    <h3>Increase/Decrease <input type="number" id="baseValue" style="width: 100px; display: inline-block;" value="100"> by <input type="number" id="percentChange" style="width: 100px; display: inline-block;" value="10">%</h3>
+                    <div class="button-group">
+                        <button class="btn-action btn-generate" onclick="calculate4('increase')">Increase</button>
+                        <button class="btn-action btn-generate" onclick="calculate4('decrease')">Decrease</button>
+                    </div>
+                    <div id="result4" style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #000; margin: 1rem 0; display: none;">
+                        <strong>Result:</strong> <span id="answer4"></span>
+                    </div>
+
+                    <div class="button-group" style="margin-top: 2rem;">
+                        <button class="btn-action btn-reset" onclick="resetForm()">
+                            <i class="fas fa-redo"></i> Reset All
+                        </button>
+                        <button class="btn-action btn-download" onclick="downloadResults()">
+                            <i class="fas fa-download"></i> Download Results
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ONLINE WEBTOOL</h3>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        function calculate1() {
+            const percent = parseFloat(document.getElementById('percent1').value);
+            const value = parseFloat(document.getElementById('value1').value);
+            if (isNaN(percent) || isNaN(value)) {
+                showMessage('Please enter valid numbers', 'error');
+                return;
+            }
+            const result = (percent / 100) * value;
+            document.getElementById('answer1').textContent = result.toFixed(2);
+            document.getElementById('result1').style.display = 'block';
+            showMessage('Calculated successfully!', 'success');
+        }
+
+        function calculate2() {
+            const value = parseFloat(document.getElementById('value2').value);
+            const total = parseFloat(document.getElementById('total2').value);
+            if (isNaN(value) || isNaN(total) || total === 0) {
+                showMessage('Please enter valid numbers', 'error');
+                return;
+            }
+            const result = (value / total) * 100;
+            document.getElementById('answer2').textContent = result.toFixed(2) + '%';
+            document.getElementById('result2').style.display = 'block';
+            showMessage('Calculated successfully!', 'success');
+        }
+
+        function calculate3() {
+            const oldValue = parseFloat(document.getElementById('oldValue').value);
+            const newValue = parseFloat(document.getElementById('newValue').value);
+            if (isNaN(oldValue) || isNaN(newValue) || oldValue === 0) {
+                showMessage('Please enter valid numbers', 'error');
+                return;
+            }
+            const change = ((newValue - oldValue) / oldValue) * 100;
+            const direction = change >= 0 ? 'increase' : 'decrease';
+            document.getElementById('answer3').textContent = 
+                `${Math.abs(change).toFixed(2)}% ${direction}`;
+            document.getElementById('result3').style.display = 'block';
+            showMessage('Calculated successfully!', 'success');
+        }
+
+        function calculate4(type) {
+            const baseValue = parseFloat(document.getElementById('baseValue').value);
+            const percentChange = parseFloat(document.getElementById('percentChange').value);
+            if (isNaN(baseValue) || isNaN(percentChange)) {
+                showMessage('Please enter valid numbers', 'error');
+                return;
+            }
+            const change = (percentChange / 100) * baseValue;
+            const result = type === 'increase' ? baseValue + change : baseValue - change;
+            document.getElementById('answer4').textContent = result.toFixed(2);
+            document.getElementById('result4').style.display = 'block';
+            showMessage('Calculated successfully!', 'success');
+        }
+
+        function downloadResults() {
+            let content = 'Percentage Calculator Results\n=============================\n\n';
+            
+            if (document.getElementById('result1').style.display !== 'none') {
+                content += `What is ${document.getElementById('percent1').value}% of ${document.getElementById('value1').value}?\n`;
+                content += `Answer: ${document.getElementById('answer1').textContent}\n\n`;
+            }
+            
+            if (document.getElementById('result2').style.display !== 'none') {
+                content += `${document.getElementById('value2').value} is what % of ${document.getElementById('total2').value}?\n`;
+                content += `Answer: ${document.getElementById('answer2').textContent}\n\n`;
+            }
+            
+            if (document.getElementById('result3').style.display !== 'none') {
+                content += `Percentage change from ${document.getElementById('oldValue').value} to ${document.getElementById('newValue').value}?\n`;
+                content += `Answer: ${document.getElementById('answer3').textContent}\n\n`;
+            }
+            
+            if (document.getElementById('result4').style.display !== 'none') {
+                content += `Change ${document.getElementById('baseValue').value} by ${document.getElementById('percentChange').value}%\n`;
+                content += `Answer: ${document.getElementById('answer4').textContent}\n\n`;
+            }
+            
+            downloadText('percentage-calculations.txt', content);
+            showMessage('Results downloaded!', 'success');
+        }
+
+        function resetForm() {
+            document.getElementById('percent1').value = 10;
+            document.getElementById('value1').value = 100;
+            document.getElementById('value2').value = 25;
+            document.getElementById('total2').value = 100;
+            document.getElementById('oldValue').value = 100;
+            document.getElementById('newValue').value = 120;
+            document.getElementById('baseValue').value = 100;
+            document.getElementById('percentChange').value = 10;
+            document.getElementById('result1').style.display = 'none';
+            document.getElementById('result2').style.display = 'none';
+            document.getElementById('result3').style.display = 'none';
+            document.getElementById('result4').style.display = 'none';
+            showMessage('Form reset successfully', 'info');
+        }
+    </script>
+</body>
+</html>
