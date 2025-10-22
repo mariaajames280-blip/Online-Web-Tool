@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free URL Shortener - Shorten long URLs easily">
+    <title>URL Shortener - ONLINE WEBTOOL</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About Us</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Tool Page -->
+    <div class="tool-page">
+        <div class="container">
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h1><i class="fas fa-link"></i> URL Shortener</h1>
+                    <p>Shorten long URLs and make them easy to share</p>
+                </div>
+
+                <div class="tool-content">
+                    <div class="form-group">
+                        <label for="longUrl">Enter Long URL *</label>
+                        <input type="url" id="longUrl" placeholder="https://example.com/very/long/url..." required>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn-action btn-generate" onclick="shortenURL()">
+                            <i class="fas fa-compress"></i> Shorten URL
+                        </button>
+                        <button class="btn-action btn-reset" onclick="resetForm()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+
+                    <div class="result-section hidden" id="resultSection">
+                        <div style="width: 100%; text-align: center;">
+                            <h3 style="margin-bottom: 1rem;">Shortened URL:</h3>
+                            <div style="background-color: #fff; padding: 1.5rem; border-radius: 8px; border: 2px solid #000; margin-bottom: 1rem;">
+                                <p style="font-size: 1.2rem; font-weight: bold; word-break: break-all;" id="shortUrl"></p>
+                            </div>
+                            <div class="button-group">
+                                <button class="btn-action btn-copy" onclick="copyShortURL()">
+                                    <i class="fas fa-copy"></i> Copy URL
+                                </button>
+                                <button class="btn-action btn-download" onclick="downloadURL()">
+                                    <i class="fas fa-download"></i> Download as Text
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem; padding: 1.5rem; background-color: #FFFACD; border-radius: 8px; border: 2px solid #000;">
+                    <h3><i class="fas fa-info-circle"></i> How to Use:</h3>
+                    <ol style="margin-left: 1.5rem; margin-top: 1rem;">
+                        <li>Enter your long URL in the input field above</li>
+                        <li>Click the "Shorten URL" button</li>
+                        <li>Your shortened URL will appear below</li>
+                        <li>Click "Copy URL" to copy it to your clipboard</li>
+                        <li>Use the shortened URL to share easily</li>
+                    </ol>
+                    <p style="margin-top: 1rem;"><strong>Note:</strong> This tool uses the TinyURL service to create shortened URLs. The shortened URLs are permanent and will redirect to your original long URL.</p>
+                </div>
+            </div>
+
+            <!-- AdSense Placeholder -->
+            <div class="ad-container">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                     data-ad-slot="XXXXXXXXXX"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ONLINE WEBTOOL</h3>
+                    <p>Your one-stop destination for free online tools</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                        <li><a href="qr-generator.html">QR Code Generator</a></li>
+                        <li><a href="url-shortener.html">URL Shortener</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Popular Tools</h4>
+                    <ul>
+                        <li><a href="password-generator.html">Password Generator</a></li>
+                        <li><a href="base64-converter.html">Base64 Converter</a></li>
+                        <li><a href="color-picker.html">Color Picker</a></li>
+                        <li><a href="word-counter.html">Word Counter</a></li>
+                        <li><a href="calculator.html">Calculator</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="social-icons">
+                        <a href="https://facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="https://twitter.com" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://youtube.com" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://github.com" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        let shortenedUrl = '';
+
+        async function shortenURL() {
+            const longUrl = document.getElementById('longUrl').value.trim();
+            const resultSection = document.getElementById('resultSection');
+            const shortUrlElement = document.getElementById('shortUrl');
+
+            if (!longUrl) {
+                showMessage('Please enter a URL to shorten', 'error');
+                return;
+            }
+
+            // Validate URL
+            try {
+                new URL(longUrl);
+            } catch (e) {
+                showMessage('Please enter a valid URL (including http:// or https://)', 'error');
+                return;
+            }
+
+            // Show loading
+            shortUrlElement.innerHTML = '<span class="loading"></span> Shortening URL...';
+            resultSection.classList.remove('hidden');
+
+            try {
+                // Use TinyURL API
+                const response = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`);
+                
+                if (response.ok) {
+                    shortenedUrl = await response.text();
+                    shortUrlElement.textContent = shortenedUrl;
+                    showMessage('URL shortened successfully!', 'success');
+                } else {
+                    throw new Error('Failed to shorten URL');
+                }
+            } catch (error) {
+                shortUrlElement.textContent = 'Error: Could not shorten URL';
+                showMessage('Error shortening URL. Please check your internet connection and try again.', 'error');
+            }
+        }
+
+        function copyShortURL() {
+            if (!shortenedUrl) {
+                showMessage('Please shorten a URL first', 'error');
+                return;
+            }
+
+            copyToClipboard(shortenedUrl);
+        }
+
+        function downloadURL() {
+            if (!shortenedUrl) {
+                showMessage('Please shorten a URL first', 'error');
+                return;
+            }
+
+            const originalUrl = document.getElementById('longUrl').value;
+            const content = `Original URL: ${originalUrl}\nShortened URL: ${shortenedUrl}\n\nGenerated by ONLINE WEBTOOL`;
+            downloadText('shortened-url.txt', content);
+            showMessage('URL downloaded successfully!', 'success');
+        }
+
+        function resetForm() {
+            document.getElementById('longUrl').value = '';
+            document.getElementById('resultSection').classList.add('hidden');
+            document.getElementById('shortUrl').textContent = '';
+            shortenedUrl = '';
+            showMessage('Form reset successfully', 'info');
+        }
+
+        // Allow Enter key to shorten
+        document.getElementById('longUrl').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                shortenURL();
+            }
+        });
+    </script>
+</body>
+</html>
