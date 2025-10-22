@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum Generator - ONLINE WEBTOOL</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo"><h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1></div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About Us</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+                <div class="hamburger"><span></span><span></span><span></span></div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="tool-page">
+        <div class="container">
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h1><i class="fas fa-file-alt"></i> Lorem Ipsum Generator</h1>
+                    <p>Generate placeholder text for your designs</p>
+                </div>
+
+                <div class="tool-content">
+                    <div class="form-group">
+                        <label for="count">Number of Paragraphs</label>
+                        <input type="number" id="count" value="5" min="1" max="100">
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn-action btn-generate" onclick="generate()">
+                            <i class="fas fa-file-alt"></i> Generate Lorem Ipsum
+                        </button>
+                        <button class="btn-action btn-reset" onclick="resetForm()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="output">Generated Text</label>
+                        <textarea id="output" readonly rows="12"></textarea>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn-action btn-copy" onclick="copyText()">
+                            <i class="fas fa-copy"></i> Copy Text
+                        </button>
+                        <button class="btn-action btn-download" onclick="downloadText2()">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ONLINE WEBTOOL</h3>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        const loremParagraphs = [
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+            "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.",
+            "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.",
+            "Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque.",
+            "Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus.",
+            "Ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        ];
+
+        function generate() {
+            const count = parseInt(document.getElementById('count').value);
+            if (count < 1 || count > 100) {
+                showMessage('Please enter a number between 1 and 100', 'error');
+                return;
+            }
+
+            let text = '';
+            for (let i = 0; i < count; i++) {
+                text += loremParagraphs[i % loremParagraphs.length] + '\n\n';
+            }
+
+            document.getElementById('output').value = text.trim();
+            showMessage('Lorem Ipsum generated successfully!', 'success');
+        }
+
+        function copyText() {
+            const text = document.getElementById('output').value;
+            if (!text) {
+                showMessage('Please generate text first', 'error');
+                return;
+            }
+            copyToClipboard(text);
+        }
+
+        function downloadText2() {
+            const text = document.getElementById('output').value;
+            if (!text) {
+                showMessage('Please generate text first', 'error');
+                return;
+            }
+            downloadText('lorem-ipsum.txt', text);
+            showMessage('Text downloaded successfully!', 'success');
+        }
+
+        function resetForm() {
+            document.getElementById('count').value = 5;
+            document.getElementById('output').value = '';
+            showMessage('Form reset successfully', 'info');
+        }
+    </script>
+</body>
+</html>
