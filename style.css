@@ -6,13 +6,15 @@
 }
 
 :root {
-    --primary-color: #000000;        /* main background (black) */
-    --secondary-color: #111111;      /* slightly lighter dark for sections/cards */
-    --text-color: #f5f5f5;           /* light text for contrast */
-    --card-bg: #1a1a1a;              /* dark gray card background */
-    --hover-color: #00bfff;          /* soft blue hover accent */
-    --shadow: rgba(255, 255, 255, 0.1); /* light shadow for glow effect */
+    --primary-color: #000000;        /* main background */
+    --secondary-color: #111111;      /* dark gray for sections/cards */
+    --text-color: #f5f5f5;           /* light text */
+    --card-bg: #1a1a1a;              /* card background */
+    --hover-color: #FFD700;          /* bright yellow hover/accent */
+    --accent-color: #FFD700;         /* yellow for buttons/links */
+    --shadow: rgba(255, 215, 0, 0.2); /* soft yellow shadow */
 }
+
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
