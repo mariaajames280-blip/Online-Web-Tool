@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Case Converter - ONLINE WEBTOOL</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo"><h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1></div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About Us</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+                <div class="hamburger"><span></span><span></span><span></span></div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="tool-page">
+        <div class="container">
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h1><i class="fas fa-text-width"></i> Text Case Converter</h1>
+                    <p>Convert text to different cases</p>
+                </div>
+
+                <div class="tool-content">
+                    <div class="form-group">
+                        <label for="text">Enter Text</label>
+                        <textarea id="text" placeholder="Enter text to convert..." rows="8"></textarea>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn-action btn-generate" onclick="convert('upper')">UPPERCASE</button>
+                        <button class="btn-action btn-generate" onclick="convert('lower')">lowercase</button>
+                        <button class="btn-action btn-generate" onclick="convert('title')">Title Case</button>
+                        <button class="btn-action btn-generate" onclick="convert('sentence')">Sentence case</button>
+                        <button class="btn-action btn-generate" onclick="convert('camel')">camelCase</button>
+                        <button class="btn-action btn-generate" onclick="convert('snake')">snake_case</button>
+                        <button class="btn-action btn-reset" onclick="resetForm()"><i class="fas fa-redo"></i> Reset</button>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn-action btn-copy" onclick="copyText()">
+                            <i class="fas fa-copy"></i> Copy Text
+                        </button>
+                        <button class="btn-action btn-download" onclick="downloadText2()">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ONLINE WEBTOOL</h3>
+                    <p>Your one-stop destination for free online tools</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        function convert(type) {
+            let text = document.getElementById('text').value;
+            if (!text) {
+                showMessage('Please enter text to convert', 'error');
+                return;
+            }
+
+            let result = '';
+            switch(type) {
+                case 'upper':
+                    result = text.toUpperCase();
+                    break;
+                case 'lower':
+                    result = text.toLowerCase();
+                    break;
+                case 'title':
+                    result = text.toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+                    break;
+                case 'sentence':
+                    result = text.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, l => l.toUpperCase());
+                    break;
+                case 'camel':
+                    result = text.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
+                    break;
+                case 'snake':
+                    result = text.toLowerCase().replace(/\s+/g, '_');
+                    break;
+            }
+
+            document.getElementById('text').value = result;
+            showMessage('Text converted successfully!', 'success');
+        }
+
+        function copyText() {
+            const text = document.getElementById('text').value;
+            if (!text) {
+                showMessage('No text to copy', 'error');
+                return;
+            }
+            copyToClipboard(text);
+        }
+
+        function downloadText2() {
+            const text = document.getElementById('text').value;
+            if (!text) {
+                showMessage('No text to download', 'error');
+                return;
+            }
+            downloadText('converted-text.txt', text);
+            showMessage('Text downloaded successfully!', 'success');
+        }
+
+        function resetForm() {
+            document.getElementById('text').value = '';
+            showMessage('Form reset successfully', 'info');
+        }
+    </script>
+</body>
+</html>
