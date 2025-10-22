@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Generator - ONLINE WEBTOOL</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo"><h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1></div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About Us</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+                <div class="hamburger"><span></span><span></span><span></span></div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="tool-page">
+        <div class="container">
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h1><i class="fas fa-barcode"></i> Barcode Generator</h1>
+                    <p>Generate barcodes for products and inventory</p>
+                </div>
+
+                <div class="tool-content">
+                    <div class="form-group">
+                        <label for="barcodeText">Barcode Value *</label>
+                        <input type="text" id="barcodeText" placeholder="Enter barcode value (numbers or text)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="format">Barcode Format</label>
+                        <select id="format">
+                            <option value="CODE128">CODE128</option>
+                            <option value="CODE39">CODE39</option>
+                            <option value="EAN13">EAN13</option>
+                            <option value="UPC">UPC</option>
+                            <option value="ITF14">ITF14</option>
+                        </select>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn-action btn-generate" onclick="generateBarcode()">
+                            <i class="fas fa-barcode"></i> Generate Barcode
+                        </button>
+                        <button class="btn-action btn-reset" onclick="resetForm()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                        <button class="btn-action btn-download" onclick="downloadBarcode()" id="downloadBtn" style="display:none;">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+
+                    <div class="result-section hidden" id="resultSection">
+                        <svg id="barcode"></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ONLINE WEBTOOL</h3>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        function generateBarcode() {
+            const text = document.getElementById('barcodeText').value.trim();
+            const format = document.getElementById('format').value;
+
+            if (!text) {
+                showMessage('Please enter a barcode value', 'error');
+                return;
+            }
+
+            try {
+                JsBarcode("#barcode", text, {
+                    format: format,
+                    width: 2,
+                    height: 100,
+                    displayValue: true,
+                    fontSize: 16,
+                    margin: 10
+                });
+
+                document.getElementById('resultSection').classList.remove('hidden');
+                document.getElementById('downloadBtn').style.display = 'inline-block';
+                showMessage('Barcode generated successfully!', 'success');
+            } catch (error) {
+                showMessage('Error generating barcode: ' + error.message, 'error');
+            }
+        }
+
+        function downloadBarcode() {
+            const svg = document.getElementById('barcode');
+            if (!svg.querySelector('rect')) {
+                showMessage('Please generate a barcode first', 'error');
+                return;
+            }
+
+            const svgData = new XMLSerializer().serializeToString(svg);
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+
+            img.onload = function() {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+                const pngUrl = canvas.toDataURL('image/png');
+                
+                const downloadLink = document.createElement('a');
+                downloadLink.href = pngUrl;
+                downloadLink.download = 'barcode.png';
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+                
+                showMessage('Barcode downloaded successfully!', 'success');
+            };
+
+            img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+        }
+
+        function resetForm() {
+            document.getElementById('barcodeText').value = '';
+            document.getElementById('format').value = 'CODE128';
+            document.getElementById('barcode').innerHTML = '';
+            document.getElementById('resultSection').classList.add('hidden');
+            document.getElementById('downloadBtn').style.display = 'none';
+            showMessage('Form reset successfully', 'info');
+        }
+    </script>
+</body>
+</html>
