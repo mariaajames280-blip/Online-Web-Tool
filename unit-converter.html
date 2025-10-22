@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter - ONLINE WEBTOOL</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo"><h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1></div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About Us</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+                <div class="hamburger"><span></span><span></span><span></span></div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="tool-page">
+        <div class="container">
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h1><i class="fas fa-exchange-alt"></i> Unit Converter</h1>
+                    <p>Convert between different units of measurement</p>
+                </div>
+
+                <div class="tool-content">
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" onchange="updateUnits()">
+                            <option value="length">Length</option>
+                            <option value="weight">Weight</option>
+                            <option value="temperature">Temperature</option>
+                            <option value="area">Area</option>
+                            <option value="volume">Volume</option>
+                            <option value="speed">Speed</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="value">Value</label>
+                        <input type="number" id="value" placeholder="Enter value" step="any" oninput="convert()">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fromUnit">From</label>
+                        <select id="fromUnit" onchange="convert()"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="toUnit">To</label>
+                        <select id="toUnit" onchange="convert()"></select>
+                    </div>
+
+                    <div class="result-section" id="resultSection" style="display: none;">
+                        <div style="background: #fff; padding: 1.5rem; border-radius: 8px; border: 2px solid #000; text-align: center;">
+                            <h3 id="result" style="font-size: 1.5rem; margin: 0;"></h3>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn-action btn-reset" onclick="resetForm()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                        <button class="btn-action btn-download" onclick="downloadResult()">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ONLINE WEBTOOL</h3>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        const units = {
+            length: {
+                meter: 1,
+                kilometer: 0.001,
+                centimeter: 100,
+                millimeter: 1000,
+                mile: 0.000621371,
+                yard: 1.09361,
+                foot: 3.28084,
+                inch: 39.3701
+            },
+            weight: {
+                kilogram: 1,
+                gram: 1000,
+                milligram: 1000000,
+                ton: 0.001,
+                pound: 2.20462,
+                ounce: 35.274
+            },
+            temperature: {
+                celsius: 'c',
+                fahrenheit: 'f',
+                kelvin: 'k'
+            },
+            area: {
+                'square meter': 1,
+                'square kilometer': 0.000001,
+                'square mile': 3.861e-7,
+                'square yard': 1.19599,
+                'square foot': 10.7639,
+                acre: 0.000247105,
+                hectare: 0.0001
+            },
+            volume: {
+                liter: 1,
+                milliliter: 1000,
+                'cubic meter': 0.001,
+                gallon: 0.264172,
+                quart: 1.05669,
+                pint: 2.11338,
+                cup: 4.22675,
+                'fluid ounce': 33.814
+            },
+            speed: {
+                'meter/second': 1,
+                'kilometer/hour': 3.6,
+                'mile/hour': 2.23694,
+                'foot/second': 3.28084,
+                knot: 1.94384
+            }
+        };
+
+        function updateUnits() {
+            const category = document.getElementById('category').value;
+            const unitList = Object.keys(units[category]);
+            
+            const fromUnit = document.getElementById('fromUnit');
+            const toUnit = document.getElementById('toUnit');
+            
+            fromUnit.innerHTML = '';
+            toUnit.innerHTML = '';
+            
+            unitList.forEach(unit => {
+                fromUnit.innerHTML += `<option value="${unit}">${unit}</option>`;
+                toUnit.innerHTML += `<option value="${unit}">${unit}</option>`;
+            });
+            
+            if (unitList.length > 1) {
+                toUnit.selectedIndex = 1;
+            }
+            
+            convert();
+        }
+
+        function convert() {
+            const value = parseFloat(document.getElementById('value').value);
+            if (isNaN(value)) {
+                document.getElementById('resultSection').style.display = 'none';
+                return;
+            }
+
+            const category = document.getElementById('category').value;
+            const fromUnit = document.getElementById('fromUnit').value;
+            const toUnit = document.getElementById('toUnit').value;
+
+            let result;
+
+            if (category === 'temperature') {
+                result = convertTemperature(value, fromUnit, toUnit);
+            } else {
+                const fromFactor = units[category][fromUnit];
+                const toFactor = units[category][toUnit];
+                result = (value / fromFactor) * toFactor;
+            }
+
+            document.getElementById('result').textContent = 
+                `${value} ${fromUnit} = ${result.toFixed(6)} ${toUnit}`;
+            document.getElementById('resultSection').style.display = 'block';
+        }
+
+        function convertTemperature(value, from, to) {
+            let celsius;
+            
+            if (from === 'celsius') celsius = value;
+            else if (from === 'fahrenheit') celsius = (value - 32) * 5/9;
+            else celsius = value - 273.15;
+            
+            if (to === 'celsius') return celsius;
+            else if (to === 'fahrenheit') return celsius * 9/5 + 32;
+            else return celsius + 273.15;
+        }
+
+        function downloadResult() {
+            const result = document.getElementById('result').textContent;
+            if (!result) {
+                showMessage('Please perform a conversion first', 'error');
+                return;
+            }
+            downloadText('unit-conversion.txt', result);
+            showMessage('Result downloaded!', 'success');
+        }
+
+        function resetForm() {
+            document.getElementById('value').value = '';
+            document.getElementById('category').value = 'length';
+            updateUnits();
+            document.getElementById('resultSection').style.display = 'none';
+            showMessage('Form reset successfully', 'info');
+        }
+
+        // Initialize
+        updateUnits();
+    </script>
+</body>
+</html>
