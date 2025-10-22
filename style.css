@@ -296,3 +296,35 @@ input:focus, textarea:focus, select:focus {
         background-color: var(--primary-color);
     }
 }
+/* ✨ Glowing Yellow Boxes (All Tools, Inputs, Buttons) */
+.tool-card,
+textarea,
+input,
+button {
+    background-color: #000000;      /* black base for boxes */
+    color: #FFD700;                 /* bright yellow text */
+    border: 2px solid #FFD700;      /* yellow border */
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.6); /* glowing yellow effect */
+    transition: all 0.3s ease;
+}
+
+/* 🖱️ Hover effect for buttons and tool cards */
+button:hover,
+.tool-card:hover {
+    background-color: #FFD700;      /* yellow background on hover */
+    color: #000000;                 /* black text on hover */
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.9); /* stronger glow on hover */
+}
+
+/* 🧩 Optional: make links in tool cards match */
+a.tool-link {
+    color: #FFD700;
+    text-decoration: none;
+    font-weight: bold;
+}
+a.tool-link:hover {
+    text-decoration: underline;
+}
+
