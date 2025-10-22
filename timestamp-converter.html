@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timestamp Converter - ONLINE WEBTOOL</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo"><h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1></div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About Us</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+                <div class="hamburger"><span></span><span></span><span></span></div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="tool-page">
+        <div class="container">
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h1><i class="fas fa-clock"></i> Timestamp Converter</h1>
+                    <p>Convert between Unix timestamp and human-readable date</p>
+                </div>
+
+                <div class="tool-content">
+                    <div style="background: #FFFACD; padding: 1rem; border-radius: 8px; border: 2px solid #000; margin-bottom: 2rem; text-align: center;">
+                        <strong>Current Timestamp:</strong> <span id="currentTimestamp"></span><br>
+                        <small id="currentDate"></small>
+                    </div>
+
+                    <h3>Timestamp to Date</h3>
+                    <div class="form-group">
+                        <label for="timestamp">Unix Timestamp (seconds)</label>
+                        <input type="number" id="timestamp" placeholder="e.g., 1640000000">
+                    </div>
+                    <div class="button-group">
+                        <button class="btn-action btn-generate" onclick="timestampToDate()">Convert to Date</button>
+                    </div>
+                    <div id="dateResult" style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #000; margin: 1rem 0; display: none;">
+                        <strong>Result:</strong><br>
+                        <div id="dateOutput" style="margin-top: 0.5rem;"></div>
+                    </div>
+
+                    <hr style="margin: 2rem 0; border: 1px solid #000;">
+
+                    <h3>Date to Timestamp</h3>
+                    <div class="form-group">
+                        <label for="datetime">Date and Time</label>
+                        <input type="datetime-local" id="datetime">
+                    </div>
+                    <div class="button-group">
+                        <button class="btn-action btn-generate" onclick="dateToTimestamp()">Convert to Timestamp</button>
+                    </div>
+                    <div id="timestampResult" style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #000; margin: 1rem 0; display: none;">
+                        <strong>Result:</strong> <span id="timestampOutput"></span>
+                    </div>
+
+                    <div class="button-group" style="margin-top: 2rem;">
+                        <button class="btn-action btn-reset" onclick="resetForm()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                        <button class="btn-action btn-download" onclick="downloadResults()">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ONLINE WEBTOOL</h3>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        function updateCurrentTime() {
+            const now = new Date();
+            const timestamp = Math.floor(now.getTime() / 1000);
+            document.getElementById('currentTimestamp').textContent = timestamp;
+            document.getElementById('currentDate').textContent = now.toLocaleString();
+        }
+
+        function timestampToDate() {
+            const timestamp = parseInt(document.getElementById('timestamp').value);
+            if (isNaN(timestamp)) {
+                showMessage('Please enter a valid timestamp', 'error');
+                return;
+            }
+
+            const date = new Date(timestamp * 1000);
+            const output = `
+                <strong>Full Date:</strong> ${date.toLocaleString()}<br>
+                <strong>UTC:</strong> ${date.toUTCString()}<br>
+                <strong>ISO 8601:</strong> ${date.toISOString()}<br>
+                <strong>Date Only:</strong> ${date.toLocaleDateString()}<br>
+                <strong>Time Only:</strong> ${date.toLocaleTimeString()}
+            `;
+            
+            document.getElementById('dateOutput').innerHTML = output;
+            document.getElementById('dateResult').style.display = 'block';
+            showMessage('Converted successfully!', 'success');
+        }
+
+        function dateToTimestamp() {
+            const datetime = document.getElementById('datetime').value;
+            if (!datetime) {
+                showMessage('Please select a date and time', 'error');
+                return;
+            }
+
+            const date = new Date(datetime);
+            const timestamp = Math.floor(date.getTime() / 1000);
+            
+            document.getElementById('timestampOutput').textContent = timestamp + ' (seconds)';
+            document.getElementById('timestampResult').style.display = 'block';
+            showMessage('Converted successfully!', 'success');
+        }
+
+        function downloadResults() {
+            let content = 'Timestamp Conversion Results\n============================\n\n';
+            content += `Current Timestamp: ${document.getElementById('currentTimestamp').textContent}\n`;
+            content += `Current Date: ${document.getElementById('currentDate').textContent}\n\n`;
+            
+            if (document.getElementById('dateResult').style.display !== 'none') {
+                content += `Timestamp to Date:\n`;
+                content += `Input: ${document.getElementById('timestamp').value}\n`;
+                content += document.getElementById('dateOutput').textContent.replace(/<br>/g, '\n').replace(/<\/?strong>/g, '') + '\n\n';
+            }
+            
+            if (document.getElementById('timestampResult').style.display !== 'none') {
+                content += `Date to Timestamp:\n`;
+                content += `Input: ${document.getElementById('datetime').value}\n`;
+                content += `Output: ${document.getElementById('timestampOutput').textContent}\n`;
+            }
+            
+            downloadText('timestamp-conversions.txt', content);
+            showMessage('Results downloaded!', 'success');
+        }
+
+        function resetForm() {
+            document.getElementById('timestamp').value = '';
+            document.getElementById('datetime').value = '';
+            document.getElementById('dateResult').style.display = 'none';
+            document.getElementById('timestampResult').style.display = 'none';
+            showMessage('Form reset successfully', 'info');
+        }
+
+        // Update current time every second
+        updateCurrentTime();
+        setInterval(updateCurrentTime, 1000);
+    </script>
+</body>
+</html>
