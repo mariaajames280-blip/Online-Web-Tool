@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MD5 Hash Generator - ONLINE WEBTOOL</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo"><h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1></div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About Us</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+                <div class="hamburger"><span></span><span></span><span></span></div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="tool-page">
+        <div class="container">
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h1><i class="fas fa-hashtag"></i> MD5 Hash Generator</h1>
+                    <p>Generate MD5 hash from text</p>
+                </div>
+
+                <div class="tool-content">
+                    <div class="form-group">
+                        <label for="input">Enter Text</label>
+                        <textarea id="input" placeholder="Enter text to generate MD5 hash..." rows="6"></textarea>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn-action btn-generate" onclick="generateMD5()">
+                            <i class="fas fa-hashtag"></i> Generate MD5
+                        </button>
+                        <button class="btn-action btn-reset" onclick="resetForm()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="output">MD5 Hash</label>
+                        <input type="text" id="output" readonly placeholder="MD5 hash will appear here...">
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn-action btn-copy" onclick="copyHash()">
+                            <i class="fas fa-copy"></i> Copy Hash
+                        </button>
+                        <button class="btn-action btn-download" onclick="downloadHash()">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ONLINE WEBTOOL</h3>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        function generateMD5() {
+            const input = document.getElementById('input').value;
+            if (!input) {
+                showMessage('Please enter text to generate hash', 'error');
+                return;
+            }
+            const hash = CryptoJS.MD5(input).toString();
+            document.getElementById('output').value = hash;
+            showMessage('MD5 hash generated successfully!', 'success');
+        }
+
+        function copyHash() {
+            const hash = document.getElementById('output').value;
+            if (!hash) {
+                showMessage('Please generate a hash first', 'error');
+                return;
+            }
+            copyToClipboard(hash);
+        }
+
+        function downloadHash() {
+            const hash = document.getElementById('output').value;
+            if (!hash) {
+                showMessage('Please generate a hash first', 'error');
+                return;
+            }
+            downloadText('md5-hash.txt', hash);
+            showMessage('Hash downloaded successfully!', 'success');
+        }
+
+        function resetForm() {
+            document.getElementById('input').value = '';
+            document.getElementById('output').value = '';
+            showMessage('Form reset successfully', 'info');
+        }
+    </script>
+</body>
+</html>
