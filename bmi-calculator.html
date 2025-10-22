@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator - ONLINE WEBTOOL</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo"><h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1></div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About Us</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+                <div class="hamburger"><span></span><span></span><span></span></div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="tool-page">
+        <div class="container">
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h1><i class="fas fa-weight"></i> BMI Calculator</h1>
+                    <p>Calculate your Body Mass Index</p>
+                </div>
+
+                <div class="tool-content">
+                    <div class="form-group">
+                        <label for="weight">Weight (kg)</label>
+                        <input type="number" id="weight" placeholder="Enter your weight in kilograms" step="0.1" min="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="height">Height (cm)</label>
+                        <input type="number" id="height" placeholder="Enter your height in centimeters" step="0.1" min="1">
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn-action btn-generate" onclick="calculateBMI()">
+                            <i class="fas fa-calculator"></i> Calculate BMI
+                        </button>
+                        <button class="btn-action btn-reset" onclick="resetForm()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+
+                    <div class="result-section hidden" id="resultSection">
+                        <div style="width: 100%; text-align: center;">
+                            <h3>Your BMI Result:</h3>
+                            <div style="background: #fff; padding: 2rem; border-radius: 8px; border: 2px solid #000; margin: 1rem 0;">
+                                <h2 id="bmiValue" style="font-size: 3rem; margin: 0;"></h2>
+                                <p id="bmiCategory" style="font-size: 1.5rem; font-weight: bold; margin: 0.5rem 0;"></p>
+                            </div>
+                            <div style="text-align: left; background: #FFFACD; padding: 1.5rem; border-radius: 8px; border: 2px solid #000;">
+                                <h4>BMI Categories:</h4>
+                                <ul style="margin-left: 1.5rem;">
+                                    <li>Underweight: < 18.5</li>
+                                    <li>Normal weight: 18.5 - 24.9</li>
+                                    <li>Overweight: 25 - 29.9</li>
+                                    <li>Obesity: ≥ 30</li>
+                                </ul>
+                            </div>
+                            <div class="button-group" style="margin-top: 1rem;">
+                                <button class="btn-action btn-download" onclick="downloadResult()">
+                                    <i class="fas fa-download"></i> Download Result
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ONLINE WEBTOOL</h3>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        function calculateBMI() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value);
+
+            if (!weight || !height || weight <= 0 || height <= 0) {
+                showMessage('Please enter valid weight and height values', 'error');
+                return;
+            }
+
+            const bmi = weight / Math.pow(height / 100, 2);
+            const bmiRounded = bmi.toFixed(1);
+
+            let category = '';
+            let categoryColor = '';
+
+            if (bmi < 18.5) {
+                category = 'Underweight';
+                categoryColor = '#3498db';
+            } else if (bmi < 25) {
+                category = 'Normal Weight';
+                categoryColor = '#2ecc71';
+            } else if (bmi < 30) {
+                category = 'Overweight';
+                categoryColor = '#f39c12';
+            } else {
+                category = 'Obesity';
+                categoryColor = '#e74c3c';
+            }
+
+            document.getElementById('bmiValue').textContent = bmiRounded;
+            document.getElementById('bmiValue').style.color = categoryColor;
+            document.getElementById('bmiCategory').textContent = category;
+            document.getElementById('bmiCategory').style.color = categoryColor;
+            document.getElementById('resultSection').classList.remove('hidden');
+
+            showMessage('BMI calculated successfully!', 'success');
+        }
+
+        function downloadResult() {
+            const weight = document.getElementById('weight').value;
+            const height = document.getElementById('height').value;
+            const bmi = document.getElementById('bmiValue').textContent;
+            const category = document.getElementById('bmiCategory').textContent;
+
+            const content = `BMI Calculation Result
+=====================
+
+Weight: ${weight} kg
+Height: ${height} cm
+BMI: ${bmi}
+Category: ${category}
+
+Generated by ONLINE WEBTOOL`;
+
+            downloadText('bmi-result.txt', content);
+            showMessage('Result downloaded successfully!', 'success');
+        }
+
+        function resetForm() {
+            document.getElementById('weight').value = '';
+            document.getElementById('height').value = '';
+            document.getElementById('resultSection').classList.add('hidden');
+            showMessage('Form reset successfully', 'info');
+        }
+    </script>
+</body>
+</html>
