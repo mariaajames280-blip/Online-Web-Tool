@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Minifier - ONLINE WEBTOOL</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo"><h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1></div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About Us</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+                <div class="hamburger"><span></span><span></span><span></span></div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="tool-page">
+        <div class="container">
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h1><i class="fas fa-compress"></i> JSON Minifier</h1>
+                    <p>Minify JSON to reduce file size</p>
+                </div>
+
+                <div class="tool-content">
+                    <div class="form-group">
+                        <label for="input">JSON Input</label>
+                        <textarea id="input" placeholder="Enter JSON data to minify..." rows="10"></textarea>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn-action btn-generate" onclick="minify()">
+                            <i class="fas fa-compress"></i> Minify JSON
+                        </button>
+                        <button class="btn-action btn-reset" onclick="resetForm()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="output">Minified Output</label>
+                        <textarea id="output" readonly rows="10"></textarea>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn-action btn-copy" onclick="copyOutput()">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                        <button class="btn-action btn-download" onclick="downloadOutput()">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+
+                    <div id="stats" style="margin-top: 1rem; display: none;">
+                        <div style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #000;">
+                            <strong>Size Reduction:</strong> <span id="reduction"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ONLINE WEBTOOL</h3>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        function minify() {
+            const input = document.getElementById('input').value.trim();
+            if (!input) {
+                showMessage('Please enter JSON data', 'error');
+                return;
+            }
+            try {
+                const parsed = JSON.parse(input);
+                const minified = JSON.stringify(parsed);
+                document.getElementById('output').value = minified;
+                
+                const originalSize = input.length;
+                const minifiedSize = minified.length;
+                const reduction = ((1 - minifiedSize / originalSize) * 100).toFixed(2);
+                
+                document.getElementById('reduction').textContent = 
+                    `${originalSize} bytes → ${minifiedSize} bytes (${reduction}% reduction)`;
+                document.getElementById('stats').style.display = 'block';
+                
+                showMessage('JSON minified successfully!', 'success');
+            } catch (e) {
+                showMessage('Invalid JSON: ' + e.message, 'error');
+            }
+        }
+
+        function copyOutput() {
+            const output = document.getElementById('output').value;
+            if (!output) {
+                showMessage('No output to copy', 'error');
+                return;
+            }
+            copyToClipboard(output);
+        }
+
+        function downloadOutput() {
+            const output = document.getElementById('output').value;
+            if (!output) {
+                showMessage('No output to download', 'error');
+                return;
+            }
+            downloadText('minified.json', output);
+            showMessage('JSON downloaded!', 'success');
+        }
+
+        function resetForm() {
+            document.getElementById('input').value = '';
+            document.getElementById('output').value = '';
+            document.getElementById('stats').style.display = 'none';
+            showMessage('Form reset successfully', 'info');
+        }
+    </script>
+</body>
+</html>
