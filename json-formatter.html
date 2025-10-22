@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Formatter - ONLINE WEBTOOL</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo"><h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1></div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About Us</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+                <div class="hamburger"><span></span><span></span><span></span></div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="tool-page">
+        <div class="container">
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h1><i class="fas fa-expand"></i> JSON Formatter</h1>
+                    <p>Format and beautify JSON data</p>
+                </div>
+
+                <div class="tool-content">
+                    <div class="form-group">
+                        <label for="input">JSON Input</label>
+                        <textarea id="input" placeholder='Enter JSON data... e.g., {"name":"John","age":30}' rows="8"></textarea>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn-action btn-generate" onclick="formatJSON()">
+                            <i class="fas fa-expand"></i> Format JSON
+                        </button>
+                        <button class="btn-action btn-generate" onclick="minifyJSON()">
+                            <i class="fas fa-compress"></i> Minify JSON
+                        </button>
+                        <button class="btn-action btn-reset" onclick="resetForm()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="output">Formatted Output</label>
+                        <textarea id="output" readonly placeholder="Formatted JSON will appear here..." rows="8"></textarea>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn-action btn-copy" onclick="copyOutput()">
+                            <i class="fas fa-copy"></i> Copy Output
+                        </button>
+                        <button class="btn-action btn-download" onclick="downloadOutput()">
+                            <i class="fas fa-download"></i> Download JSON
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ONLINE WEBTOOL</h3>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        function formatJSON() {
+            const input = document.getElementById('input').value.trim();
+            if (!input) {
+                showMessage('Please enter JSON data', 'error');
+                return;
+            }
+            try {
+                const parsed = JSON.parse(input);
+                const formatted = JSON.stringify(parsed, null, 2);
+                document.getElementById('output').value = formatted;
+                showMessage('JSON formatted successfully!', 'success');
+            } catch (e) {
+                showMessage('Invalid JSON: ' + e.message, 'error');
+            }
+        }
+
+        function minifyJSON() {
+            const input = document.getElementById('input').value.trim();
+            if (!input) {
+                showMessage('Please enter JSON data', 'error');
+                return;
+            }
+            try {
+                const parsed = JSON.parse(input);
+                const minified = JSON.stringify(parsed);
+                document.getElementById('output').value = minified;
+                showMessage('JSON minified successfully!', 'success');
+            } catch (e) {
+                showMessage('Invalid JSON: ' + e.message, 'error');
+            }
+        }
+
+        function copyOutput() {
+            const output = document.getElementById('output').value;
+            if (!output) {
+                showMessage('No output to copy', 'error');
+                return;
+            }
+            copyToClipboard(output);
+        }
+
+        function downloadOutput() {
+            const output = document.getElementById('output').value;
+            if (!output) {
+                showMessage('No output to download', 'error');
+                return;
+            }
+            downloadText('formatted.json', output);
+            showMessage('JSON downloaded successfully!', 'success');
+        }
+
+        function resetForm() {
+            document.getElementById('input').value = '';
+            document.getElementById('output').value = '';
+            showMessage('Form reset successfully', 'info');
+        }
+    </script>
+</body>
+</html>
