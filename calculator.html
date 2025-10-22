@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator - ONLINE WEBTOOL</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .calc-display {
+            width: 100%;
+            padding: 1.5rem;
+            font-size: 2rem;
+            text-align: right;
+            background: #fff;
+            border: 2px solid #000;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-family: monospace;
+        }
+        .calc-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+        }
+        .calc-btn {
+            padding: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: #FFFACD;
+            border: 2px solid #000;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .calc-btn:hover {
+            background: #FFE55C;
+            transform: scale(1.05);
+        }
+        .calc-btn:active {
+            transform: scale(0.95);
+        }
+        .calc-btn.operator {
+            background: #FFD700;
+        }
+        .calc-btn.equals {
+            background: #4CAF50;
+            color: #fff;
+        }
+        .calc-btn.clear {
+            background: #ff6b6b;
+            color: #fff;
+        }
+        .calc-btn.wide {
+            grid-column: span 2;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo"><h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1></div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About Us</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+                <div class="hamburger"><span></span><span></span><span></span></div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="tool-page">
+        <div class="container">
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h1><i class="fas fa-calculator"></i> Scientific Calculator</h1>
+                    <p>Perform mathematical calculations</p>
+                </div>
+
+                <div class="tool-content">
+                    <input type="text" id="display" class="calc-display" readonly value="0">
+                    
+                    <div class="calc-buttons">
+                        <button class="calc-btn clear" onclick="clearDisplay()">C</button>
+                        <button class="calc-btn operator" onclick="appendToDisplay('(')">(</button>
+                        <button class="calc-btn operator" onclick="appendToDisplay(')')">)</button>
+                        <button class="calc-btn operator" onclick="appendToDisplay('/')">÷</button>
+                        
+                        <button class="calc-btn" onclick="appendToDisplay('7')">7</button>
+                        <button class="calc-btn" onclick="appendToDisplay('8')">8</button>
+                        <button class="calc-btn" onclick="appendToDisplay('9')">9</button>
+                        <button class="calc-btn operator" onclick="appendToDisplay('*')">×</button>
+                        
+                        <button class="calc-btn" onclick="appendToDisplay('4')">4</button>
+                        <button class="calc-btn" onclick="appendToDisplay('5')">5</button>
+                        <button class="calc-btn" onclick="appendToDisplay('6')">6</button>
+                        <button class="calc-btn operator" onclick="appendToDisplay('-')">-</button>
+                        
+                        <button class="calc-btn" onclick="appendToDisplay('1')">1</button>
+                        <button class="calc-btn" onclick="appendToDisplay('2')">2</button>
+                        <button class="calc-btn" onclick="appendToDisplay('3')">3</button>
+                        <button class="calc-btn operator" onclick="appendToDisplay('+')">+</button>
+                        
+                        <button class="calc-btn wide" onclick="appendToDisplay('0')">0</button>
+                        <button class="calc-btn" onclick="appendToDisplay('.')">.</button>
+                        <button class="calc-btn equals" onclick="calculate()">=</button>
+                    </div>
+
+                    <div class="button-group" style="margin-top: 1rem;">
+                        <button class="btn-action btn-reset" onclick="clearDisplay()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                        <button class="btn-action btn-download" onclick="downloadResult()">
+                            <i class="fas fa-download"></i> Download Result
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ONLINE WEBTOOL</h3>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        let displayValue = '0';
+
+        function appendToDisplay(value) {
+            if (displayValue === '0' && value !== '.') {
+                displayValue = value;
+            } else {
+                displayValue += value;
+            }
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            document.getElementById('display').value = displayValue;
+        }
+
+        function clearDisplay() {
+            displayValue = '0';
+            updateDisplay();
+            showMessage('Calculator reset', 'info');
+        }
+
+        function calculate() {
+            try {
+                const result = eval(displayValue);
+                displayValue = result.toString();
+                updateDisplay();
+                showMessage('Calculation completed', 'success');
+            } catch (e) {
+                showMessage('Invalid expression', 'error');
+                displayValue = '0';
+                updateDisplay();
+            }
+        }
+
+        function downloadResult() {
+            const result = document.getElementById('display').value;
+            downloadText('calculator-result.txt', `Result: ${result}`);
+            showMessage('Result downloaded successfully!', 'success');
+        }
+
+        // Keyboard support
+        document.addEventListener('keydown', function(e) {
+            if (e.key >= '0' && e.key <= '9' || e.key === '.' || e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
+                appendToDisplay(e.key);
+            } else if (e.key === 'Enter') {
+                calculate();
+            } else if (e.key === 'Escape' || e.key === 'c' || e.key === 'C') {
+                clearDisplay();
+            }
+        });
+    </script>
+</body>
+</html>
