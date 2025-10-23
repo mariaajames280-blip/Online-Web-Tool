@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="YouTube to MP3 Converter - Convert YouTube videos to MP3 audio files for free">
+    <title>YouTube to MP3 Converter - ONLINE WEBTOOL</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="tool-section">
+        <div class="container">
+            <div class="tool-header">
+                <h1><i class="fab fa-youtube"></i> YouTube to MP3 Converter</h1>
+                <p>Convert YouTube videos to high-quality MP3 audio files instantly</p>
+            </div>
+
+            <div class="youtube-mp3-container">
+                <div class="input-section">
+                    <div class="url-input-group">
+                        <label for="youtubeUrl">YouTube Video URL:</label>
+                        <div class="input-with-button">
+                            <input type="text" id="youtubeUrl" placeholder="Paste YouTube video URL here (e.g., https://www.youtube.com/watch?v=VIDEO_ID)" autocomplete="off">
+                            <button id="pasteBtn" class="btn-small" title="Paste from clipboard">
+                                <i class="fas fa-paste"></i> Paste
+                            </button>
+                        </div>
+                        <div class="input-info">
+                            <span id="urlStatus">Enter a valid YouTube URL</span>
+                            <button id="clearUrl" class="btn-small">
+                                <i class="fas fa-eraser"></i> Clear
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="video-preview" id="videoPreview" style="display: none;">
+                        <h4><i class="fas fa-play-circle"></i> Video Preview</h4>
+                        <div class="preview-content">
+                            <div class="thumbnail-container">
+                                <img id="videoThumbnail" src="" alt="Video thumbnail">
+                                <div class="play-overlay">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                            <div class="video-details">
+                                <h5 id="videoTitle">Video Title</h5>
+                                <div class="video-meta">
+                                    <span><i class="fas fa-clock"></i> <span id="videoDuration">0:00</span></span>
+                                    <span><i class="fas fa-calendar"></i> <span id="videoDate">Unknown</span></span>
+                                    <span><i class="fas fa-eye"></i> <span id="videoViews">0</span></span>
+                                </div>
+                                <div class="video-quality">
+                                    <span>Available Quality:</span>
+                                    <span id="videoQuality">128kbps MP3</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="conversion-options">
+                    <h3><i class="fas fa-sliders-h"></i> Conversion Settings</h3>
+                    <div class="options-grid">
+                        <div class="option-group">
+                            <label for="audioQuality">Audio Quality:</label>
+                            <select id="audioQuality">
+                                <option value="128">128 kbps (Good Quality)</option>
+                                <option value="192" selected>192 kbps (High Quality)</option>
+                                <option value="256">256 kbps (Very High Quality)</option>
+                                <option value="320">320 kbps (Best Quality)</option>
+                            </select>
+                        </div>
+                        <div class="option-group">
+                            <label for="outputFormat">Output Format:</label>
+                            <select id="outputFormat">
+                                <option value="mp3" selected>MP3 (Recommended)</option>
+                                <option value="m4a">M4A (Apple Devices)</option>
+                                <option value="wav">WAV (Lossless)</option>
+                            </select>
+                        </div>
+                        <div class="option-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="addMetadata" checked>
+                                <span class="checkmark"></span>
+                                Add ID3 tags (Title, Artist)
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="normalizeAudio">
+                                <span class="checkmark"></span>
+                                Normalize audio volume
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-section">
+                    <button id="convertBtn" class="btn-primary" disabled>
+                        <i class="fas fa-download"></i> Convert to MP3
+                    </button>
+                    <button id="sampleBtn" class="btn-secondary">
+                        <i class="fas fa-music"></i> Try Sample Video
+                    </button>
+                </div>
+
+                <div class="conversion-progress" id="conversionProgress" style="display: none;">
+                    <h3><i class="fas fa-spinner fa-spin"></i> Converting to MP3...</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span id="progressText">Processing your video...</span>
+                        <span id="progressPercent">0%</span>
+                    </div>
+                    <div class="progress-details">
+                        <div class="detail-item">
+                            <span>Estimated time:</span>
+                            <span id="estimatedTime">30 seconds</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>File size:</span>
+                            <span id="estimatedSize">~3.5 MB</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-section" id="resultSection" style="display: none;">
+                    <h3><i class="fas fa-check-circle"></i> Conversion Complete!</h3>
+                    <div class="result-content">
+                        <div class="success-message">
+                            <div class="success-icon">
+                                <i class="fas fa-file-audio"></i>
+                            </div>
+                            <div class="success-details">
+                                <h4>Your MP3 is ready!</h4>
+                                <p>File: <span id="resultFileName">audio.mp3</span></p>
+                                <p>Size: <span id="resultFileSize">0 MB</span></p>
+                                <p>Quality: <span id="resultQuality">192 kbps</span></p>
+                                <p>Conversion time: <span id="conversionTime">0 seconds</span></p>
+                            </div>
+                        </div>
+                        <div class="download-actions">
+                            <button id="downloadBtn" class="btn-primary">
+                                <i class="fas fa-download"></i> Download MP3
+                            </button>
+                            <button id="convertAnother" class="btn-secondary">
+                                <i class="fas fa-redo"></i> Convert Another
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Fast Conversion</h4>
+                    <p>Convert videos to MP3 in seconds</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-music"></i>
+                    <h4>High Quality</h4>
+                    <p>Up to 320 kbps audio quality</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>Safe & Secure</h4>
+                    <p>No downloads required</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-infinity"></i>
+                    <h4>Unlimited Use</h4>
+                    <p>Convert as many videos as you want</p>
+                </div>
+            </div>
+
+            <div class="info-sections">
+                <div class="info-grid">
+                    <div class="info-card">
+                        <i class="fas fa-question-circle"></i>
+                        <h4>How to Use</h4>
+                        <p>1. Copy YouTube video URL<br>2. Paste it above<br>3. Choose quality settings<br>4. Click convert and download</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h4>Important Notice</h4>
+                        <p>Only convert videos you have permission to use. Respect copyright laws and content creators.</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h4>Mobile Friendly</h4>
+                        <p>Works on all devices - desktop, tablet, and mobile phones.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ONLINE WEBTOOL</h3>
+                    <p>Your one-stop destination for free online tools</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="qr-generator.html">QR Code Generator</a></li>
+                        <li><a href="url-shortener.html">URL Shortener</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Popular Tools</h4>
+                    <ul>
+                        <li><a href="youtube-mp3.html">YouTube to MP3 Converter</a></li>
+                        <li><a href="youtube-thumbnail.html">YouTube Thumbnail Downloader</a></li>
+                        <li><a href="pdf-to-word.html">PDF to Word Converter</a></li>
+                        <li><a href="image-to-base64.html">Image to Base64</a></li>
+                        <li><a href="keyword-density.html">Keyword Density Checker</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="social-icons">
+                        <a href="https://facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="https://twitter.com" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://youtube.com" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://github.com" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="youtube-mp3.js"></script>
+</body>
+</html>
