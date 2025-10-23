@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Grammar Checker - Check grammar, spelling, and punctuation errors for free">
+    <title>Grammar Checker - ONLINE WEBTOOL</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="tool-section">
+        <div class="container">
+            <div class="tool-header">
+                <h1><i class="fas fa-spell-check"></i> Grammar Checker</h1>
+                <p>Check grammar, spelling, punctuation, and improve your writing instantly</p>
+            </div>
+
+            <div class="grammar-checker-container">
+                <div class="input-section">
+                    <div class="input-group">
+                        <label for="textInput">Enter your text to check:</label>
+                        <textarea id="textInput" placeholder="Type or paste your text here to check for grammar and spelling errors..." rows="12"></textarea>
+                        <div class="input-info">
+                            <span id="wordCount">0 words</span>
+                            <span id="charCount">0 characters</span>
+                            <span id="sentenceCount">0 sentences</span>
+                            <button id="clearText" class="btn-small">
+                                <i class="fas fa-eraser"></i> Clear
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="writing-stats">
+                        <h4><i class="fas fa-chart-bar"></i> Writing Statistics</h4>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value" id="readabilityScore">100</div>
+                                <div class="stat-label">Readability</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="gradeLevel">-</div>
+                                <div class="stat-label">Grade Level</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="avgSentenceLength">0</div>
+                                <div class="stat-label">Avg. Sentence</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="passiveVoice">0%</div>
+                                <div class="stat-label">Passive Voice</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="check-options">
+                    <h4><i class="fas fa-cog"></i> Check Options</h4>
+                    <div class="options-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="checkSpelling" checked>
+                            <span class="checkmark"></span>
+                            Check spelling
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="checkGrammar" checked>
+                            <span class="checkmark"></span>
+                            Check grammar
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="checkPunctuation" checked>
+                            <span class="checkmark"></span>
+                            Check punctuation
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="checkStyle">
+                            <span class="checkmark"></span>
+                            Check writing style
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="suggestSynonyms">
+                            <span class="checkmark"></span>
+                            Suggest synonyms
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="formalTone">
+                            <span class="checkmark"></span>
+                            Formal tone
+                        </label>
+                    </div>
+                </div>
+
+                <div class="action-section">
+                    <button id="checkBtn" class="btn-primary">
+                        <i class="fas fa-search"></i> Check Grammar
+                    </button>
+                    <button id="sampleBtn" class="btn-secondary">
+                        <i class="fas fa-file-alt"></i> Try Sample Text
+                    </button>
+                    <button id="autoFixBtn" class="btn-secondary" disabled>
+                        <i class="fas fa-magic"></i> Auto Fix All
+                    </button>
+                </div>
+
+                <div class="results-section" id="resultsSection" style="display: none;">
+                    <h3><i class="fas fa-chart-pie"></i> Grammar Report</h3>
+                    
+                    <div class="results-overview">
+                        <div class="score-summary">
+                            <div class="score-card">
+                                <div class="score-icon">
+                                    <i class="fas fa-bug"></i>
+                                </div>
+                                <div class="score-content">
+                                    <div class="score-value" id="errorCount">0</div>
+                                    <div class="score-label">Issues Found</div>
+                                </div>
+                            </div>
+                            <div class="score-card">
+                                <div class="score-icon">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="score-content">
+                                    <div class="score-value" id="qualityScore">100%</div>
+                                    <div class="score-label">Writing Quality</div>
+                                </div>
+                            </div>
+                            <div class="score-card">
+                                <div class="score-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="score-content">
+                                    <div class="score-value" id="readingTime">0m</div>
+                                    <div class="score-label">Reading Time</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="errors-breakdown">
+                            <h4>Issues Breakdown</h4>
+                            <div class="breakdown-grid">
+                                <div class="breakdown-item spelling">
+                                    <span class="error-type">Spelling</span>
+                                    <span class="error-count" id="spellingErrors">0</span>
+                                </div>
+                                <div class="breakdown-item grammar">
+                                    <span class="error-type">Grammar</span>
+                                    <span class="error-count" id="grammarErrors">0</span>
+                                </div>
+                                <div class="breakdown-item punctuation">
+                                    <span class="error-type">Punctuation</span>
+                                    <span class="error-count" id="punctuationErrors">0</span>
+                                </div>
+                                <div class="breakdown-item style">
+                                    <span class="error-type">Style</span>
+                                    <span class="error-count" id="styleErrors">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detailed-errors">
+                        <h4><i class="fas fa-exclamation-circle"></i> Detailed Issues</h4>
+                        <div class="errors-list" id="errorsList">
+                            <!-- Errors will be listed here -->
+                        </div>
+                    </div>
+
+                    <div class="suggestions">
+                        <h4><i class="fas fa-lightbulb"></i> Writing Suggestions</h4>
+                        <div class="suggestions-list" id="suggestionsList">
+                            <p class="no-suggestions">No suggestions available. Check your text to get writing tips.</p>
+                        </div>
+                    </div>
+
+                    <div class="corrected-text" id="correctedTextSection" style="display: none;">
+                        <h4><i class="fas fa-check-circle"></i> Corrected Text</h4>
+                        <div class="corrected-content">
+                            <div class="text-preview" id="correctedText">
+                                <!-- Corrected text will appear here -->
+                            </div>
+                            <div class="correction-actions">
+                                <button id="copyCorrected" class="btn-small">
+                                    <i class="fas fa-copy"></i> Copy Corrected Text
+                                </button>
+                                <button id="replaceOriginal" class="btn-small">
+                                    <i class="fas fa-sync-alt"></i> Replace Original
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checking-progress" id="checkingProgress" style="display: none;">
+                    <h3><i class="fas fa-spinner fa-spin"></i> Checking Grammar...</h3>
+                    <div class="progress-steps">
+                        <div class="progress-step active">
+                            <i class="fas fa-check"></i>
+                            <span>Text Analysis</span>
+                        </div>
+                        <div class="progress-step">
+                            <i class="fas fa-spinner"></i>
+                            <span>Spelling Check</span>
+                        </div>
+                        <div class="progress-step">
+                            <i class="fas fa-spinner"></i>
+                            <span>Grammar Check</span>
+                        </div>
+                        <div class="progress-step">
+                            <i class="fas fa-spinner"></i>
+                            <span>Style Analysis</span>
+                        </div>
+                    </div>
+                    <div class="progress-text">
+                        <span id="progressText">Analyzing your text structure...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Instant Check</h4>
+                    <p>Get grammar suggestions in seconds</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h4>Advanced AI</h4>
+                    <p>Smart grammar and style analysis</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>100% Private</h4>
+                    <p>Your text is never stored</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h4>Any Device</h4>
+                    <p>Works on all platforms</p>
+                </div>
+            </div>
+
+            <div class="info-sections">
+                <div class="info-grid">
+                    <div class="info-card">
+                        <i class="fas fa-question-circle"></i>
+                        <h4>Common Grammar Mistakes</h4>
+                        <p>Watch for subject-verb agreement, tense consistency, pronoun usage, and proper punctuation placement.</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-tips"></i>
+                        <h4>Writing Tips</h4>
+                        <p>Use active voice, vary sentence length, avoid repetition, and proofread carefully before finalizing.</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-rocket"></i>
+                        <h4>Improve Writing</h4>
+                        <p>Read regularly, practice writing daily, get feedback, and use tools like this to identify areas for improvement.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ONLINE WEBTOOL</h3>
+                    <p>Your one-stop destination for free online tools</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="qr-generator.html">QR Code Generator</a></li>
+                        <li><a href="url-shortener.html">URL Shortener</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Popular Tools</h4>
+                    <ul>
+                        <li><a href="grammar-checker.html">Grammar Checker</a></li>
+                        <li><a href="plagiarism-checker.html">Plagiarism Checker</a></li>
+                        <li><a href="youtube-mp3.html">YouTube to MP3 Converter</a></li>
+                        <li><a href="pdf-to-word.html">PDF to Word Converter</a></li>
+                        <li><a href="keyword-density.html">Keyword Density Checker</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="social-icons">
+                        <a href="https://facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="https://twitter.com" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://youtube.com" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://github.com" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="grammar-checker.js"></script>
+</body>
+</html>
