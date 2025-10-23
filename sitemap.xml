@@ -1,147 +1,227 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/</loc>
-    <lastmod>2024-01-01</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://onlinewebtool.live/</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/about.html</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://onlinewebtool.live/about.html</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/contact.html</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://onlinewebtool.live/contact.html</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/tools/qr-generator.html</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://onlinewebtool.live/privacy.html</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://onlinewebtool.live/blog.html</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Tools Pages -->
+  <url>
+    <loc>https://onlinewebtool.live/qr-generator.html</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/tools/url-shortener.html</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://onlinewebtool.live/url-shortener.html</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/tools/password-generator.html</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://onlinewebtool.live/text-case-converter.html</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://onlinewebtool.live/base64-converter.html</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://onlinewebtool.live/md5-generator.html</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://onlinewebtool.live/word-counter.html</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://onlinewebtool.live/password-generator.html</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://onlinewebtool.live/html-encoder.html</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/tools/word-counter.html</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://onlinewebtool.live/json-minifier.html</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/tools/base64-converter.html</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://onlinewebtool.live/json-formatter.html</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://onlinewebtool.live/image-to-base64.html</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://onlinewebtool.live/color-picker.html</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://onlinewebtool.live/unit-converter.html</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://onlinewebtool.live/currency-converter.html</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://onlinewebtool.live/timestamp-converter.html</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/tools/text-case-converter.html</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://onlinewebtool.live/percentage-calculator.html</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/tools/calculator.html</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://onlinewebtool.live/lorem-ipsum.html</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/tools/color-picker.html</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://onlinewebtool.live/password-strength.html</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://onlinewebtool.live/url-encoder.html</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/tools/md5-generator.html</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://onlinewebtool.live/calculator.html</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/tools/json-formatter.html</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://onlinewebtool.live/age-calculator.html</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://onlinewebtool.live/bmi-calculator.html</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://onlinewebtool.live/barcode-generator.html</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/tools/json-minifier.html</loc>
-    <lastmod>2024-01-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/tools/lorem-ipsum.html</loc>
-    <lastmod>2024-01-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/tools/bmi-calculator.html</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://onlinewebtool.live/random-number.html</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/tools/url-encoder.html</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://onlinewebtool.live/language-translator.html</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/tools/html-encoder.html</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://onlinewebtool.live/keyword-density.html</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/tools/random-number.html</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://onlinewebtool.live/youtube-thumbnail.html</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/tools/age-calculator.html</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://onlinewebtool.live/pdf-to-word.html</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/tools/percentage-calculator.html</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://onlinewebtool.live/youtube-mp3.html</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/tools/unit-converter.html</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://onlinewebtool.live/plagiarism-checker.html</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/tools/timestamp-converter.html</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://onlinewebtool.live/grammar-checker.html</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://[your-username].github.io/[your-repo-name]/tools/barcode-generator.html</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://onlinewebtool.live/website-speed-checker.html</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.9</priority>
   </url>
 </urlset>
