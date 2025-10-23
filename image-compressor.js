@@ -45,9 +45,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let compressedBlob = null;
     let originalImageData = null;
 
-    // Sample image URL (a free stock photo)
-    const sampleImageUrl = 'https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80';
-
     // Initialize
     updateQualityValue();
 
@@ -123,19 +120,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Copy compressed image
-    copyCompressed.addEventListener('click', async function() {
+    // Copy compressed image (simplified - just show message)
+    copyCompressed.addEventListener('click', function() {
         if (compressedBlob) {
-            try {
-                await navigator.clipboard.write([
-                    new ClipboardItem({
-                        [compressedBlob.type]: compressedBlob
-                    })
-                ]);
-                showNotification('Compressed image copied to clipboard!');
-            } catch (err) {
-                showNotification('Failed to copy image to clipboard');
-            }
+            showNotification('Copy feature would work in a real implementation');
         }
     });
 
@@ -144,6 +132,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function handleImageFile(file) {
+        console.log('File selected:', file);
+        
         // Check if file is an image
         if (!file.type.match('image.*')) {
             showNotification('Please select a valid image file!');
@@ -165,8 +155,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // Load image to get dimensions
         const reader = new FileReader();
         reader.onload = function(e) {
+            console.log('File loaded successfully');
             const img = new Image();
             img.onload = function() {
+                console.log('Image dimensions:', img.width, 'x', img.height);
                 fileDimensions.textContent = `${img.width} × ${img.height}`;
                 originalImageData = {
                     width: img.width,
@@ -181,33 +173,62 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Enable download original button
                 downloadOriginal.disabled = false;
+                
+                // Show file info and enable compress button
+                fileInfo.style.display = 'flex';
+                compressBtn.disabled = false;
+
+                showNotification('Image loaded successfully!');
+            };
+            img.onerror = function() {
+                console.error('Failed to load image');
+                showNotification('Error loading image. Please try another file.');
             };
             img.src = e.target.result;
         };
+        reader.onerror = function() {
+            console.error('FileReader error');
+            showNotification('Error reading file. Please try again.');
+        };
         reader.readAsDataURL(file);
-
-        // Show file info and enable compress button
-        fileInfo.style.display = 'flex';
-        compressBtn.disabled = false;
-
-        showNotification('Image loaded successfully!');
     }
 
     function loadSampleImage() {
         showNotification('Loading sample image...');
         
-        // Create a fake file object for the sample image
-        fetch(sampleImageUrl)
-            .then(response => response.blob())
-            .then(blob => {
-                const file = new File([blob], 'sample-image.jpg', { type: 'image/jpeg' });
-                handleImageFile(file);
-                showNotification('Sample image loaded!');
-            })
-            .catch(error => {
-                showNotification('Failed to load sample image');
-                console.error('Error loading sample image:', error);
-            });
+        // Create a simple sample image using canvas
+        createSampleImage();
+    }
+
+    function createSampleImage() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 800;
+        canvas.height = 600;
+        const ctx = canvas.getContext('2d');
+        
+        // Create a gradient background
+        const gradient = ctx.createLinearGradient(0, 0, 800, 600);
+        gradient.addColorStop(0, '#ff6b6b');
+        gradient.addColorStop(0.5, '#4ecdc4');
+        gradient.addColorStop(1, '#45b7d1');
+        
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 800, 600);
+        
+        // Add some text
+        ctx.fillStyle = 'white';
+        ctx.font = 'bold 40px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('Sample Image', 400, 250);
+        ctx.font = '20px Arial';
+        ctx.fillText('For Compression Testing', 400, 300);
+        
+        // Convert to blob and create file
+        canvas.toBlob(function(blob) {
+            const file = new File([blob], 'sample-image.jpg', { type: 'image/jpeg' });
+            handleImageFile(file);
+            showNotification('Sample image loaded!');
+        }, 'image/jpeg', 0.9);
     }
 
     function compressImage() {
@@ -215,6 +236,8 @@ document.addEventListener('DOMContentLoaded', function() {
             showNotification('Please select an image first!');
             return;
         }
+
+        console.log('Starting compression...');
 
         // Show loading state
         compressBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Compressing...';
@@ -225,21 +248,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const maxWidthValue = parseInt(maxWidth.value) || 0;
         const format = outputFormat.value;
 
-        // Simulate compression process
-        setTimeout(() => {
-            try {
-                performCompression(quality, maxWidthValue, format);
-                
-                compressBtn.innerHTML = '<i class="fas fa-compress-alt"></i> Compress Image';
-                compressBtn.disabled = false;
-                
-                showNotification('Image compressed successfully!');
-            } catch (error) {
-                showNotification('Error compressing image. Please try again.');
-                compressBtn.innerHTML = '<i class="fas fa-compress-alt"></i> Compress Image';
-                compressBtn.disabled = false;
-            }
-        }, 1000);
+        // Perform compression
+        performCompression(quality, maxWidthValue, format);
     }
 
     function performCompression(quality, maxWidth, format) {
@@ -248,6 +258,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const img = new Image();
 
         img.onload = function() {
+            console.log('Compressing image...');
+            
             // Calculate new dimensions
             let newWidth = img.width;
             let newHeight = img.height;
@@ -256,6 +268,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 newWidth = maxWidth;
                 newHeight = (img.height * maxWidth) / img.width;
             }
+
+            console.log('New dimensions:', newWidth, 'x', newHeight);
 
             // Set canvas dimensions
             canvas.width = newWidth;
@@ -271,31 +285,46 @@ document.addEventListener('DOMContentLoaded', function() {
             switch (format) {
                 case 'png':
                     mimeType = 'image/png';
-                    qualityValue = undefined; // PNG doesn't use quality parameter
+                    qualityValue = undefined;
                     break;
                 case 'webp':
                     mimeType = 'image/webp';
                     break;
                 case 'jpeg':
-                default:
                     mimeType = 'image/jpeg';
                     break;
+                case 'same':
+                default:
+                    mimeType = originalFile.type || 'image/jpeg';
+                    break;
             }
+
+            console.log('Output format:', mimeType, 'Quality:', qualityValue);
 
             // Convert canvas to blob
             canvas.toBlob(function(blob) {
                 if (!blob) {
+                    console.error('Blob creation failed');
                     showNotification('Compression failed. Please try again.');
+                    resetCompressButton();
                     return;
                 }
 
+                console.log('Compression successful. Blob size:', blob.size);
                 compressedBlob = blob;
 
                 // Create object URL for compressed image
                 const compressedUrl = URL.createObjectURL(blob);
 
                 // Update compressed image display
+                compressedImage.onload = function() {
+                    console.log('Compressed image loaded into DOM');
+                };
+                compressedImage.onerror = function() {
+                    console.error('Failed to load compressed image');
+                };
                 compressedImage.src = compressedUrl;
+                
                 compressedDimensions.textContent = `${newWidth} × ${newHeight}`;
                 compressedSize.textContent = formatFileSize(blob.size);
 
@@ -303,6 +332,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const originalSizeBytes = originalFile.size;
                 const compressedSizeBytes = blob.size;
                 const reduction = ((originalSizeBytes - compressedSizeBytes) / originalSizeBytes) * 100;
+                
+                console.log('Size reduction:', reduction.toFixed(1) + '%');
                 
                 sizeReduction.textContent = `${reduction.toFixed(1)}% smaller`;
                 savingsPercent.textContent = `${reduction.toFixed(1)}%`;
@@ -316,6 +347,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Show comparison section
                 comparisonSection.style.display = 'block';
 
+                // Reset button
+                resetCompressButton();
+
+                showNotification('Image compressed successfully!');
+
                 // Scroll to comparison section
                 comparisonSection.scrollIntoView({ behavior: 'smooth' });
 
@@ -323,7 +359,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
         };
 
+        img.onerror = function() {
+            console.error('Failed to load image for compression');
+            showNotification('Error compressing image. Please try again.');
+            resetCompressButton();
+        };
+
         img.src = originalImageData.src;
+    }
+
+    function resetCompressButton() {
+        compressBtn.innerHTML = '<i class="fas fa-compress-alt"></i> Compress Image';
+        compressBtn.disabled = false;
     }
 
     function downloadFile(file, filename) {
@@ -335,6 +382,7 @@ document.addEventListener('DOMContentLoaded', function() {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
+        showNotification('Download started!');
     }
 
     function downloadBlob(blob, filename) {
@@ -346,6 +394,7 @@ document.addEventListener('DOMContentLoaded', function() {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
+        showNotification('Compressed image downloaded!');
     }
 
     function getFileExtension(format) {
@@ -353,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function() {
             case 'jpeg': return 'jpg';
             case 'png': return 'png';
             case 'webp': return 'webp';
-            default: return 'jpg';
+            default: return originalFile.name.split('.').pop() || 'jpg';
         }
     }
 
@@ -376,6 +425,10 @@ document.addEventListener('DOMContentLoaded', function() {
         maxWidth.value = 1920;
         outputFormat.value = 'same';
         updateQualityValue();
+        
+        // Clear images
+        originalImage.src = '';
+        compressedImage.src = '';
     }
 
     function formatFileSize(bytes) {
@@ -387,6 +440,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function showNotification(message) {
+        // Remove existing notifications
+        const existingNotifications = document.querySelectorAll('.notification');
+        existingNotifications.forEach(notif => notif.remove());
+        
         const notification = document.createElement('div');
         notification.className = 'notification';
         notification.textContent = message;
