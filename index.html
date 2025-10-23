@@ -56,6 +56,8 @@
             background-color: #0a0a0a;
             color: #ffffff;
             line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
         }
         
         .container {
@@ -64,12 +66,106 @@
             padding: 0 20px;
         }
         
-        /* Header Styles - FIXED */
+        /* Floating Bubbles Animation */
+        .bubbles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .bubbles span {
+            position: absolute;
+            display: block;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: animateBubbles 15s linear infinite;
+            bottom: -100px;
+        }
+        
+        .bubbles span:nth-child(1) {
+            left: 10%;
+            animation-delay: 0s;
+            animation-duration: 15s;
+        }
+        
+        .bubbles span:nth-child(2) {
+            left: 20%;
+            animation-delay: 2s;
+            animation-duration: 18s;
+        }
+        
+        .bubbles span:nth-child(3) {
+            left: 30%;
+            animation-delay: 4s;
+            animation-duration: 12s;
+        }
+        
+        .bubbles span:nth-child(4) {
+            left: 40%;
+            animation-delay: 6s;
+            animation-duration: 20s;
+        }
+        
+        .bubbles span:nth-child(5) {
+            left: 50%;
+            animation-delay: 8s;
+            animation-duration: 16s;
+        }
+        
+        .bubbles span:nth-child(6) {
+            left: 60%;
+            animation-delay: 10s;
+            animation-duration: 14s;
+        }
+        
+        .bubbles span:nth-child(7) {
+            left: 70%;
+            animation-delay: 12s;
+            animation-duration: 19s;
+        }
+        
+        .bubbles span:nth-child(8) {
+            left: 80%;
+            animation-delay: 14s;
+            animation-duration: 17s;
+        }
+        
+        .bubbles span:nth-child(9) {
+            left: 90%;
+            animation-delay: 16s;
+            animation-duration: 13s;
+        }
+        
+        .bubbles span:nth-child(10) {
+            left: 95%;
+            animation-delay: 18s;
+            animation-duration: 11s;
+        }
+        
+        @keyframes animateBubbles {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-1000px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Header Styles */
         header {
             background: #111111;
             border-bottom: 1px solid #333;
             padding: 15px 0;
             position: relative;
+            z-index: 1000;
         }
         
         nav {
@@ -136,38 +232,56 @@
             color: #666;
         }
         
-        .weather-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            color: #cccccc;
+        /* Live Clock Styles */
+        .live-clock {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 8px 15px;
+            color: #ffcc00;
+            font-weight: 600;
             font-size: 0.9rem;
-            white-space: nowrap;
+            min-width: 180px;
+            text-align: center;
+        }
+        
+        .clock-time {
+            font-size: 1.1rem;
+            margin-bottom: 2px;
+        }
+        
+        .clock-date {
+            font-size: 0.8rem;
+            color: #cccccc;
         }
         
         /* Hero Section */
         .hero {
             background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
-            padding: 60px 0;
+            padding: 80px 0 60px;
             text-align: center;
+            position: relative;
         }
         
         .hero h1 {
             font-size: 3rem;
             margin-bottom: 20px;
             color: #ffcc00;
+            animation: fadeInUp 1s ease-out;
         }
         
         .hero p {
             font-size: 1.2rem;
             color: #cccccc;
             margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out 0.2s both;
         }
         
         .hero-buttons {
             display: flex;
             gap: 15px;
             justify-content: center;
+            animation: fadeInUp 1s ease-out 0.4s both;
         }
         
         .btn {
@@ -188,6 +302,7 @@
         .btn-primary:hover {
             background: #e6b800;
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 204, 0, 0.3);
         }
         
         .btn-secondary {
@@ -199,11 +314,13 @@
         .btn-secondary:hover {
             background: #ffcc00;
             color: #000;
+            transform: translateY(-2px);
         }
         
-        /* Tools Section - FIXED */
+        /* Tools Section - IMPROVED */
         .tools-section {
-            padding: 60px 0;
+            padding: 40px 0 60px;
+            position: relative;
         }
         
         .section-title {
@@ -211,6 +328,7 @@
             font-size: 2.5rem;
             margin-bottom: 40px;
             color: #ffcc00;
+            animation: fadeInUp 0.8s ease-out;
         }
         
         .tools-grid {
@@ -222,39 +340,49 @@
         
         .tool-card {
             background: #1a1a1a;
-            border-radius: 10px;
-            padding: 25px;
+            border-radius: 12px;
+            padding: 25px 20px;
             text-align: center;
             border: 1px solid #333;
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
             height: 100%;
-            min-height: 220px;
+            min-height: 200px;
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
         }
         
         .tool-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
             border-color: #ffcc00;
-            box-shadow: 0 10px 20px rgba(255, 204, 0, 0.1);
+            box-shadow: 0 10px 25px rgba(255, 204, 0, 0.15);
         }
         
         .tool-card i {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             color: #ffcc00;
             margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+        
+        .tool-card:hover i {
+            transform: scale(1.1);
         }
         
         .tool-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
+            font-size: 1.3rem;
+            margin-bottom: 12px;
             color: #ffffff;
+            line-height: 1.3;
         }
         
         .tool-card p {
             color: #cccccc;
             margin-bottom: 20px;
             flex-grow: 1;
+            font-size: 0.95rem;
+            line-height: 1.4;
         }
         
         .tool-link {
@@ -263,15 +391,17 @@
             background: #ffcc00;
             color: #000;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 6px;
             font-weight: 600;
             transition: all 0.3s;
             margin-top: auto;
+            font-size: 0.9rem;
         }
         
         .tool-link:hover {
             background: #e6b800;
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 204, 0, 0.3);
         }
         
         /* Footer */
@@ -279,6 +409,7 @@
             background: #111111;
             padding: 40px 0 20px;
             border-top: 1px solid #333;
+            position: relative;
         }
         
         .footer-content {
@@ -343,28 +474,49 @@
             color: #666;
         }
         
-        /* Live Clock Styles */
-        .live-clock {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 8px 15px;
-            color: #ffcc00;
-            font-weight: 600;
-            font-size: 0.9rem;
-            min-width: 180px;
-            text-align: center;
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        .clock-time {
-            font-size: 1.1rem;
-            margin-bottom: 2px;
-        }
-        
-        .clock-date {
-            font-size: 0.8rem;
-            color: #cccccc;
-        }
+        /* Stagger animation for tool cards */
+        .tool-card:nth-child(1) { animation-delay: 0.1s; }
+        .tool-card:nth-child(2) { animation-delay: 0.2s; }
+        .tool-card:nth-child(3) { animation-delay: 0.3s; }
+        .tool-card:nth-child(4) { animation-delay: 0.4s; }
+        .tool-card:nth-child(5) { animation-delay: 0.5s; }
+        .tool-card:nth-child(6) { animation-delay: 0.6s; }
+        .tool-card:nth-child(7) { animation-delay: 0.7s; }
+        .tool-card:nth-child(8) { animation-delay: 0.8s; }
+        .tool-card:nth-child(9) { animation-delay: 0.9s; }
+        .tool-card:nth-child(10) { animation-delay: 1.0s; }
+        .tool-card:nth-child(11) { animation-delay: 1.1s; }
+        .tool-card:nth-child(12) { animation-delay: 1.2s; }
+        .tool-card:nth-child(13) { animation-delay: 1.3s; }
+        .tool-card:nth-child(14) { animation-delay: 1.4s; }
+        .tool-card:nth-child(15) { animation-delay: 1.5s; }
+        .tool-card:nth-child(16) { animation-delay: 1.6s; }
+        .tool-card:nth-child(17) { animation-delay: 1.7s; }
+        .tool-card:nth-child(18) { animation-delay: 1.8s; }
+        .tool-card:nth-child(19) { animation-delay: 1.9s; }
+        .tool-card:nth-child(20) { animation-delay: 2.0s; }
+        .tool-card:nth-child(21) { animation-delay: 2.1s; }
+        .tool-card:nth-child(22) { animation-delay: 2.2s; }
+        .tool-card:nth-child(23) { animation-delay: 2.3s; }
+        .tool-card:nth-child(24) { animation-delay: 2.4s; }
+        .tool-card:nth-child(25) { animation-delay: 2.5s; }
+        .tool-card:nth-child(26) { animation-delay: 2.6s; }
+        .tool-card:nth-child(27) { animation-delay: 2.7s; }
+        .tool-card:nth-child(28) { animation-delay: 2.8s; }
+        .tool-card:nth-child(29) { animation-delay: 2.9s; }
+        .tool-card:nth-child(30) { animation-delay: 3.0s; }
         
         /* Responsive Design */
         @media (max-width: 1024px) {
@@ -408,6 +560,11 @@
             .tools-grid {
                 grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
             }
+            
+            .tool-card {
+                min-height: 180px;
+                padding: 20px 15px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -419,14 +576,40 @@
                 font-size: 1.8rem;
             }
             
+            .section-title {
+                font-size: 2rem;
+            }
+            
             .tool-card {
-                min-height: 200px;
-                padding: 20px;
+                min-height: 160px;
+                padding: 15px 12px;
+            }
+            
+            .tool-card h3 {
+                font-size: 1.2rem;
+            }
+            
+            .tool-card p {
+                font-size: 0.9rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Floating Bubbles -->
+    <div class="bubbles">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
     <header>
         <div class="container">
             <nav>
@@ -472,7 +655,7 @@
         </div>
     </section>
 
-    <!-- Tools Section - FIXED -->
+    <!-- Tools Section - ALL 40+ TOOLS INCLUDED -->
     <section id="tools" class="tools-section">
         <div class="container">
             <h2 class="section-title">Our Tools</h2>
@@ -651,57 +834,128 @@
                 <div class="tool-card">
                     <i class="fas fa-language"></i>
                     <h3>Language Translator</h3>
-                    <p>Translate text between multiple languages</p>
+                    <p>Translate text between languages</p>
                     <a href="language-translator.html" class="tool-link">Open Tool</a>
                 </div>
 
                 <div class="tool-card">
                     <i class="fas fa-chart-bar"></i>
                     <h3>Keyword Density Checker</h3>
-                    <p>Analyze keyword frequency for SEO optimization</p>
+                    <p>Analyze keyword frequency for SEO</p>
                     <a href="keyword-density.html" class="tool-link">Open Tool</a>
                 </div>
 
                 <div class="tool-card">
                     <i class="fab fa-youtube"></i>
                     <h3>YouTube Thumbnail Downloader</h3>
-                    <p>Download HD thumbnails from YouTube videos</p>
+                    <p>Download HD thumbnails from YouTube</p>
                     <a href="youtube-thumbnail.html" class="tool-link">Open Tool</a>
                 </div>
 
                 <div class="tool-card">
                     <i class="fas fa-file-pdf"></i>
                     <h3>PDF to Word Converter</h3>
-                    <p>Convert PDF documents to editable Word files</p>
+                    <p>Convert PDF to editable Word files</p>
                     <a href="pdf-to-word.html" class="tool-link">Open Tool</a>
                 </div>
 
                 <div class="tool-card">
                     <i class="fab fa-youtube"></i>
                     <h3>YouTube to MP3 Converter</h3>
-                    <p>Convert YouTube videos to MP3 audio files</p>
+                    <p>Convert YouTube videos to MP3</p>
                     <a href="youtube-mp3.html" class="tool-link">Open Tool</a>
                 </div>
 
                 <div class="tool-card">
                     <i class="fas fa-search"></i>
                     <h3>Plagiarism Checker</h3>
-                    <p>Detect duplicate content and check for plagiarism</p>
+                    <p>Detect duplicate content</p>
                     <a href="plagiarism-checker.html" class="tool-link">Open Tool</a>
                 </div>
 
                 <div class="tool-card">
                     <i class="fas fa-spell-check"></i>
                     <h3>Grammar Checker</h3>
-                    <p>Check grammar, spelling, and punctuation errors</p>
+                    <p>Check grammar and spelling errors</p>
                     <a href="grammar-checker.html" class="tool-link">Open Tool</a>
                 </div>
 
                 <div class="tool-card">
                     <i class="fas fa-tachometer-alt"></i>
                     <h3>Website Speed Checker</h3>
-                    <p>Test your website's loading speed and get optimization recommendations</p>
+                    <p>Test website loading speed</p>
                     <a href="website-speed-checker.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <!-- Additional Tools -->
+                <div class="tool-card">
+                    <i class="fas fa-image"></i>
+                    <h3>Image Compressor</h3>
+                    <p>Compress images without quality loss</p>
+                    <a href="image-compressor.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-file-video"></i>
+                    <h3>Video Converter</h3>
+                    <p>Convert video formats online</p>
+                    <a href="video-converter.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-music"></i>
+                    <h3>Audio Converter</h3>
+                    <p>Convert audio file formats</p>
+                    <a href="audio-converter.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-ruler"></i>
+                    <h3>Image Resizer</h3>
+                    <p>Resize images to exact dimensions</p>
+                    <a href="image-resizer.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-crop"></i>
+                    <h3>Image Cropper</h3>
+                    <p>Crop images to desired size</p>
+                    <a href="image-cropper.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-font"></i>
+                    <h3>Font Generator</h3>
+                    <p>Create custom font styles</p>
+                    <a href="font-generator.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-palette"></i>
+                    <h3>Color Palette Generator</h3>
+                    <p>Generate beautiful color palettes</p>
+                    <a href="color-palette.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-code-branch"></i>
+                    <h3>XML Formatter</h3>
+                    <p>Format and beautify XML code</p>
+                    <a href="xml-formatter.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-database"></i>
+                    <h3>SQL Formatter</h3>
+                    <p>Format SQL queries</p>
+                    <a href="sql-formatter.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-terminal"></i>
+                    <h3>Code Minifier</h3>
+                    <p>Minify CSS, JS, and HTML code</p>
+                    <a href="code-minifier.html" class="tool-link">Open Tool</a>
                 </div>
             </div>
         </div>
