@@ -3,74 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="URL Encoder & Decoder - Encode and decode URLs online for free">
     <title>URL Encoder/Decoder - ONLINE WEBTOOL</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <header>
         <div class="container">
             <nav>
-                <div class="logo"><h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1></div>
+                <div class="logo">
+                    <h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1>
+                </div>
                 <ul class="nav-menu">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../about.html">About Us</a></li>
-                    <li><a href="../contact.html">Contact</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="blog.html">Blog</a></li>
                 </ul>
-                <div class="hamburger"><span></span><span></span><span></span></div>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </nav>
         </div>
     </header>
 
-    <div class="tool-page">
+    <section class="tool-section">
         <div class="container">
-            <div class="tool-container">
-                <div class="tool-header">
-                    <h1><i class="fas fa-lock"></i> URL Encoder/Decoder</h1>
-                    <p>Encode and decode URL strings</p>
+            <div class="tool-header">
+                <h1><i class="fas fa-lock"></i> URL Encoder/Decoder</h1>
+                <p>Encode URLs for safe transmission or decode encoded URLs instantly</p>
+            </div>
+
+            <div class="url-encoder-container">
+                <div class="input-section">
+                    <div class="mode-selector">
+                        <button class="mode-btn active" data-mode="encode">
+                            <i class="fas fa-lock"></i> Encode URL
+                        </button>
+                        <button class="mode-btn" data-mode="decode">
+                            <i class="fas fa-unlock"></i> Decode URL
+                        </button>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="urlInput">Enter URL to process:</label>
+                        <textarea id="urlInput" placeholder="Paste your URL here..." rows="4"></textarea>
+                        <div class="input-info">
+                            <span id="charCount">0 characters</span>
+                            <button id="clearInput" class="btn-small">
+                                <i class="fas fa-eraser"></i> Clear
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="tool-content">
-                    <div class="form-group">
-                        <label for="input">Input Text/URL</label>
-                        <textarea id="input" placeholder="Enter text or URL to encode/decode..." rows="6"></textarea>
-                    </div>
+                <div class="action-section">
+                    <button id="processBtn" class="btn-primary">
+                        <i class="fas fa-cogs"></i> Process URL
+                    </button>
+                    <button id="swapBtn" class="btn-secondary" title="Switch between Encode/Decode">
+                        <i class="fas fa-exchange-alt"></i> Swap Mode
+                    </button>
+                </div>
 
-                    <div class="button-group">
-                        <button class="btn-action btn-generate" onclick="encode()">
-                            <i class="fas fa-arrow-right"></i> Encode URL
-                        </button>
-                        <button class="btn-action btn-generate" onclick="decode()">
-                            <i class="fas fa-arrow-left"></i> Decode URL
-                        </button>
-                        <button class="btn-action btn-reset" onclick="resetForm()">
-                            <i class="fas fa-redo"></i> Reset
-                        </button>
+                <div class="output-section">
+                    <div class="output-group">
+                        <label for="urlOutput">Processed URL:</label>
+                        <textarea id="urlOutput" placeholder="Encoded or decoded URL will appear here..." rows="4" readonly></textarea>
+                        <div class="output-actions">
+                            <button id="copyOutput" class="btn-small" disabled>
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                            <button id="testUrl" class="btn-small" disabled>
+                                <i class="fas fa-external-link-alt"></i> Test URL
+                            </button>
+                        </div>
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label for="output">Output</label>
-                        <textarea id="output" placeholder="Result will appear here..." rows="6" readonly></textarea>
+                <div class="examples-section">
+                    <h3><i class="fas fa-lightbulb"></i> Examples & Usage</h3>
+                    <div class="examples-grid">
+                        <div class="example-card">
+                            <h4>Encoding Example</h4>
+                            <p><strong>Original:</strong> https://example.com/page?name=John Doe&age=25</p>
+                            <p><strong>Encoded:</strong> https://example.com/page?name=John%20Doe&age=25</p>
+                        </div>
+                        <div class="example-card">
+                            <h4>Decoding Example</h4>
+                            <p><strong>Encoded:</strong> https://example.com/search?q=hello%20world%26results%3D10</p>
+                            <p><strong>Decoded:</strong> https://example.com/search?q=hello world&results=10</p>
+                        </div>
                     </div>
+                </div>
 
-                    <div class="button-group">
-                        <button class="btn-action btn-copy" onclick="copyOutput()">
-                            <i class="fas fa-copy"></i> Copy Output
-                        </button>
-                        <button class="btn-action btn-download" onclick="downloadOutput()">
-                            <i class="fas fa-download"></i> Download
-                        </button>
+                <div class="info-section">
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <i class="fas fa-info-circle"></i>
+                            <h4>What is URL Encoding?</h4>
+                            <p>URL encoding converts special characters into a format that can be safely transmitted over the internet using percent-encoding (%XX).</p>
+                        </div>
+                        <div class="info-card">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <h4>When to Encode?</h4>
+                            <p>Encode URLs when they contain spaces, special characters, or non-ASCII characters to ensure proper transmission.</p>
+                        </div>
+                        <div class="info-card">
+                            <i class="fas fa-check-circle"></i>
+                            <h4>When to Decode?</h4>
+                            <p>Decode URLs when you receive encoded URLs and need to read the original content or parameters.</p>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Instant Processing</h4>
+                    <p>Encode or decode URLs in real-time</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>Secure & Private</h4>
+                    <p>All processing happens locally in your browser</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-exchange-alt"></i>
+                    <h4>Two-Way Conversion</h4>
+                    <p>Easy encode/decode with mode switching</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-clipboard-check"></i>
+                    <h4>One-Click Copy</h4>
+                    <p>Copy processed URLs with a single click</p>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>ONLINE WEBTOOL</h3>
+                    <p>Your one-stop destination for free online tools</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="qr-generator.html">QR Code Generator</a></li>
+                        <li><a href="url-shortener.html">URL Shortener</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Popular Tools</h4>
+                    <ul>
+                        <li><a href="password-generator.html">Password Generator</a></li>
+                        <li><a href="base64-converter.html">Base64 Converter</a></li>
+                        <li><a href="url-encoder.html">URL Encoder/Decoder</a></li>
+                        <li><a href="word-counter.html">Word Counter</a></li>
+                        <li><a href="language-translator.html">Language Translator</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="social-icons">
+                        <a href="https://facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="https://twitter.com" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://youtube.com" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://github.com" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -79,62 +192,6 @@
         </div>
     </footer>
 
-    <script src="../js/main.js"></script>
-    <script>
-        function encode() {
-            const input = document.getElementById('input').value;
-            if (!input) {
-                showMessage('Please enter text to encode', 'error');
-                return;
-            }
-            try {
-                const encoded = encodeURIComponent(input);
-                document.getElementById('output').value = encoded;
-                showMessage('URL encoded successfully!', 'success');
-            } catch (e) {
-                showMessage('Error encoding URL', 'error');
-            }
-        }
-
-        function decode() {
-            const input = document.getElementById('input').value;
-            if (!input) {
-                showMessage('Please enter URL to decode', 'error');
-                return;
-            }
-            try {
-                const decoded = decodeURIComponent(input);
-                document.getElementById('output').value = decoded;
-                showMessage('URL decoded successfully!', 'success');
-            } catch (e) {
-                showMessage('Error decoding URL', 'error');
-            }
-        }
-
-        function copyOutput() {
-            const output = document.getElementById('output').value;
-            if (!output) {
-                showMessage('No output to copy', 'error');
-                return;
-            }
-            copyToClipboard(output);
-        }
-
-        function downloadOutput() {
-            const output = document.getElementById('output').value;
-            if (!output) {
-                showMessage('No output to download', 'error');
-                return;
-            }
-            downloadText('url-output.txt', output);
-            showMessage('Output downloaded successfully!', 'success');
-        }
-
-        function resetForm() {
-            document.getElementById('input').value = '';
-            document.getElementById('output').value = '';
-            showMessage('Form reset successfully', 'info');
-        }
-    </script>
+    <script src="url-encoder.js"></script>
 </body>
 </html>
