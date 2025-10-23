@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Plagiarism Checker - Detect duplicate content and check for plagiarism for free">
+    <title>Plagiarism Checker - ONLINE WEBTOOL</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="tool-section">
+        <div class="container">
+            <div class="tool-header">
+                <h1><i class="fas fa-search"></i> Plagiarism Checker</h1>
+                <p>Detect duplicate content and check for plagiarism in your text</p>
+            </div>
+
+            <div class="plagiarism-checker-container">
+                <div class="input-section">
+                    <div class="input-group">
+                        <label for="textInput">Enter text to check for plagiarism:</label>
+                        <textarea id="textInput" placeholder="Paste your text here to check for duplicate content..." rows="10"></textarea>
+                        <div class="input-info">
+                            <span id="wordCount">0 words</span>
+                            <span id="charCount">0 characters</span>
+                            <button id="clearText" class="btn-small">
+                                <i class="fas fa-eraser"></i> Clear
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="check-options">
+                        <h4><i class="fas fa-cog"></i> Check Options</h4>
+                        <div class="options-grid">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="deepSearch" checked>
+                                <span class="checkmark"></span>
+                                Deep web search
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="academicCheck">
+                                <span class="checkmark"></span>
+                                Academic databases
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="excludeQuotes">
+                                <span class="checkmark"></span>
+                                Exclude quotations
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="checkParaphrasing">
+                                <span class="checkmark"></span>
+                                Check paraphrasing
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-section">
+                    <button id="checkBtn" class="btn-primary">
+                        <i class="fas fa-search"></i> Check for Plagiarism
+                    </button>
+                    <button id="sampleBtn" class="btn-secondary">
+                        <i class="fas fa-file-alt"></i> Try Sample Text
+                    </button>
+                </div>
+
+                <div class="results-section" id="resultsSection" style="display: none;">
+                    <h3><i class="fas fa-chart-bar"></i> Plagiarism Report</h3>
+                    
+                    <div class="results-overview">
+                        <div class="plagiarism-score">
+                            <div class="score-circle">
+                                <div class="score-value" id="plagiarismScore">0%</div>
+                                <div class="score-label">Plagiarism Detected</div>
+                            </div>
+                            <div class="score-breakdown">
+                                <div class="breakdown-item">
+                                    <span class="label">Original Content:</span>
+                                    <span class="value" id="originalPercent">100%</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="label">Plagiarized Content:</span>
+                                    <span class="value" id="plagiarizedPercent">0%</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="label">Similarity Score:</span>
+                                    <span class="value" id="similarityScore">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detailed-results">
+                        <h4><i class="fas fa-list"></i> Detailed Analysis</h4>
+                        <div class="results-grid">
+                            <div class="result-card">
+                                <div class="result-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="result-content">
+                                    <h5>Unique Content</h5>
+                                    <p id="uniqueContent">100% of your text appears to be original</p>
+                                </div>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-icon">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="result-content">
+                                    <h5>Potential Issues</h5>
+                                    <p id="potentialIssues">No significant plagiarism detected</p>
+                                </div>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-icon">
+                                    <i class="fas fa-globe"></i>
+                                </div>
+                                <div class="result-content">
+                                    <h5>Web Sources Checked</h5>
+                                    <p id="sourcesChecked">0 online sources scanned</p>
+                                </div>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="result-content">
+                                    <h5>Processing Time</h5>
+                                    <p id="processingTime">0 seconds</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="similar-sources" id="similarSources" style="display: none;">
+                        <h4><i class="fas fa-link"></i> Similar Sources Found</h4>
+                        <div class="sources-list" id="sourcesList">
+                            <!-- Similar sources will be listed here -->
+                        </div>
+                    </div>
+
+                    <div class="recommendations">
+                        <h4><i class="fas fa-lightbulb"></i> Recommendations</h4>
+                        <div class="recommendations-list" id="recommendationsList">
+                            <p class="no-issues">Your content appears to be original. No recommendations needed.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checking-progress" id="checkingProgress" style="display: none;">
+                    <h3><i class="fas fa-spinner fa-spin"></i> Checking for Plagiarism...</h3>
+                    <div class="progress-steps">
+                        <div class="progress-step active">
+                            <i class="fas fa-check"></i>
+                            <span>Text Analysis</span>
+                        </div>
+                        <div class="progress-step">
+                            <i class="fas fa-spinner"></i>
+                            <span>Web Search</span>
+                        </div>
+                        <div class="progress-step">
+                            <i class="fas fa-spinner"></i>
+                            <span>Database Check</span>
+                        </div>
+                        <div class="progress-step">
+                            <i class="fas fa-spinner"></i>
+                            <span>Generating Report</span>
+                        </div>
+                    </div>
+                    <div class="progress-text">
+                        <span id="progressText">Analyzing your text structure...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>100% Private</h4>
+                    <p>Your text is never stored or shared</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Fast Results</h4>
+                    <p>Get plagiarism report in seconds</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-search"></i>
+                    <h4>Deep Analysis</h4>
+                    <p>Comprehensive web and database search</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h4>Academic Ready</h4>
+                    <p>Perfect for students and researchers</p>
+                </div>
+            </div>
+
+            <div class="info-sections">
+                <div class="info-grid">
+                    <div class="info-card">
+                        <i class="fas fa-question-circle"></i>
+                        <h4>What is Plagiarism?</h4>
+                        <p>Plagiarism is using someone else's work without proper attribution. It includes copying text, ideas, or creative work without permission or credit.</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h4>Why Check for Plagiarism?</h4>
+                        <p>Plagiarism can lead to academic penalties, legal issues, and damage to your reputation. Always ensure your work is original.</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>Best Practices</h4>
+                        <p>Always cite sources, use quotation marks for direct quotes, and paraphrase properly while maintaining the original meaning.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ONLINE WEBTOOL</h3>
+                    <p>Your one-stop destination for free online tools</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="qr-generator.html">QR Code Generator</a></li>
+                        <li><a href="url-shortener.html">URL Shortener</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Popular Tools</h4>
+                    <ul>
+                        <li><a href="plagiarism-checker.html">Plagiarism Checker</a></li>
+                        <li><a href="youtube-mp3.html">YouTube to MP3 Converter</a></li>
+                        <li><a href="pdf-to-word.html">PDF to Word Converter</a></li>
+                        <li><a href="keyword-density.html">Keyword Density Checker</a></li>
+                        <li><a href="language-translator.html">Language Translator</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="social-icons">
+                        <a href="https://facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="https://twitter.com" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://youtube.com" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://github.com" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="plagiarism-checker.js"></script>
+</body>
+</html>
