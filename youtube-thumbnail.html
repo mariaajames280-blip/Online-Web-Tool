@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="YouTube Thumbnail Downloader - Download HD thumbnails from any YouTube video">
+    <title>YouTube Thumbnail Downloader - ONLINE WEBTOOL</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="tool-section">
+        <div class="container">
+            <div class="tool-header">
+                <h1><i class="fab fa-youtube"></i> YouTube Thumbnail Downloader</h1>
+                <p>Download high-quality thumbnails from any YouTube video in multiple resolutions</p>
+            </div>
+
+            <div class="youtube-thumbnail-container">
+                <div class="input-section">
+                    <div class="url-input-group">
+                        <label for="youtubeUrl">YouTube Video URL:</label>
+                        <div class="input-with-button">
+                            <input type="text" id="youtubeUrl" placeholder="Paste YouTube video URL here (e.g., https://www.youtube.com/watch?v=VIDEO_ID)" autocomplete="off">
+                            <button id="pasteBtn" class="btn-small" title="Paste from clipboard">
+                                <i class="fas fa-paste"></i> Paste
+                            </button>
+                        </div>
+                        <div class="input-info">
+                            <span id="urlStatus">Enter a valid YouTube URL</span>
+                            <button id="clearUrl" class="btn-small">
+                                <i class="fas fa-eraser"></i> Clear
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="video-info" id="videoInfo" style="display: none;">
+                        <h4><i class="fas fa-info-circle"></i> Video Information</h4>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span>Video ID:</span>
+                                <span id="videoId">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span>Title:</span>
+                                <span id="videoTitle">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span>Channel:</span>
+                                <span id="videoChannel">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-section">
+                    <button id="fetchBtn" class="btn-primary" disabled>
+                        <i class="fas fa-download"></i> Fetch Thumbnails
+                    </button>
+                    <button id="sampleBtn" class="btn-secondary">
+                        <i class="fas fa-play-circle"></i> Try Sample Video
+                    </button>
+                </div>
+
+                <div class="thumbnails-section" id="thumbnailsSection" style="display: none;">
+                    <h3><i class="fas fa-images"></i> Available Thumbnails</h3>
+                    <p class="section-description">Click on any thumbnail to download it in full quality</p>
+                    
+                    <div class="thumbnails-grid" id="thumbnailsGrid">
+                        <!-- Thumbnails will be generated here -->
+                    </div>
+                </div>
+
+                <div class="quality-info">
+                    <h3><i class="fas fa-star"></i> Thumbnail Qualities Available</h3>
+                    <div class="quality-grid">
+                        <div class="quality-card">
+                            <div class="quality-badge max">MAX</div>
+                            <h4>Max Resolution</h4>
+                            <p>1280×720 pixels</p>
+                            <span class="quality-code">maxresdefault.jpg</span>
+                        </div>
+                        <div class="quality-card">
+                            <div class="quality-badge high">HD</div>
+                            <h4>High Quality</h4>
+                            <p>640×480 pixels</p>
+                            <span class="quality-code">sddefault.jpg</span>
+                        </div>
+                        <div class="quality-card">
+                            <div class="quality-badge medium">SD</div>
+                            <h4>Standard Quality</h4>
+                            <p>480×360 pixels</p>
+                            <span class="quality-code">hqdefault.jpg</span>
+                        </div>
+                        <div class="quality-card">
+                            <div class="quality-badge low">MQ</div>
+                            <h4>Medium Quality</h4>
+                            <p>320×180 pixels</p>
+                            <span class="quality-code">mqdefault.jpg</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="instructions-section">
+                    <h3><i class="fas fa-graduation-cap"></i> How to Use</h3>
+                    <div class="steps-grid">
+                        <div class="step-card">
+                            <div class="step-number">1</div>
+                            <h4>Copy YouTube URL</h4>
+                            <p>Go to YouTube and copy the video URL from your browser's address bar</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">2</div>
+                            <h4>Paste URL</h4>
+                            <p>Paste the YouTube URL in the input field above</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">3</div>
+                            <h4>Fetch Thumbnails</h4>
+                            <p>Click "Fetch Thumbnails" to generate all available thumbnail sizes</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">4</div>
+                            <h4>Download</h4>
+                            <p>Click on any thumbnail to download it in full quality</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-hd"></i>
+                    <h4>HD Quality</h4>
+                    <p>Download thumbnails in maximum available resolution</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Instant Download</h4>
+                    <p>Get thumbnails instantly without registration</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>100% Safe</h4>
+                    <p>No downloads required, works directly in browser</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h4>Mobile Friendly</h4>
+                    <p>Works perfectly on all devices and browsers</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ONLINE WEBTOOL</h3>
+                    <p>Your one-stop destination for free online tools</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="qr-generator.html">QR Code Generator</a></li>
+                        <li><a href="url-shortener.html">URL Shortener</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Popular Tools</h4>
+                    <ul>
+                        <li><a href="youtube-thumbnail.html">YouTube Thumbnail Downloader</a></li>
+                        <li><a href="password-generator.html">Password Generator</a></li>
+                        <li><a href="image-to-base64.html">Image to Base64</a></li>
+                        <li><a href="keyword-density.html">Keyword Density Checker</a></li>
+                        <li><a href="language-translator.html">Language Translator</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="social-icons">
+                        <a href="https://facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="https://twitter.com" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://youtube.com" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://github.com" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="youtube-thumbnail.js"></script>
+</body>
+</html>
