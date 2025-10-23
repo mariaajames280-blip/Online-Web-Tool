@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Disallow: /tmp/
+Disallow: /cgi-bin/
+Crawl-delay: 2
+
+# Sitemap
+Sitemap: https://onlinewebtool.live/sitemap.xml
