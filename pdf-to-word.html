@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PDF to Word Converter - Convert PDF documents to editable Word files online for free">
+    <title>PDF to Word Converter - ONLINE WEBTOOL</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="tool-section">
+        <div class="container">
+            <div class="tool-header">
+                <h1><i class="fas fa-file-pdf"></i> PDF to Word Converter</h1>
+                <p>Convert PDF documents to editable Word files instantly - Preserves formatting and layout</p>
+            </div>
+
+            <div class="pdf-converter-container">
+                <div class="upload-section">
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">
+                            <i class="fas fa-file-pdf"></i>
+                            <i class="fas fa-arrow-right"></i>
+                            <i class="fas fa-file-word"></i>
+                        </div>
+                        <h3>Drop your PDF file here or click to browse</h3>
+                        <p>Supports: PDF files (Max: 25MB)</p>
+                        <input type="file" id="pdfInput" accept=".pdf" hidden>
+                        <button class="btn-primary" onclick="document.getElementById('pdfInput').click()">
+                            <i class="fas fa-folder-open"></i> Choose PDF File
+                        </button>
+                        <div class="file-requirements">
+                            <h4>File Requirements:</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> Maximum file size: 25MB</li>
+                                <li><i class="fas fa-check"></i> Supported format: PDF</li>
+                                <li><i class="fas fa-check"></i> Text-based PDFs work best</li>
+                                <li><i class="fas fa-check"></i> Scanned PDFs may have limited accuracy</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="file-preview" id="filePreview" style="display: none;">
+                        <h4><i class="fas fa-eye"></i> File Preview</h4>
+                        <div class="preview-content">
+                            <div class="file-info">
+                                <div class="file-icon">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-details">
+                                    <div class="file-name" id="fileName">document.pdf</div>
+                                    <div class="file-size" id="fileSize">0 KB</div>
+                                    <div class="file-status" id="fileStatus">Ready for conversion</div>
+                                </div>
+                            </div>
+                            <div class="preview-actions">
+                                <button id="removeFile" class="btn-small">
+                                    <i class="fas fa-times"></i> Remove
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="conversion-options">
+                    <h3><i class="fas fa-cog"></i> Conversion Options</h3>
+                    <div class="options-grid">
+                        <div class="option-group">
+                            <label for="outputFormat">Output Format:</label>
+                            <select id="outputFormat">
+                                <option value="docx">DOCX (Microsoft Word)</option>
+                                <option value="doc">DOC (Word 97-2003)</option>
+                                <option value="rtf">RTF (Rich Text Format)</option>
+                            </select>
+                        </div>
+                        <div class="option-group">
+                            <label for="quality">Conversion Quality:</label>
+                            <select id="quality">
+                                <option value="high">High (Best quality)</option>
+                                <option value="medium" selected>Medium (Balanced)</option>
+                                <option value="fast">Fast (Quick conversion)</option>
+                            </select>
+                        </div>
+                        <div class="option-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="preserveLayout" checked>
+                                <span class="checkmark"></span>
+                                Preserve layout and formatting
+                            </label>
+                        </div>
+                        <div class="option-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="extractImages">
+                                <span class="checkmark"></span>
+                                Extract and include images
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-section">
+                    <button id="convertBtn" class="btn-primary" disabled>
+                        <i class="fas fa-sync-alt"></i> Convert to Word
+                    </button>
+                    <button id="clearAll" class="btn-secondary">
+                        <i class="fas fa-eraser"></i> Clear All
+                    </button>
+                </div>
+
+                <div class="result-section" id="resultSection" style="display: none;">
+                    <h3><i class="fas fa-check-circle"></i> Conversion Complete!</h3>
+                    <div class="result-content">
+                        <div class="result-success">
+                            <div class="success-icon">
+                                <i class="fas fa-file-word"></i>
+                            </div>
+                            <div class="success-details">
+                                <h4>Your PDF has been converted successfully!</h4>
+                                <p>File: <span id="resultFileName">document.docx</span></p>
+                                <p>Size: <span id="resultFileSize">0 KB</span></p>
+                                <p>Conversion time: <span id="conversionTime">0 seconds</span></p>
+                            </div>
+                        </div>
+                        <div class="download-actions">
+                            <button id="downloadBtn" class="btn-primary">
+                                <i class="fas fa-download"></i> Download Word Document
+                            </button>
+                            <button id="convertAnother" class="btn-secondary">
+                                <i class="fas fa-redo"></i> Convert Another File
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="conversion-progress" id="conversionProgress" style="display: none;">
+                    <h3><i class="fas fa-spinner fa-spin"></i> Converting PDF to Word...</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span id="progressText">Processing your document...</span>
+                        <span id="progressPercent">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>100% Secure</h4>
+                    <p>Files are processed locally in your browser</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Fast Conversion</h4>
+                    <p>Convert PDF to Word in seconds</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-edit"></i>
+                    <h4>Editable Output</h4>
+                    <p>Get fully editable Word documents</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h4>High Quality</h4>
+                    <p>Preserves formatting and layout</p>
+                </div>
+            </div>
+
+            <div class="info-sections">
+                <div class="info-grid">
+                    <div class="info-card">
+                        <i class="fas fa-question-circle"></i>
+                        <h4>Why Convert PDF to Word?</h4>
+                        <p>Convert PDF to Word to edit text, modify content, reuse information, or update documents while maintaining the original formatting.</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-lightbulb"></i>
+                        <h4>Best Practices</h4>
+                        <p>Use text-based PDFs for best results. Scanned documents may require OCR technology for accurate text extraction.</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h4>Mobile Friendly</h4>
+                        <p>Works perfectly on all devices - desktop, tablet, and mobile phones. No installation required.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ONLINE WEBTOOL</h3>
+                    <p>Your one-stop destination for free online tools</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="qr-generator.html">QR Code Generator</a></li>
+                        <li><a href="url-shortener.html">URL Shortener</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Popular Tools</h4>
+                    <ul>
+                        <li><a href="pdf-to-word.html">PDF to Word Converter</a></li>
+                        <li><a href="youtube-thumbnail.html">YouTube Thumbnail Downloader</a></li>
+                        <li><a href="image-to-base64.html">Image to Base64</a></li>
+                        <li><a href="password-generator.html">Password Generator</a></li>
+                        <li><a href="keyword-density.html">Keyword Density Checker</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="social-icons">
+                        <a href="https://facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="https://twitter.com" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://youtube.com" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://github.com" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="pdf-to-word.js"></script>
+</body>
+</html>
