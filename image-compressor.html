@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Image Compressor - Compress images and reduce file size while maintaining quality">
+    <title>Image Compressor - ONLINE WEBTOOL</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="tool-section">
+        <div class="container">
+            <div class="tool-header">
+                <h1><i class="fas fa-compress-alt"></i> Image Compressor</h1>
+                <p>Reduce image file size without losing quality - Compare original vs compressed side by side</p>
+            </div>
+
+            <div class="image-compressor-container">
+                <div class="upload-section">
+                    <div class="upload-area" id="uploadArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>Drop your image here or click to browse</h3>
+                        <p>Supports: JPG, PNG, WebP, GIF (Max: 10MB)</p>
+                        <input type="file" id="imageInput" accept="image/*" hidden>
+                        <button class="btn-primary" onclick="document.getElementById('imageInput').click()">
+                            <i class="fas fa-folder-open"></i> Choose Image
+                        </button>
+                    </div>
+
+                    <div class="file-info" id="fileInfo" style="display: none;">
+                        <div class="file-details">
+                            <div class="file-icon">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <div class="file-meta">
+                                <div class="file-name" id="fileName">image.jpg</div>
+                                <div class="file-size" id="fileSize">0 KB</div>
+                                <div class="file-dimensions" id="fileDimensions">0×0</div>
+                            </div>
+                        </div>
+                        <button id="removeFile" class="btn-small">
+                            <i class="fas fa-times"></i> Remove
+                        </button>
+                    </div>
+                </div>
+
+                <div class="compression-options">
+                    <h3><i class="fas fa-sliders-h"></i> Compression Settings</h3>
+                    <div class="options-grid">
+                        <div class="option-group">
+                            <label for="quality">Compression Quality:</label>
+                            <div class="slider-container">
+                                <input type="range" id="quality" min="10" max="100" value="80">
+                                <div class="slider-labels">
+                                    <span>Smaller File</span>
+                                    <span id="qualityValue">80%</span>
+                                    <span>Better Quality</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option-group">
+                            <label for="maxWidth">Max Width (pixels):</label>
+                            <input type="number" id="maxWidth" min="100" max="4000" value="1920" placeholder="1920">
+                            <span class="option-hint">Set 0 to keep original width</span>
+                        </div>
+                        <div class="option-group">
+                            <label for="outputFormat">Output Format:</label>
+                            <select id="outputFormat">
+                                <option value="same">Same as original</option>
+                                <option value="jpeg">JPEG (Best for photos)</option>
+                                <option value="png">PNG (Best for graphics)</option>
+                                <option value="webp">WebP (Modern format)</option>
+                            </select>
+                        </div>
+                        <div class="option-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="preserveMetadata" checked>
+                                <span class="checkmark"></span>
+                                Preserve EXIF data
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="optimizeForWeb">
+                                <span class="checkmark"></span>
+                                Optimize for web
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-section">
+                    <button id="compressBtn" class="btn-primary" disabled>
+                        <i class="fas fa-compress-alt"></i> Compress Image
+                    </button>
+                    <button id="sampleBtn" class="btn-secondary">
+                        <i class="fas fa-image"></i> Try Sample Image
+                    </button>
+                </div>
+
+                <div class="comparison-section" id="comparisonSection" style="display: none;">
+                    <h3><i class="fas fa-balance-scale"></i> Comparison Results</h3>
+                    
+                    <div class="images-comparison">
+                        <div class="image-card original">
+                            <div class="image-header">
+                                <h4>Original Image</h4>
+                                <div class="image-stats">
+                                    <span class="size" id="originalSize">0 KB</span>
+                                    <span class="dimensions" id="originalDimensions">0×0</span>
+                                </div>
+                            </div>
+                            <div class="image-container">
+                                <img id="originalImage" src="" alt="Original image">
+                            </div>
+                            <div class="image-actions">
+                                <button id="downloadOriginal" class="btn-small" disabled>
+                                    <i class="fas fa-download"></i> Download
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="comparison-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                            <div class="savings-badge" id="savingsBadge">
+                                Save <span id="savingsPercent">0%</span>
+                            </div>
+                        </div>
+
+                        <div class="image-card compressed">
+                            <div class="image-header">
+                                <h4>Compressed Image</h4>
+                                <div class="image-stats">
+                                    <span class="size" id="compressedSize">0 KB</span>
+                                    <span class="dimensions" id="compressedDimensions">0×0</span>
+                                    <span class="reduction" id="sizeReduction">0% smaller</span>
+                                </div>
+                            </div>
+                            <div class="image-container">
+                                <img id="compressedImage" src="" alt="Compressed image">
+                            </div>
+                            <div class="image-actions">
+                                <button id="downloadCompressed" class="btn-small">
+                                    <i class="fas fa-download"></i> Download
+                                </button>
+                                <button id="copyCompressed" class="btn-small">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="compression-stats">
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value" id="fileSizeReduction">0%</div>
+                                <div class="stat-label">Size Reduction</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="qualityScore">100%</div>
+                                <div class="stat-label">Quality Score</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="compressionRatio">1:1</div>
+                                <div class="stat-label">Compression Ratio</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="estimatedSavings">0 KB</div>
+                                <div class="stat-label">Estimated Savings</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tips-section">
+                    <h3><i class="fas fa-lightbulb"></i> Compression Tips</h3>
+                    <div class="tips-grid">
+                        <div class="tip-card">
+                            <i class="fas fa-camera"></i>
+                            <h4>For Photos</h4>
+                            <p>Use JPEG format with 70-80% quality for best results</p>
+                        </div>
+                        <div class="tip-card">
+                            <i class="fas fa-palette"></i>
+                            <h4>For Graphics</h4>
+                            <p>PNG works better for images with transparency</p>
+                        </div>
+                        <div class="tip-card">
+                            <i class="fas fa-globe"></i>
+                            <h4>For Web</h4>
+                            <p>WebP format offers superior compression</p>
+                        </div>
+                        <div class="tip-card">
+                            <i class="fas fa-mobile-alt"></i>
+                            <h4>For Mobile</h4>
+                            <p>Resize images to match display requirements</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-eye"></i>
+                    <h4>Visual Comparison</h4>
+                    <p>See original vs compressed side by side</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h4>Smart Compression</h4>
+                    <p>Advanced algorithms maintain quality</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Fast Processing</h4>
+                    <p>Compress images in seconds</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>Privacy First</h4>
+                    <p>All processing happens in your browser</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ONLINE WEBTOOL</h3>
+                    <p>Your one-stop destination for free online tools</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="qr-generator.html">QR Code Generator</a></li>
+                        <li><a href="url-shortener.html">URL Shortener</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Popular Tools</h4>
+                    <ul>
+                        <li><a href="image-compressor.html">Image Compressor</a></li>
+                        <li><a href="pdf-to-word.html">PDF to Word Converter</a></li>
+                        <li><a href="youtube-thumbnail.html">YouTube Thumbnail Downloader</a></li>
+                        <li><a href="image-to-base64.html">Image to Base64</a></li>
+                        <li><a href="keyword-density.html">Keyword Density Checker</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="social-icons">
+                        <a href="https://facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="https://twitter.com" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://youtube.com" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://github.com" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="image-compressor.js"></script>
+</body>
+</html>
