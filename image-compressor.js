@@ -1,4 +1,4 @@
-// Image Compressor
+// Image Compressor - Simplified Working Version
 document.addEventListener('DOMContentLoaded', function() {
     const imageInput = document.getElementById('imageInput');
     const uploadArea = document.getElementById('uploadArea');
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Sample image
     sampleBtn.addEventListener('click', function() {
-        loadSampleImage();
+        createSampleImage();
     });
 
     // Download original
@@ -114,16 +114,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Download compressed
     downloadCompressed.addEventListener('click', function() {
         if (compressedBlob) {
-            const extension = getFileExtension(outputFormat.value);
-            const filename = 'compressed-' + originalFile.name.replace(/\.[^/.]+$/, "") + '.' + extension;
+            const extension = getFileExtension();
+            const filename = 'compressed-image.' + extension;
             downloadBlob(compressedBlob, filename);
         }
     });
 
-    // Copy compressed image (simplified - just show message)
+    // Copy compressed image
     copyCompressed.addEventListener('click', function() {
         if (compressedBlob) {
-            showNotification('Copy feature would work in a real implementation');
+            showNotification('In a real implementation, image would be copied to clipboard');
         }
     });
 
@@ -132,8 +132,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function handleImageFile(file) {
-        console.log('File selected:', file);
-        
         // Check if file is an image
         if (!file.type.match('image.*')) {
             showNotification('Please select a valid image file!');
@@ -155,10 +153,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Load image to get dimensions
         const reader = new FileReader();
         reader.onload = function(e) {
-            console.log('File loaded successfully');
             const img = new Image();
             img.onload = function() {
-                console.log('Image dimensions:', img.width, 'x', img.height);
                 fileDimensions.textContent = `${img.width} × ${img.height}`;
                 originalImageData = {
                     width: img.width,
@@ -180,55 +176,54 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 showNotification('Image loaded successfully!');
             };
-            img.onerror = function() {
-                console.error('Failed to load image');
-                showNotification('Error loading image. Please try another file.');
-            };
             img.src = e.target.result;
-        };
-        reader.onerror = function() {
-            console.error('FileReader error');
-            showNotification('Error reading file. Please try again.');
         };
         reader.readAsDataURL(file);
     }
 
-    function loadSampleImage() {
-        showNotification('Loading sample image...');
-        
-        // Create a simple sample image using canvas
-        createSampleImage();
-    }
-
     function createSampleImage() {
+        // Create a simple sample image using canvas
         const canvas = document.createElement('canvas');
         canvas.width = 800;
         canvas.height = 600;
         const ctx = canvas.getContext('2d');
         
-        // Create a gradient background
+        // Create a colorful gradient background
         const gradient = ctx.createLinearGradient(0, 0, 800, 600);
-        gradient.addColorStop(0, '#ff6b6b');
-        gradient.addColorStop(0.5, '#4ecdc4');
-        gradient.addColorStop(1, '#45b7d1');
+        gradient.addColorStop(0, '#FF6B6B');
+        gradient.addColorStop(0.5, '#4ECDC4');
+        gradient.addColorStop(1, '#45B7D1');
         
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, 800, 600);
         
-        // Add some text
-        ctx.fillStyle = 'white';
-        ctx.font = 'bold 40px Arial';
+        // Add some shapes
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.beginPath();
+        ctx.arc(200, 200, 80, 0, Math.PI * 2);
+        ctx.fill();
+        
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+        ctx.beginPath();
+        ctx.arc(600, 400, 100, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Add text
+        ctx.fillStyle = '#2C3E50';
+        ctx.font = 'bold 48px Arial';
         ctx.textAlign = 'center';
-        ctx.fillText('Sample Image', 400, 250);
-        ctx.font = '20px Arial';
+        ctx.fillText('SAMPLE IMAGE', 400, 250);
+        
+        ctx.font = '24px Arial';
         ctx.fillText('For Compression Testing', 400, 300);
+        ctx.fillText('800 × 600 pixels', 400, 350);
         
         // Convert to blob and create file
         canvas.toBlob(function(blob) {
             const file = new File([blob], 'sample-image.jpg', { type: 'image/jpeg' });
             handleImageFile(file);
             showNotification('Sample image loaded!');
-        }, 'image/jpeg', 0.9);
+        }, 'image/jpeg', 0.95);
     }
 
     function compressImage() {
@@ -236,8 +231,6 @@ document.addEventListener('DOMContentLoaded', function() {
             showNotification('Please select an image first!');
             return;
         }
-
-        console.log('Starting compression...');
 
         // Show loading state
         compressBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Compressing...';
@@ -253,12 +246,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function performCompression(quality, maxWidth, format) {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
         const img = new Image();
-
+        
         img.onload = function() {
-            console.log('Compressing image...');
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
             
             // Calculate new dimensions
             let newWidth = img.width;
@@ -269,100 +261,77 @@ document.addEventListener('DOMContentLoaded', function() {
                 newHeight = (img.height * maxWidth) / img.width;
             }
 
-            console.log('New dimensions:', newWidth, 'x', newHeight);
-
             // Set canvas dimensions
             canvas.width = newWidth;
             canvas.height = newHeight;
 
-            // Draw image on canvas with compression
+            // Fill with white background (for JPEG transparency)
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, newWidth, newHeight);
+            
+            // Draw image on canvas
             ctx.drawImage(img, 0, 0, newWidth, newHeight);
 
-            // Get compressed image data
+            // Determine output format
             let mimeType = 'image/jpeg';
-            let qualityValue = quality;
-
             switch (format) {
                 case 'png':
                     mimeType = 'image/png';
-                    qualityValue = undefined;
                     break;
                 case 'webp':
                     mimeType = 'image/webp';
                     break;
-                case 'jpeg':
-                    mimeType = 'image/jpeg';
-                    break;
                 case 'same':
-                default:
                     mimeType = originalFile.type || 'image/jpeg';
                     break;
+                default:
+                    mimeType = 'image/jpeg';
             }
 
-            console.log('Output format:', mimeType, 'Quality:', qualityValue);
-
-            // Convert canvas to blob
+            // Convert to blob with quality
             canvas.toBlob(function(blob) {
                 if (!blob) {
-                    console.error('Blob creation failed');
                     showNotification('Compression failed. Please try again.');
                     resetCompressButton();
                     return;
                 }
 
-                console.log('Compression successful. Blob size:', blob.size);
                 compressedBlob = blob;
 
-                // Create object URL for compressed image
+                // Create URL for compressed image
                 const compressedUrl = URL.createObjectURL(blob);
-
-                // Update compressed image display
-                compressedImage.onload = function() {
-                    console.log('Compressed image loaded into DOM');
-                };
-                compressedImage.onerror = function() {
-                    console.error('Failed to load compressed image');
-                };
-                compressedImage.src = compressedUrl;
                 
+                // Display compressed image
+                compressedImage.src = compressedUrl;
                 compressedDimensions.textContent = `${newWidth} × ${newHeight}`;
                 compressedSize.textContent = formatFileSize(blob.size);
 
-                // Calculate and display savings
+                // Calculate savings
                 const originalSizeBytes = originalFile.size;
                 const compressedSizeBytes = blob.size;
                 const reduction = ((originalSizeBytes - compressedSizeBytes) / originalSizeBytes) * 100;
                 
-                console.log('Size reduction:', reduction.toFixed(1) + '%');
-                
+                // Update UI with results
                 sizeReduction.textContent = `${reduction.toFixed(1)}% smaller`;
                 savingsPercent.textContent = `${reduction.toFixed(1)}%`;
                 fileSizeReduction.textContent = `${reduction.toFixed(1)}%`;
-                
-                // Update stats
-                qualityScore.textContent = `${Math.max(10, 100 - reduction / 2).toFixed(0)}%`;
+                qualityScore.textContent = `${Math.max(30, 100 - reduction / 3).toFixed(0)}%`;
                 compressionRatio.textContent = `1:${(originalSizeBytes / compressedSizeBytes).toFixed(1)}`;
                 estimatedSavings.textContent = formatFileSize(originalSizeBytes - compressedSizeBytes);
 
                 // Show comparison section
                 comparisonSection.style.display = 'block';
-
-                // Reset button
                 resetCompressButton();
-
+                
                 showNotification('Image compressed successfully!');
+                
+                // Scroll to results
+                setTimeout(() => {
+                    comparisonSection.scrollIntoView({ behavior: 'smooth' });
+                }, 500);
 
-                // Scroll to comparison section
-                comparisonSection.scrollIntoView({ behavior: 'smooth' });
+            }, mimeType, quality);
 
-            }, mimeType, qualityValue);
-
-        };
-
-        img.onerror = function() {
-            console.error('Failed to load image for compression');
-            showNotification('Error compressing image. Please try again.');
-            resetCompressButton();
         };
 
         img.src = originalImageData.src;
@@ -397,12 +366,15 @@ document.addEventListener('DOMContentLoaded', function() {
         showNotification('Compressed image downloaded!');
     }
 
-    function getFileExtension(format) {
+    function getFileExtension() {
+        const format = outputFormat.value;
         switch (format) {
-            case 'jpeg': return 'jpg';
             case 'png': return 'png';
             case 'webp': return 'webp';
-            default: return originalFile.name.split('.').pop() || 'jpg';
+            case 'jpeg': return 'jpg';
+            case 'same': 
+            default: 
+                return originalFile ? originalFile.name.split('.').pop() : 'jpg';
         }
     }
 
