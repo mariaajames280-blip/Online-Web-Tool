@@ -67,48 +67,27 @@
                     </div>
                 </div>
 
-                <div class="compression-options">
-                    <h3><i class="fas fa-sliders-h"></i> Compression Settings</h3>
-                    <div class="options-grid">
-                        <div class="option-group">
-                            <label for="quality">Compression Quality:</label>
-                            <div class="slider-container">
-                                <input type="range" id="quality" min="10" max="100" value="80">
-                                <div class="slider-labels">
-                                    <span>Smaller File</span>
-                                    <span id="qualityValue">80%</span>
-                                    <span>Better Quality</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="option-group">
-                            <label for="maxWidth">Max Width (pixels):</label>
-                            <input type="number" id="maxWidth" min="100" max="4000" value="1920" placeholder="1920">
-                            <span class="option-hint">Set 0 to keep original width</span>
-                        </div>
-                        <div class="option-group">
-                            <label for="outputFormat">Output Format:</label>
-                            <select id="outputFormat">
-                                <option value="same">Same as original</option>
-                                <option value="jpeg">JPEG (Best for photos)</option>
-                                <option value="png">PNG (Best for graphics)</option>
-                                <option value="webp">WebP (Modern format)</option>
-                            </select>
-                        </div>
-                        <div class="option-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="preserveMetadata" checked>
-                                <span class="checkmark"></span>
-                                Preserve EXIF data
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="optimizeForWeb">
-                                <span class="checkmark"></span>
-                                Optimize for web
-                            </label>
-                        </div>
-                    </div>
+               <div class="compression-options">
+    <h3><i class="fas fa-sliders-h"></i> Compression Settings</h3>
+    <div class="options-grid">
+        <div class="option-group">
+            <label for="quality">Compression Quality:</label>
+            <div class="slider-container">
+                <input type="range" id="quality" min="10" max="100" value="80">
+                <div class="slider-labels">
+                    <span>Smaller File</span>
+                    <span id="qualityValue">80%</span>
+                    <span>Better Quality</span>
                 </div>
+            </div>
+        </div>
+        <div class="option-group">
+            <label for="maxWidth">Max Width (pixels):</label>
+            <input type="number" id="maxWidth" min="100" max="4000" value="1920" placeholder="1920">
+            <span class="option-hint">Set 0 to keep original width</span>
+        </div>
+    </div>
+</div>
 
                 <div class="action-section">
                     <button id="compressBtn" class="btn-primary" disabled>
