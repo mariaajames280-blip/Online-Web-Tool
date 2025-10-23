@@ -711,3 +711,245 @@ footer {
         flex-direction: column;
     }
 }
+/* URL Encoder/Decoder Styles */
+.url-encoder-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.mode-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    background: #000000;
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.mode-btn {
+    flex: 1;
+    padding: 15px 20px;
+    border: 2px solid #ffd700;
+    border-radius: 8px;
+    background: #000000;
+    color: #ffd700;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.mode-btn:hover {
+    background: #1a1a1a;
+    border-color: #ffff00;
+}
+
+.mode-btn.active {
+    background: #ffd700;
+    color: #000000;
+    border-color: #ffd700;
+}
+
+.input-section {
+    background: #000000;
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.input-group label {
+    display: block;
+    color: #ffd700;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.input-group textarea {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #ffd700;
+    border-radius: 8px;
+    background: #000000;
+    color: #ffd700;
+    font-family: monospace;
+    resize: vertical;
+    font-size: 14px;
+}
+
+.input-group textarea:focus {
+    outline: none;
+    border-color: #ffff00;
+}
+
+.input-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #ffd700;
+}
+
+.btn-small {
+    background: #ffd700;
+    color: #000000;
+    border: 2px solid #ffd700;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.8em;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-small:hover {
+    background: #ffff00;
+    border-color: #ffff00;
+}
+
+.action-section {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.output-section {
+    background: #000000;
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.output-group label {
+    display: block;
+    color: #ffd700;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.output-group textarea {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #28a745;
+    border-radius: 8px;
+    background: #000000;
+    color: #28a745;
+    font-family: monospace;
+    resize: vertical;
+    font-size: 14px;
+}
+
+.output-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.examples-section {
+    background: #000000;
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.examples-section h3 {
+    color: #ffd700;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.examples-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.example-card {
+    background: #1a1a1a;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.example-card h4 {
+    color: #ffd700;
+    margin-bottom: 15px;
+    font-size: 1em;
+}
+
+.example-card p {
+    color: #ffffff;
+    margin-bottom: 8px;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+.example-card strong {
+    color: #ffd700;
+}
+
+.info-section {
+    margin-bottom: 25px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.info-card {
+    background: #000000;
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+.info-card i {
+    font-size: 2em;
+    color: #ffd700;
+    margin-bottom: 15px;
+}
+
+.info-card h4 {
+    color: #ffd700;
+    margin-bottom: 10px;
+    font-size: 1em;
+}
+
+.info-card p {
+    color: #ffffff;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .mode-selector {
+        flex-direction: column;
+    }
+    
+    .examples-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-section {
+        flex-direction: column;
+    }
+}
