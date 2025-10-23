@@ -1,157 +1,152 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Online ToolWeb - Free Online Tools Collection</title>
-  <meta name="description" content="Online ToolWeb offers 20+ free online tools including QR code generator, calculator, converter, and more — all in one place.">
+/* Image to Base64 Converter Styles */
+.converter-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="style.css">
+.upload-area {
+    background: #000000;
+    border: 3px dashed #ffd700;
+    border-radius: 15px;
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 30px;
+}
 
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+.upload-area:hover {
+    background: #1a1a1a;
+    border-color: #ffff00;
+}
 
-  <!-- Scripts -->
-  <script src="main.js" defer></script>
-</head>
+.upload-area i {
+    font-size: 3em;
+    color: #ffd700;
+    margin-bottom: 15px;
+}
 
-<body>
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo"><h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1></div>
-                <ul class="nav-menu">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../about.html">About Us</a></li>
-                    <li><a href="../contact.html">Contact</a></li>
-                </ul>
-                <div class="hamburger"><span></span><span></span><span></span></div>
-            </nav>
-        </div>
-    </header>
+.upload-area h3 {
+    color: #ffd700;
+    margin-bottom: 10px;
+}
 
-    <div class="tool-page">
-        <div class="container">
-            <div class="tool-container">
-                <div class="tool-header">
-                    <h1><i class="fas fa-code"></i> Base64 Encoder/Decoder</h1>
-                    <p>Encode and decode Base64 strings</p>
-                </div>
+.upload-area p {
+    color: #ffd700;
+    opacity: 0.8;
+    margin-bottom: 20px;
+}
 
-                <div class="tool-content">
-                    <div class="form-group">
-                        <label for="input">Input Text</label>
-                        <textarea id="input" placeholder="Enter text to encode or Base64 to decode..." rows="6"></textarea>
-                    </div>
+.preview-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 30px;
+}
 
-                    <div class="button-group">
-                        <button class="btn-action btn-generate" onclick="encode()">
-                            <i class="fas fa-arrow-right"></i> Encode to Base64
-                        </button>
-                        <button class="btn-action btn-generate" onclick="decode()">
-                            <i class="fas fa-arrow-left"></i> Decode from Base64
-                        </button>
-                        <button class="btn-action btn-reset" onclick="resetForm()">
-                            <i class="fas fa-redo"></i> Reset
-                        </button>
-                    </div>
+.image-preview {
+    background: #000000;
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+}
 
-                    <div class="form-group">
-                        <label for="output">Output</label>
-                        <textarea id="output" placeholder="Result will appear here..." rows="6" readonly></textarea>
-                    </div>
+.image-preview img {
+    max-width: 100%;
+    max-height: 180px;
+    border-radius: 5px;
+}
 
-                    <div class="button-group">
-                        <button class="btn-action btn-copy" onclick="copyOutput()">
-                            <i class="fas fa-copy"></i> Copy Output
-                        </button>
-                        <button class="btn-action btn-download" onclick="downloadOutput()">
-                            <i class="fas fa-download"></i> Download
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+.image-preview i {
+    font-size: 2em;
+    color: #ffd700;
+    margin-bottom: 10px;
+}
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>ONLINE WEBTOOL</h3>
-                    <p>Your one-stop destination for free online tools</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="../index.html">Home</a></li>
-                        <li><a href="qr-generator.html">QR Code Generator</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+.image-preview p {
+    color: #ffd700;
+}
 
-    <script src="../js/main.js"></script>
-    <script>
-        function encode() {
-            const input = document.getElementById('input').value;
-            if (!input) {
-                showMessage('Please enter text to encode', 'error');
-                return;
-            }
-            try {
-                const encoded = btoa(unescape(encodeURIComponent(input)));
-                document.getElementById('output').value = encoded;
-                showMessage('Text encoded successfully!', 'success');
-            } catch (e) {
-                showMessage('Error encoding text', 'error');
-            }
-        }
+.image-info {
+    background: #000000;
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+    padding: 20px;
+}
 
-        function decode() {
-            const input = document.getElementById('input').value;
-            if (!input) {
-                showMessage('Please enter Base64 to decode', 'error');
-                return;
-            }
-            try {
-                const decoded = decodeURIComponent(escape(atob(input)));
-                document.getElementById('output').value = decoded;
-                showMessage('Base64 decoded successfully!', 'success');
-            } catch (e) {
-                showMessage('Error decoding Base64. Please check your input.', 'error');
-            }
-        }
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #333;
+}
 
-        function copyOutput() {
-            const output = document.getElementById('output').value;
-            if (!output) {
-                showMessage('No output to copy', 'error');
-                return;
-            }
-            copyToClipboard(output);
-        }
+.info-item:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+}
 
-        function downloadOutput() {
-            const output = document.getElementById('output').value;
-            if (!output) {
-                showMessage('No output to download', 'error');
-                return;
-            }
-            downloadText('base64-output.txt', output);
-            showMessage('Output downloaded successfully!', 'success');
-        }
+.info-item span:first-child {
+    color: #ffd700;
+    font-weight: bold;
+}
 
-        function resetForm() {
-            document.getElementById('input').value = '';
-            document.getElementById('output').value = '';
-            showMessage('Form reset successfully', 'info');
-        }
-    </script>
-</body>
-</html>
+.info-item span:last-child {
+    color: #ffffff;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.result-section {
+    background: #000000;
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.result-section label {
+    display: block;
+    color: #ffd700;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.result-section textarea {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #ffd700;
+    border-radius: 5px;
+    background: #000000;
+    color: #ffd700;
+    font-family: monospace;
+    resize: vertical;
+    margin-bottom: 15px;
+}
+
+.result-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .preview-section {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+}
