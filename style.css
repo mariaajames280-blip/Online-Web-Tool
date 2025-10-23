@@ -1731,3 +1731,373 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+/* PDF to Word Converter Styles */
+.pdf-converter-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.upload-section {
+    background: #000000;
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 25px;
+}
+
+.upload-area {
+    text-align: center;
+    padding: 40px 20px;
+    border: 3px dashed #ffd700;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.upload-area:hover {
+    background: #1a1a1a;
+    border-color: #ffff00;
+}
+
+.upload-icon {
+    font-size: 2em;
+    color: #ffd700;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+}
+
+.upload-icon .fa-arrow-right {
+    font-size: 1em;
+    opacity: 0.7;
+}
+
+.upload-area h3 {
+    color: #ffd700;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.upload-area p {
+    color: #ffd700;
+    opacity: 0.8;
+    margin-bottom: 20px;
+}
+
+.file-requirements {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+}
+
+.file-requirements h4 {
+    color: #ffd700;
+    margin-bottom: 15px;
+    font-size: 1em;
+}
+
+.file-requirements ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.file-requirements li {
+    color: #ffffff;
+    margin-bottom: 8px;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.file-requirements li i {
+    color: #28a745;
+    font-size: 0.8em;
+}
+
+.file-preview {
+    margin-top: 20px;
+    padding: 20px;
+    background: #1a1a1a;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+.file-preview h4 {
+    color: #ffd700;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1em;
+}
+
+.preview-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+}
+
+.file-icon {
+    font-size: 2em;
+    color: #dc3545;
+}
+
+.file-details {
+    flex: 1;
+}
+
+.file-name {
+    color: #ffffff;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.file-size {
+    color: #ffd700;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.file-status {
+    color: #28a745;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.conversion-options {
+    background: #000000;
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.conversion-options h3 {
+    color: #ffd700;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.option-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.option-group label {
+    color: #ffd700;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.option-group select {
+    padding: 12px;
+    border: 2px solid #ffd700;
+    border-radius: 6px;
+    background: #000000;
+    color: #ffd700;
+    font-size: 0.9em;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff !important;
+    font-weight: normal !important;
+    cursor: pointer;
+}
+
+.action-section {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.result-section {
+    background: #000000;
+    border: 2px solid #28a745;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.result-section h3 {
+    color: #28a745;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.result-success {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+    padding: 20px;
+    background: #1a1a1a;
+    border-radius: 8px;
+}
+
+.success-icon {
+    font-size: 3em;
+    color: #28a745;
+}
+
+.success-details h4 {
+    color: #28a745;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.success-details p {
+    color: #ffffff;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.success-details span {
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.download-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.conversion-progress {
+    background: #000000;
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.conversion-progress h3 {
+    color: #ffd700;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 12px;
+    background: #333;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ffd700, #ffff00);
+    border-radius: 6px;
+    width: 0%;
+    transition: width 0.5s ease;
+}
+
+.progress-text {
+    display: flex;
+    justify-content: space-between;
+    color: #ffd700;
+    font-size: 0.9em;
+}
+
+.info-sections {
+    margin-top: 30px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.info-card {
+    background: #000000;
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+.info-card i {
+    font-size: 2em;
+    color: #ffd700;
+    margin-bottom: 15px;
+}
+
+.info-card h4 {
+    color: #ffd700;
+    margin-bottom: 10px;
+    font-size: 1em;
+}
+
+.info-card p {
+    color: #ffffff;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .options-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .preview-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .file-info {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .download-actions {
+        flex-direction: column;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-section {
+        flex-direction: column;
+    }
+    
+    .result-success {
+        flex-direction: column;
+        text-align: center;
+    }
+}
