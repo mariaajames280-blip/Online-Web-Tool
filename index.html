@@ -44,46 +44,198 @@
     }
     </script>
     
-    <!-- Add missing Open Graph tags -->
-    <meta property="og:site_name" content="OnlineWebTool">
-    
     <style>
-        /* Your existing CSS styles here */
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background: #000;
-            color: #fff;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+        
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
+        
+        /* Header Styles */
+        header {
+            background: #111111;
+            border-bottom: 1px solid #333;
+            padding: 15px 0;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            color: #ffcc00;
+            font-size: 1.8rem;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        .nav-menu a {
+            color: #cccccc;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: #ffcc00;
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: #1a1a1a;
+            border-radius: 5px;
+            padding: 5px 10px;
+            border: 1px solid #333;
+        }
+        
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            padding: 5px;
+            width: 200px;
+            outline: none;
+        }
+        
+        .search-bar input::placeholder {
+            color: #666;
+        }
+        
+        .weather-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #cccccc;
+            font-size: 0.9rem;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #ffcc00;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: #cccccc;
+            margin-bottom: 30px;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: #ffcc00;
+            color: #000;
+        }
+        
+        .btn-primary:hover {
+            background: #e6b800;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #ffcc00;
+            border: 2px solid #ffcc00;
+        }
+        
+        .btn-secondary:hover {
+            background: #ffcc00;
+            color: #000;
+        }
+        
+        /* Tools Section */
+        .tools-section {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #ffcc00;
+        }
+        
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 40px 0;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
         }
+        
         .tool-card {
             background: #1a1a1a;
             border-radius: 10px;
             padding: 25px;
             text-align: center;
             border: 1px solid #333;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
         }
+        
         .tool-card:hover {
             transform: translateY(-5px);
             border-color: #ffcc00;
+            box-shadow: 0 10px 20px rgba(255, 204, 0, 0.1);
         }
+        
         .tool-card i {
-            font-size: 2em;
+            font-size: 2.5rem;
             color: #ffcc00;
             margin-bottom: 15px;
         }
+        
+        .tool-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+        
+        .tool-card p {
+            color: #cccccc;
+            margin-bottom: 20px;
+        }
+        
         .tool-link {
             display: inline-block;
             padding: 10px 20px;
@@ -91,291 +243,390 @@
             color: #000;
             text-decoration: none;
             border-radius: 5px;
-            font-weight: bold;
-            margin-top: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
         }
-        header, footer {
-            background: #111;
-            padding: 20px 0;
+        
+        .tool-link:hover {
+            background: #e6b800;
+            transform: translateY(-2px);
+        }
+        
+        /* Footer */
+        footer {
+            background: #111111;
+            padding: 40px 0 20px;
+            border-top: 1px solid #333;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3,
+        .footer-section h4 {
+            color: #ffcc00;
+            margin-bottom: 15px;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-section ul li a {
+            color: #cccccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section ul li a:hover {
+            color: #ffcc00;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #333;
+            border-radius: 50%;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background: #ffcc00;
+            color: #000;
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #666;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 200px;
+                text-align: center;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-bar {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
     <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+                <div class="search-bar">
+                    <input type="text" placeholder="Type here to search">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="weather-info">
+                    <span>23°C Clear</span>
+                    <span>(4)</span>
+                    <span>9:05 PM</span>
+                    <span>10/22/2025</span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h2 class="fade-in">Welcome to ONLINE WEBTOOL</h2>
-                <p class="slide-up">Your Complete Solution for 40+ Free Online Tools</p>
-                <div class="hero-buttons slide-up-delay">
+                <h1>Welcome to ONLINE WEBTOOL</h1>
+                <p>Your Complete Solution for 40+ Free Online Tools</p>
+                <div class="hero-buttons">
                     <a href="#tools" class="btn btn-primary">Explore Tools</a>
                     <a href="about.html" class="btn btn-secondary">Learn More</a>
                 </div>
             </div>
         </div>
-        <!-- Floating White Bubbles -->
-    <div class="bubbles">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
     </section>
 
-    <!-- AdSense Placeholder -->
-    <div class="ad-container">
-        <!-- Google AdSense Ad Unit -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-             data-ad-slot="XXXXXXXXXX"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-    </div>
-
- <!-- Tools Section -->
-<section id="tools" class="tools-section">
-    <div class="container">
-        <h2 class="section-title">Our Tools</h2>
-        <div class="tools-grid">
-            <!-- Text Tools -->
-            <div class="tool-card">
-                <i class="fas fa-qrcode"></i>
-                <h3>QR Code Generator</h3>
-                <p>Generate QR codes instantly</p>
-                <a href="qr-generator.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <i class="fas fa-link"></i>
-                <h3>URL Shortener</h3>
-                <p>Shorten long URLs easily</p>
-                <a href="url-shortener.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <i class="fas fa-text-width"></i>
-                <h3>Text Case Converter</h3>
-                <p>Convert text case formats</p>
-                <a href="text-case-converter.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <i class="fas fa-code"></i>
-                <h3>Base64 Encoder/Decoder</h3>
-                <p>Encode and decode Base64</p>
-                <a href="base64-converter.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <i class="fas fa-hashtag"></i>
-                <h3>MD5 Hash Generator</h3>
-                <p>Generate MD5 hashes</p>
-                <a href="md5-generator.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <i class="fas fa-calculator"></i>
-                <h3>Word Counter</h3>
-                <p>Count words and characters</p>
-                <a href="word-counter.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <i class="fas fa-random"></i>
-                <h3>Random Password Generator</h3>
-                <p>Generate secure passwords</p>
-                <a href="password-generator.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <i class="fas fa-file-code"></i>
-                <h3>HTML Encoder/Decoder</h3>
-                <p>Encode and decode HTML</p>
-                <a href="html-encoder.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <i class="fas fa-compress"></i>
-                <h3>JSON Minifier</h3>
-                <p>Minify JSON data</p>
-                <a href="json-minifier.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <i class="fas fa-expand"></i>
-                <h3>JSON Formatter</h3>
-                <p>Format and beautify JSON</p>
-                <a href="json-formatter.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <!-- Converter Tools -->
-            <div class="tool-card">
-                <i class="fas fa-file-image"></i>
-                <h3>Image to Base64</h3>
-                <p>Convert images to Base64</p>
-                <a href="image-to-base64.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <i class="fas fa-palette"></i>
-                <h3>Color Picker</h3>
-                <p>Pick and convert colors</p>
-                <a href="color-picker.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <i class="fas fa-exchange-alt"></i>
-                <h3>Unit Converter</h3>
-                <p>Convert various units</p>
-                <a href="unit-converter.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <i class="fas fa-dollar-sign"></i>
-                <h3>Currency Converter</h3>
-                <p>Convert currencies online</p>
-                <a href="currency-converter.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <i class="fas fa-clock"></i>
-                <h3>Timestamp Converter</h3>
-                <p>Convert timestamps</p>
-                <a href="timestamp-converter.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <i class="fas fa-percent"></i>
-                <h3>Percentage Calculator</h3>
-                <p>Calculate percentages</p>
-                <a href="percentage-calculator.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <!-- Data Tools -->
-            <div class="tool-card">
-                <i class="fas fa-file-alt"></i>
-                <h3>Lorem Ipsum Generator</h3>
-                <p>Generate placeholder text</p>
-                <a href="lorem-ipsum.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <i class="fas fa-shield-alt"></i>
-                <h3>Password Strength Checker</h3>
-                <p>Check password strength</p>
-                <a href="password-strength.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <i class="fas fa-lock"></i>
-                <h3>URL Encoder/Decoder</h3>
-                <p>Encode and decode URLs</p>
-                <a href="url-encoder.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <i class="fas fa-calculator"></i>
-                <h3>Scientific Calculator</h3>
-                <p>Advanced calculations</p>
-                <a href="calculator.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <i class="fas fa-chart-line"></i>
-                <h3>Age Calculator</h3>
-                <p>Calculate your age</p>
-                <a href="age-calculator.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <i class="fas fa-percentage"></i>
-                <h3>BMI Calculator</h3>
-                <p>Calculate Body Mass Index</p>
-                <a href="bmi-calculator.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <i class="fas fa-barcode"></i>
-                <h3>Barcode Generator</h3>
-                <p>Generate barcodes</p>
-                <a href="barcode-generator.html" class="tool-link">Open Tool</a>
-            </div>
-
-            <div class="tool-card">
-                <i class="fas fa-dice"></i>
-                <h3>Random Number Generator</h3>
-                <p>Generate random numbers</p>
-                <a href="random-number.html" class="tool-link">Open Tool</a>
-            </div>
+    <!-- Tools Section -->
+    <section id="tools" class="tools-section">
+        <div class="container">
+            <h2 class="section-title">Our Tools</h2>
+            <div class="tools-grid">
+                <!-- Text Tools -->
                 <div class="tool-card">
-                <i class="fas fa-language"></i>
-                <h3>Language Translator</h3>
-                <p>Translate text between multiple languages</p>
-                <a href="language-translator.html" class="tool-link">Open Tool</a>
-           </div>
-                 <div class="tool-card">
-                 <i class="fas fa-chart-bar"></i>
-                 <h3>Keyword Density Checker</h3>
-                 <p>Analyze keyword frequency for SEO optimization</p>
-                 <a href="keyword-density.html" class="tool-link">Open Tool</a>
-          </div>
-                  <div class="tool-card">
-                  <i class="fab fa-youtube"></i>
-                  <h3>YouTube Thumbnail Downloader</h3>
-                  <p>Download HD thumbnails from YouTube videos</p>
-                  <a href="youtube-thumbnail.html" class="tool-link">Open Tool</a>
+                    <i class="fas fa-qrcode"></i>
+                    <h3>QR Code Generator</h3>
+                    <p>Generate QR codes instantly</p>
+                    <a href="qr-generator.html" class="tool-link">Open Tool</a>
                 </div>
-                   <div class="tool-card">
-                   <i class="fas fa-file-pdf"></i>
-                   <h3>PDF to Word Converter</h3>
-                   <p>Convert PDF documents to editable Word files</p>
-                   <a href="pdf-to-word.html" class="tool-link">Open Tool</a>
-               </div>
-                     <div class="tool-card">
-                     <i class="fab fa-youtube"></i>
-                     <h3>YouTube to MP3 Converter</h3>
-                     <p>Convert YouTube videos to MP3 audio files</p>
-                     <a href="youtube-mp3.html" class="tool-link">Open Tool</a>
-                   </div>
-                     <div class="tool-card">
-                     <i class="fas fa-search"></i>
-                     <h3>Plagiarism Checker</h3>
-                     <p>Detect duplicate content and check for plagiarism</p>
-                     <a href="plagiarism-checker.html" class="tool-link">Open Tool</a>
-                   </div>
-                     <div class="tool-card">
-                     <i class="fas fa-spell-check"></i>
-                     <h3>Grammar Checker</h3>
-                     <p>Check grammar, spelling, and punctuation errors</p>
-                     <a href="grammar-checker.html" class="tool-link">Open Tool</a>
-                   </div>
-                    <div class="tool-card">
+
+                <div class="tool-card">
+                    <i class="fas fa-link"></i>
+                    <h3>URL Shortener</h3>
+                    <p>Shorten long URLs easily</p>
+                    <a href="url-shortener.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-text-width"></i>
+                    <h3>Text Case Converter</h3>
+                    <p>Convert text case formats</p>
+                    <a href="text-case-converter.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-code"></i>
+                    <h3>Base64 Encoder/Decoder</h3>
+                    <p>Encode and decode Base64</p>
+                    <a href="base64-converter.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-hashtag"></i>
+                    <h3>MD5 Hash Generator</h3>
+                    <p>Generate MD5 hashes</p>
+                    <a href="md5-generator.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-calculator"></i>
+                    <h3>Word Counter</h3>
+                    <p>Count words and characters</p>
+                    <a href="word-counter.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-random"></i>
+                    <h3>Random Password Generator</h3>
+                    <p>Generate secure passwords</p>
+                    <a href="password-generator.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-file-code"></i>
+                    <h3>HTML Encoder/Decoder</h3>
+                    <p>Encode and decode HTML</p>
+                    <a href="html-encoder.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-compress"></i>
+                    <h3>JSON Minifier</h3>
+                    <p>Minify JSON data</p>
+                    <a href="json-minifier.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-expand"></i>
+                    <h3>JSON Formatter</h3>
+                    <p>Format and beautify JSON</p>
+                    <a href="json-formatter.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <!-- Converter Tools -->
+                <div class="tool-card">
+                    <i class="fas fa-file-image"></i>
+                    <h3>Image to Base64</h3>
+                    <p>Convert images to Base64</p>
+                    <a href="image-to-base64.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-palette"></i>
+                    <h3>Color Picker</h3>
+                    <p>Pick and convert colors</p>
+                    <a href="color-picker.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-exchange-alt"></i>
+                    <h3>Unit Converter</h3>
+                    <p>Convert various units</p>
+                    <a href="unit-converter.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h3>Currency Converter</h3>
+                    <p>Convert currencies online</p>
+                    <a href="currency-converter.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Timestamp Converter</h3>
+                    <p>Convert timestamps</p>
+                    <a href="timestamp-converter.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-percent"></i>
+                    <h3>Percentage Calculator</h3>
+                    <p>Calculate percentages</p>
+                    <a href="percentage-calculator.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <!-- Data Tools -->
+                <div class="tool-card">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>Lorem Ipsum Generator</h3>
+                    <p>Generate placeholder text</p>
+                    <a href="lorem-ipsum.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Password Strength Checker</h3>
+                    <p>Check password strength</p>
+                    <a href="password-strength.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-lock"></i>
+                    <h3>URL Encoder/Decoder</h3>
+                    <p>Encode and decode URLs</p>
+                    <a href="url-encoder.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-calculator"></i>
+                    <h3>Scientific Calculator</h3>
+                    <p>Advanced calculations</p>
+                    <a href="calculator.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Age Calculator</h3>
+                    <p>Calculate your age</p>
+                    <a href="age-calculator.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-percentage"></i>
+                    <h3>BMI Calculator</h3>
+                    <p>Calculate Body Mass Index</p>
+                    <a href="bmi-calculator.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-barcode"></i>
+                    <h3>Barcode Generator</h3>
+                    <p>Generate barcodes</p>
+                    <a href="barcode-generator.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-dice"></i>
+                    <h3>Random Number Generator</h3>
+                    <p>Generate random numbers</p>
+                    <a href="random-number.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-language"></i>
+                    <h3>Language Translator</h3>
+                    <p>Translate text between multiple languages</p>
+                    <a href="language-translator.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-chart-bar"></i>
+                    <h3>Keyword Density Checker</h3>
+                    <p>Analyze keyword frequency for SEO optimization</p>
+                    <a href="keyword-density.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fab fa-youtube"></i>
+                    <h3>YouTube Thumbnail Downloader</h3>
+                    <p>Download HD thumbnails from YouTube videos</p>
+                    <a href="youtube-thumbnail.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-file-pdf"></i>
+                    <h3>PDF to Word Converter</h3>
+                    <p>Convert PDF documents to editable Word files</p>
+                    <a href="pdf-to-word.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fab fa-youtube"></i>
+                    <h3>YouTube to MP3 Converter</h3>
+                    <p>Convert YouTube videos to MP3 audio files</p>
+                    <a href="youtube-mp3.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-search"></i>
+                    <h3>Plagiarism Checker</h3>
+                    <p>Detect duplicate content and check for plagiarism</p>
+                    <a href="plagiarism-checker.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-spell-check"></i>
+                    <h3>Grammar Checker</h3>
+                    <p>Check grammar, spelling, and punctuation errors</p>
+                    <a href="grammar-checker.html" class="tool-link">Open Tool</a>
+                </div>
+
+                <div class="tool-card">
                     <i class="fas fa-tachometer-alt"></i>
                     <h3>Website Speed Checker</h3>
                     <p>Test your website's loading speed and get optimization recommendations</p>
-                     <a href="website-speed-checker.html" class="tool-link">Open Tool</a>
-                   </div>
-                 </div>
+                    <a href="website-speed-checker.html" class="tool-link">Open Tool</a>
                 </div>
-            </section>
-
-    <!-- AdSense Placeholder -->
-    <div class="ad-container">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-             data-ad-slot="XXXXXXXXXX"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-    </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer>
@@ -423,7 +674,7 @@
         </div>
     </footer>
 
-   <script src="js/main.js"></script>
-
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 </body>
 </html>
