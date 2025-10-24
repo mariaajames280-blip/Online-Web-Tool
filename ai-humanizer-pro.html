@@ -662,26 +662,7 @@
                 { pattern: /\. /g, replacement: '. ' + getRandomStarter() },
                 { pattern: /\bvery\b/gi, replacement: getRandomIntensifier() },
                 { pattern: /\bmany\b/gi, replacement: getRandomQuantifier() },
-            ],
-            
-            // Layer 4: Style-specific transformations
-            styleTemplates: {
-                academic: {
-                    patterns: [
-                        { pattern: /\bhowever\b/gi, replacement: 'but' },
-                        { pattern: /\btherefore\b/gi, replacement: 'so' },
-                    ],
-                    features: ['complexSentences', 'academicVocabulary']
-                },
-                casual: {
-                    patterns: [
-                        { pattern: /\bhowever\b/gi, replacement: 'but' },
-                        { pattern: /\btherefore\b/gi, replacement: 'so' },
-                        { pattern: /\bfurthermore\b/gi, replacement: 'also' },
-                    ],
-                    features: ['simpleSentences', 'colloquialLanguage']
-                }
-            }
+            ]
         };
 
         function getRandomStarter() {
@@ -699,6 +680,8 @@
             return quantifiers[Math.floor(Math.random() * quantifiers.length)];
         }
 
+        let originalInputText = '';
+
         function humanizeAdvanced() {
             const input = document.getElementById('aiInput').value;
             if (!input.trim()) {
@@ -706,19 +689,24 @@
                 return;
             }
 
+            originalInputText = input; // Store the original text
+
             // Show processing animation
             const processing = document.getElementById('processing');
             processing.style.display = 'block';
             
             // Reset layer progress
             const layers = document.querySelectorAll('.layer-status');
-            layers.forEach(layer => layer.textContent = 'Pending');
+            layers.forEach(layer => {
+                layer.textContent = 'Pending';
+                layer.style.color = '#FFFF00';
+            });
             
-            // Simulate multi-layer processing
-            simulateLayerProcessing(0, input);
+            // Start multi-layer processing
+            simulateLayerProcessing(0);
         }
 
-        function simulateLayerProcessing(layerIndex, text) {
+        function simulateLayerProcessing(layerIndex) {
             const layers = [
                 { name: 'Pattern Analysis', duration: 800 },
                 { name: 'Vocabulary Replacement', duration: 1200 },
@@ -740,31 +728,31 @@
                     layerElements[layerIndex].style.color = '#00FF00';
                     
                     // Process next layer
-                    simulateLayerProcessing(layerIndex + 1, text);
+                    simulateLayerProcessing(layerIndex + 1);
                 }, layer.duration);
             } else {
-                // All layers completed
-                finishHumanization(text);
+                // All layers completed - Process the text
+                finishHumanization();
             }
         }
 
-        function finishHumanization(originalText) {
+        function finishHumanization() {
             const processing = document.getElementById('processing');
             const intensity = parseInt(document.getElementById('intensity').value);
             const writingStyle = document.getElementById('writingStyle').value;
             
-            // Advanced humanization process
-            let humanized = advancedHumanize(originalText, intensity, writingStyle);
+            // Process the original text with all layers
+            let humanized = advancedHumanize(originalInputText, intensity, writingStyle);
             
             // Update output
             document.getElementById('humanOutput').value = humanized;
             
-            // Hide processing animation
+            // Hide processing animation after a brief delay
             setTimeout(() => {
                 processing.style.display = 'none';
                 
                 // Update analytics
-                updateAnalytics(originalText, humanized);
+                updateAnalytics(originalInputText, humanized);
                 
                 // Update risk badge
                 document.getElementById('outputRisk').textContent = 'DETECTION RISK: LOW';
@@ -775,6 +763,8 @@
 
         function advancedHumanize(text, intensity, style) {
             let result = text;
+            
+            console.log("Original text:", text); // Debug log
             
             // Layer 1: Basic pattern replacement
             advancedPatterns.formalToCasual.forEach(pattern => {
@@ -790,7 +780,10 @@
                     // Add variety to sentence starters
                     for (let i = 1; i < sentences.length; i++) {
                         if (Math.random() > 0.6) {
-                            sentences[i] = getRandomStarter() + sentences[i].toLowerCase();
+                            const starter = getRandomStarter();
+                            if (starter) {
+                                sentences[i] = starter + sentences[i].toLowerCase();
+                            }
                         }
                     }
                     result = sentences.join('. ');
@@ -808,32 +801,47 @@
             // Layer 5: Final cleanup and naturalization
             result = naturalizeText(result);
             
+            console.log("Humanized text:", result); // Debug log
             return result;
         }
 
         function applyWritingStyle(text, style) {
+            let result = text;
+            
             // Apply style-specific transformations
             switch(style) {
                 case 'casual':
-                    return text
+                    result = result
                         .replace(/\bhowever\b/gi, 'but')
                         .replace(/\btherefore\b/gi, 'so')
                         .replace(/\bthus\b/gi, 'so')
                         .replace(/\bfurthermore\b/gi, 'also');
+                    break;
                 case 'academic':
-                    return text; // Keep more formal
+                    // Keep more formal for academic
+                    break;
                 case 'creative':
-                    return text
+                    result = result
                         .replace(/\bvery\b/gi, 'really')
                         .replace(/\bimportant\b/gi, 'key')
                         .replace(/\bmany\b/gi, 'numerous');
+                    break;
+                case 'conversational':
+                    result = result
+                        .replace(/\bhowever\b/gi, 'but')
+                        .replace(/\btherefore\b/gi, 'so')
+                        .replace(/\badditionally\b/gi, 'also')
+                        .replace(/\bconsequently\b/gi, 'so');
+                    break;
                 default:
-                    return text;
+                    // No changes for other styles
+                    break;
             }
+            
+            return result;
         }
 
         function injectHumanPatterns(text) {
-            // Inject natural human writing patterns
             let result = text;
             
             // Add occasional conversational elements
@@ -867,7 +875,7 @@
             // Calculate scores
             const originalScore = calculateAIScore(original);
             const humanizedScore = calculateAIScore(humanized);
-            const bypassRate = Math.max(0, Math.round(((originalScore - humanizedScore) / originalScore) * 100));
+            const bypassRate = originalScore > 0 ? Math.max(0, Math.round(((originalScore - humanizedScore) / originalScore) * 100)) : 0;
             const readability = calculateReadability(humanized);
             
             // Update display
@@ -887,7 +895,8 @@
         }
 
         function calculateAIScore(text) {
-            // Advanced AI detection scoring
+            if (!text || text.trim().length === 0) return 0;
+            
             let score = 0;
             
             // Check for AI patterns
@@ -903,7 +912,7 @@
             });
             
             // Check sentence structure variety
-            const sentences = text.split(/[.!?]+/);
+            const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);
             if (sentences.length > 3) {
                 const firstWords = sentences.map(s => s.trim().split(' ')[0].toLowerCase());
                 const uniqueStarters = new Set(firstWords).size;
@@ -922,15 +931,17 @@
         }
 
         function calculateReadability(text) {
-            // Simple readability score
-            const words = text.split(/\s+/).length;
-            const sentences = text.split(/[.!?]+/).length;
-            const avgSentenceLength = words / sentences;
+            if (!text || text.trim().length === 0) return 0;
             
-            let score = 8; // Base score
-            if (avgSentenceLength < 15) score += 1;
-            if (avgSentenceLength < 20) score += 1;
-            if (text.length < 500) score += 1;
+            const words = text.split(/\s+/).length;
+            const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
+            const avgSentenceLength = sentences > 0 ? words / sentences : 0;
+            
+            let score = 6; // Base score
+            
+            if (avgSentenceLength > 0 && avgSentenceLength < 20) score += 2;
+            if (avgSentenceLength > 0 && avgSentenceLength < 15) score += 1;
+            if (text.length < 800) score += 1;
             
             return Math.min(10, Math.max(1, score));
         }
@@ -938,16 +949,16 @@
         function updateDetectorScores(aiScore) {
             // Simulate different detector results based on AI score
             const detectors = {
-                'gptzeroScore': aiScore + Math.random() * 10 - 5,
-                'originalityScore': aiScore + Math.random() * 8 - 4,
-                'turnitinScore': aiScore + Math.random() * 12 - 6,
-                'writerScore': aiScore + Math.random() * 15 - 7,
-                'crossplagScore': aiScore + Math.random() * 10 - 5
+                'gptzeroScore': Math.max(0, Math.min(99, aiScore + Math.random() * 10 - 5)),
+                'originalityScore': Math.max(0, Math.min(99, aiScore + Math.random() * 8 - 4)),
+                'turnitinScore': Math.max(0, Math.min(99, aiScore + Math.random() * 12 - 6)),
+                'writerScore': Math.max(0, Math.min(99, aiScore + Math.random() * 15 - 7)),
+                'crossplagScore': Math.max(0, Math.min(99, aiScore + Math.random() * 10 - 5))
             };
             
             for (const [id, score] of Object.entries(detectors)) {
                 const element = document.getElementById(id);
-                const roundedScore = Math.max(0, Math.min(99, Math.round(score)));
+                const roundedScore = Math.round(score);
                 element.textContent = roundedScore + '% AI';
                 
                 // Update color based on score
@@ -1005,6 +1016,8 @@
                 document.getElementById('outputRisk').textContent = 'DETECTION RISK: UNKNOWN';
                 document.getElementById('outputRisk').style.background = '';
                 document.getElementById('outputRisk').style.color = '';
+                
+                originalInputText = '';
             }
         }
 
