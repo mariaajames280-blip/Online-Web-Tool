@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI to Human Text Converter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #000000;
+            color: #FFFF00;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #FFFF00;
+        }
+        
+        .description {
+            color: #cccc00;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .tool-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .tool-area {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .input-section, .output-section {
+            background-color: #111111;
+            padding: 25px;
+            border-radius: 10px;
+            border: 2px solid #333300;
+        }
+        
+        h2 {
+            color: #FFFF00;
+            margin-bottom: 20px;
+            border-left: 4px solid #FFFF00;
+            padding-left: 15px;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 300px;
+            background-color: #1a1a1a;
+            color: #FFFF00;
+            border: 2px solid #333300;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #FFFF00;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background-color: #FFFF00;
+            color: #000000;
+            border: none;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        button:hover {
+            background-color: #cccc00;
+        }
+        
+        .options {
+            background-color: #111111;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #333300;
+            margin-bottom: 20px;
+        }
+        
+        .option-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        select {
+            background-color: #000000;
+            color: #FFFF00;
+            border: 2px solid #333300;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        label {
+            color: #FFFF00;
+            font-size: 14px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-item {
+            background-color: #1a1a1a;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            border: 1px solid #333300;
+        }
+        
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #FFFF00;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #cccc00;
+            margin-top: 5px;
+        }
+        
+        .examples {
+            background-color: #111111;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #333300;
+            margin-top: 30px;
+        }
+        
+        .example-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .example-btn {
+            background-color: #333300;
+            color: #FFFF00;
+            border: 1px solid #666600;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .example-btn:hover {
+            background-color: #666600;
+        }
+        
+        .improvement-badge {
+            display: inline-block;
+            background: #113311;
+            color: #00FF00;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        
+        .ai-indicator {
+            color: #FF4444;
+            font-weight: bold;
+        }
+        
+        .human-indicator {
+            color: #00FF00;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 → 👤 AI to Human Text Converter</h1>
+            <p class="description">Transform AI-generated content into natural, human-sounding text that bypasses AI detection</p>
+        </header>
+        
+        <div class="options">
+            <h3>Conversion Settings</h3>
+            <div class="option-group">
+                <div class="option-item">
+                    <label for="tone">Writing Tone:</label>
+                    <select id="tone">
+                        <option value="casual">Casual</option>
+                        <option value="professional">Professional</option>
+                        <option value="friendly">Friendly</option>
+                        <option value="academic">Academic</option>
+                        <option value="creative">Creative</option>
+                    </select>
+                </div>
+                
+                <div class="option-item">
+                    <label for="intensity">Humanization Level:</label>
+                    <select id="intensity">
+                        <option value="light">Light</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="heavy">Heavy</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tool-area">
+            <div class="input-section">
+                <h2>AI-Generated Text <span class="ai-indicator">(🤖 AI)</span></h2>
+                <textarea id="aiInput" placeholder="Paste AI-generated text here...&#10;Example: The utilization of advanced algorithms facilitates the optimization of operational efficiencies..."></textarea>
+                <div class="buttons">
+                    <button onclick="humanizeText()">Humanize Text</button>
+                    <button onclick="detectAI()">Detect AI Patterns</button>
+                    <button onclick="clearText()">Clear All</button>
+                </div>
+            </div>
+            
+            <div class="output-section">
+                <h2>Humanized Text <span class="human-indicator">(👤 Human)</span></h2>
+                <textarea id="humanOutput" placeholder="Humanized text will appear here..." readonly></textarea>
+                <div id="conversionResult"></div>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="aiScore">0%</div>
+                        <div class="stat-label">AI Detection</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="readabilityScore">0</div>
+                        <div class="stat-label">Readability</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="wordCount">0</div>
+                        <div class="stat-label">Words</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="improvement">0%</div>
+                        <div class="stat-label">Improvement</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="examples">
+            <h2>AI Text Examples</h2>
+            <p style="color: #cccc00; margin-bottom: 15px;">Try humanizing these common AI-generated texts:</p>
+            <div class="example-buttons">
+                <button class="example-btn" onclick="loadExample('academic')">Academic Text</button>
+                <button class="example-btn" onclick="loadExample('business')">Business Report</button>
+                <button class="example-btn" onclick="loadExample('marketing')">Marketing Content</button>
+                <button class="example-btn" onclick="loadExample('technical')">Technical Documentation</button>
+                <button class="example-btn" onclick="loadExample('email')">Email Response</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function humanizeText() {
+            const input = document.getElementById('aiInput').value;
+            const tone = document.getElementById('tone').value;
+            const intensity = document.getElementById('intensity').value;
+            const resultDiv = document.getElementById('conversionResult');
+            
+            if (!input.trim()) {
+                resultDiv.innerHTML = '<div style="color: #FF4444; padding: 10px; background: #331111; border-radius: 5px;">Please enter some AI-generated text</div>';
+                return;
+            }
+            
+            // Show loading
+            resultDiv.innerHTML = '<div style="color: #FFFF00; padding: 10px; background: #333311; border-radius: 5px;">🔄 Humanizing text... This may take a few seconds</div>';
+            
+            setTimeout(() => {
+                try {
+                    const humanized = processHumanization(input, tone, intensity);
+                    document.getElementById('humanOutput').value = humanized;
+                    
+                    // Calculate scores
+                    const aiScore = calculateAIScore(humanized);
+                    const readability = calculateReadability(humanized);
+                    const improvement = calculateImprovement(input, humanized);
+                    
+                    updateScores(aiScore, readability, improvement);
+                    
+                    resultDiv.innerHTML = `<div style="color: #00FF00; padding: 10px; background: #113311; border-radius: 5px;">
+                        ✅ Successfully humanized! 
+                        <span class="improvement-badge">${improvement}% more human</span>
+                    </div>`;
+                    
+                } catch (error) {
+                    resultDiv.innerHTML = `<div style="color: #FF4444; padding: 10px; background: #331111; border-radius: 5px;">❌ Error: ${error.message}</div>`;
+                }
+            }, 1000);
+        }
+        
+        function processHumanization(text, tone, intensity) {
+            // AI patterns to replace
+            const aiPatterns = [
+                // Formal to casual
+                { pattern: /\butilize\b/gi, replacement: 'use' },
+                { pattern: /\bfacilitate\b/gi, replacement: 'help' },
+                { pattern: /\boptimize\b/gi, replacement: 'improve' },
+                { pattern: /\bimplement\b/gi, replacement: 'set up' },
+                { pattern: /\butilization\b/gi, replacement: 'use' },
+                { pattern: /\bfacilitation\b/gi, replacement: 'help' },
+                { pattern: /\boptimization\b/gi, replacement: 'improvement' },
+                { pattern: /\bimplementation\b/gi, replacement: 'setup' },
+                
+                // Complex to simple
+                { pattern: /\bmethodology\b/gi, replacement: 'method' },
+                { pattern: /\bparadigm\b/gi, replacement: 'model' },
+                { pattern: /\bleverage\b/gi, replacement: 'use' },
+                { pattern: /\bsynergy\b/gi, replacement: 'teamwork' },
+                { pattern: /\brobust\b/gi, replacement: 'strong' },
+                
+                // Remove redundant phrases
+                { pattern: /\bit is important to note that\b/gi, replacement: '' },
+                { pattern: /\bit should be noted that\b/gi, replacement: '' },
+                { pattern: /\bin order to\b/gi, replacement: 'to' },
+            ];
+            
+            let humanized = text;
+            
+            // Apply basic replacements
+            aiPatterns.forEach(item => {
+                humanized = humanized.replace(item.pattern, item.replacement);
+            });
+            
+            // Apply tone-specific transformations
+            humanized = applyTone(humanized, tone);
+            
+            // Apply intensity level
+            humanized = applyIntensity(humanized, intensity);
+            
+            // Clean up extra spaces and punctuation
+            humanized = humanized
+                .replace(/\s+/g, ' ')
+                .replace(/\s\./g, '.')
+                .replace(/\s,/g, ',')
+                .replace(/\s\?/g, '?')
+                .replace(/\s!/g, '!')
+                .trim();
+            
+            // Capitalize first letter
+            humanized = humanized.charAt(0).toUpperCase() + humanized.slice(1);
+            
+            return humanized;
+        }
+        
+        function applyTone(text, tone) {
+            switch(tone) {
+                case 'casual':
+                    return text
+                        .replace(/\bhowever\b/gi, 'but')
+                        .replace(/\btherefore\b/gi, 'so')
+                        .replace(/\bfurthermore\b/gi, 'also')
+                        .replace(/\bthus\b/gi, 'so')
+                        .replace(/\bhence\b/gi, 'so');
+                        
+                case 'friendly':
+                    return text
+                        .replace(/\bcan\b/gi, 'can')
+                        .replace(/\bwill\b/gi, "ll")
+                        .replace(/\bI am\b/gi, "I'm")
+                        .replace(/\byou are\b/gi, "you're");
+                        
+                case 'professional':
+                    return text; // Keep more formal
+                    
+                case 'academic':
+                    return text; // Keep academic style
+                    
+                case 'creative':
+                    return text
+                        .replace(/\bvery\b/gi, 'really')
+                        .replace(/\bmany\b/gi, 'lots of')
+                        .replace(/\bimportant\b/gi, 'key');
+                        
+                default:
+                    return text;
+            }
+        }
+        
+        function applyIntensity(text, intensity) {
+            const variations = [
+                // Sentence starters
+                'Well, ', 'Actually, ', 'You know, ', 'So, ', 'Basically, ',
+                'The thing is, ', 'Honestly, ', 'Interestingly, '
+            ];
+            
+            let result = text;
+            
+            if (intensity === 'heavy') {
+                // Add more conversational elements
+                const sentences = result.split('. ');
+                if (sentences.length > 1) {
+                    // Add variation to first sentence
+                    const randomStarter = variations[Math.floor(Math.random() * variations.length)];
+                    sentences[0] = randomStarter + sentences[0].toLowerCase();
+                    result = sentences.join('. ');
+                }
+            }
+            
+            return result;
+        }
+        
+        function detectAI() {
+            const input = document.getElementById('aiInput').value;
+            const resultDiv = document.getElementById('conversionResult');
+            
+            if (!input.trim()) {
+                resultDiv.innerHTML = '<div style="color: #FF4444; padding: 10px; background: #331111; border-radius: 5px;">Please enter some text to analyze</div>';
+                return;
+            }
+            
+            const aiScore = calculateAIScore(input);
+            const readability = calculateReadability(input);
+            
+            document.getElementById('aiScore').textContent = aiScore + '%';
+            document.getElementById('readabilityScore').textContent = readability;
+            document.getElementById('wordCount').textContent = input.split(/\s+/).length;
+            document.getElementById('improvement').textContent = '0%';
+            
+            let message = '';
+            if (aiScore > 70) {
+                message = `🤖 High AI probability detected (${aiScore}%)`;
+            } else if (aiScore > 40) {
+                message = `⚠️ Mixed AI/Human characteristics (${aiScore}%)`;
+            } else {
+                message = `👤 Likely human-written (${aiScore}%)`;
+            }
+            
+            resultDiv.innerHTML = `<div style="color: #FFFF00; padding: 10px; background: #333311; border-radius: 5px;">
+                ${message} | Readability: ${readability}/10
+            </div>`;
+        }
+        
+        function calculateAIScore(text) {
+            // Simple AI detection based on common patterns
+            let score = 0;
+            const aiIndicators = [
+                /\butilize\b/gi, /\bfacilitate\b/gi, /\boptimize\b/gi, /\bimplement\b/gi,
+                /\bmethodology\b/gi, /\bparadigm\b/gi, /\bleverage\b/gi, /\bsynergy\b/gi,
+                /\brobust\b/gi, /\bscalable\b/gi, /\bseamless\b/gi, /\bempower\b/gi
+            ];
+            
+            aiIndicators.forEach(pattern => {
+                const matches = text.match(pattern);
+                if (matches) score += matches.length * 5;
+            });
+            
+            // Check for repetitive sentence structures
+            const sentences = text.split(/[.!?]+/);
+            if (sentences.length > 3) {
+                const firstWords = sentences.map(s => s.trim().split(' ')[0].toLowerCase());
+                const uniqueStarters = new Set(firstWords).size;
+                const repetitionRate = (1 - uniqueStarters / sentences.length) * 100;
+                score += repetitionRate * 0.5;
+            }
+            
+            return Math.min(95, Math.round(score));
+        }
+        
+        function calculateReadability(text) {
+            // Simple readability score
+            const words = text.split(/\s+/).length;
+            const sentences = text.split(/[.!?]+/).length;
+            const avgSentenceLength = words / sentences;
+            
+            let score = 10;
+            if (avgSentenceLength > 25) score -= 3;
+            if (avgSentenceLength > 35) score -= 2;
+            if (text.length > 1000) score -= 2;
+            
+            return Math.max(1, Math.round(score));
+        }
+        
+        function calculateImprovement(original, humanized) {
+            const originalScore = calculateAIScore(original);
+            const humanizedScore = calculateAIScore(humanized);
+            return Math.round(((originalScore - humanizedScore) / originalScore) * 100);
+        }
+        
+        function updateScores(aiScore, readability, improvement) {
+            document.getElementById('aiScore').textContent = aiScore + '%';
+            document.getElementById('readabilityScore').textContent = readability;
+            document.getElementById('wordCount').textContent = document.getElementById('humanOutput').value.split(/\s+/).length;
+            document.getElementById('improvement').textContent = improvement + '%';
+        }
+        
+        function clearText() {
+            document.getElementById('aiInput').value = '';
+            document.getElementById('humanOutput').value = '';
+            document.getElementById('conversionResult').innerHTML = '';
+            updateScores(0, 0, 0);
+        }
+        
+        function loadExample(type) {
+            const examples = {
+                academic: `The utilization of advanced computational methodologies facilitates the optimization of research outcomes through systematic data analysis paradigms. Subsequent implementation of these frameworks enables enhanced productivity metrics across diverse academic disciplines.`,
+                
+                business: `Leveraging synergistic corporate strategies facilitates the optimization of operational efficiencies while implementing robust scalability frameworks. This paradigm shift empowers organizations to maximize stakeholder value through innovative business process reengineering.`,
+                
+                marketing: `Implementing comprehensive digital transformation strategies facilitates the optimization of customer engagement metrics through omnichannel marketing methodologies. This enables brands to leverage data-driven insights for enhanced conversion rate optimization and customer lifetime value maximization.`,
+                
+                technical: `The deployment of containerized microservices architecture facilitates the optimization of application performance metrics through distributed computing paradigms. Implementation of these scalable frameworks enables robust fault tolerance and enhanced system reliability across heterogeneous infrastructure environments.`,
+                
+                email: `Pursuant to our previous correspondence regarding the aforementioned matter, I am writing to facilitate the optimization of our collaborative efforts. Implementation of the proposed methodologies will undoubtedly enhance our synergistic partnership and maximize mutual operational efficiencies.`
+            };
+            
+            document.getElementById('aiInput').value = examples[type];
+            document.getElementById('humanOutput').value = '';
+            document.getElementById('conversionResult').innerHTML = '';
+            updateScores(0, 0, 0);
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateScores(0, 0, 0);
+        });
+    </script>
+</body>
+</html>
