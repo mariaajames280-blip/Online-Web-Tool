@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Beautifier</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #000000;
+            color: #FFFF00;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #FFFF00;
+        }
+        
+        .description {
+            color: #cccc00;
+            margin-bottom: 30px;
+        }
+        
+        .tool-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 968px) {
+            .tool-area {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .input-section, .output-section {
+            background-color: #111111;
+            padding: 25px;
+            border-radius: 10px;
+            border: 2px solid #333300;
+        }
+        
+        h2 {
+            color: #FFFF00;
+            margin-bottom: 20px;
+            border-left: 4px solid #FFFF00;
+            padding-left: 15px;
+        }
+        
+        .language-selector {
+            margin-bottom: 15px;
+        }
+        
+        select {
+            background-color: #000000;
+            color: #FFFF00;
+            border: 2px solid #333300;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            width: 200px;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: #FFFF00;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 400px;
+            background-color: #1a1a1a;
+            color: #FFFF00;
+            border: 2px solid #333300;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+            line-height: 1.4;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #FFFF00;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background-color: #FFFF00;
+            color: #000000;
+            border: none;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        button:hover {
+            background-color: #cccc00;
+        }
+        
+        button:disabled {
+            background-color: #666600;
+            cursor: not-allowed;
+        }
+        
+        .options {
+            background-color: #111111;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #333300;
+            margin-bottom: 20px;
+        }
+        
+        .option-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        input[type="number"] {
+            background-color: #000000;
+            color: #FFFF00;
+            border: 1px solid #333300;
+            padding: 5px 10px;
+            border-radius: 3px;
+            width: 60px;
+        }
+        
+        input[type="checkbox"] {
+            transform: scale(1.2);
+        }
+        
+        label {
+            color: #FFFF00;
+            font-size: 14px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-item {
+            background-color: #1a1a1a;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            border: 1px solid #333300;
+        }
+        
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #FFFF00;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #cccc00;
+            margin-top: 5px;
+        }
+        
+        .examples {
+            background-color: #111111;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #333300;
+            margin-top: 30px;
+        }
+        
+        .example-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .example-btn {
+            background-color: #333300;
+            color: #FFFF00;
+            border: 1px solid #666600;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .example-btn:hover {
+            background-color: #666600;
+        }
+        
+        .syntax-highlight {
+            color: #ff6b6b;
+        }
+        
+        .syntax-string {
+            color: #98c379;
+        }
+        
+        .syntax-keyword {
+            color: #c678dd;
+        }
+        
+        .syntax-comment {
+            color: #5c6370;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💻 Code Beautifier & Formatter</h1>
+            <p class="description">Beautify, format, and minify your code in multiple languages</p>
+        </header>
+        
+        <div class="options">
+            <div class="option-group">
+                <div class="option-item">
+                    <label for="language">Language:</label>
+                    <select id="language" onchange="changeLanguage()">
+                        <option value="html">HTML</option>
+                        <option value="css">CSS</option>
+                        <option value="javascript">JavaScript</option>
+                        <option value="json">JSON</option>
+                        <option value="xml">XML</option>
+                        <option value="php">PHP</option>
+                        <option value="python">Python</option>
+                    </select>
+                </div>
+                
+                <div class="option-item">
+                    <label for="indentSize">Indent Size:</label>
+                    <input type="number" id="indentSize" value="2" min="1" max="8">
+                </div>
+                
+                <div class="option-item">
+                    <input type="checkbox" id="syntaxHighlight" checked>
+                    <label for="syntaxHighlight">Syntax Highlighting</label>
+                </div>
+                
+                <div class="option-item">
+                    <input type="checkbox" id="preserveComments" checked>
+                    <label for="preserveComments">Preserve Comments</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tool-area">
+            <div class="input-section">
+                <h2>Input Code</h2>
+                <div class="language-selector">
+                    <span style="color: #cccc00;">Editing: </span>
+                    <strong id="currentLanguage">HTML</strong>
+                </div>
+                <textarea id="codeInput" placeholder="Paste your code here or use examples below..."></textarea>
+                <div class="buttons">
+                    <button onclick="beautifyCode()">Beautify Code</button>
+                    <button onclick="minifyCode()">Minify Code</button>
+                    <button onclick="validateCode()">Validate</button>
+                    <button onclick="clearCode()">Clear All</button>
+                </div>
+            </div>
+            
+            <div class="output-section">
+                <h2>Formatted Code</h2>
+                <div class="language-selector">
+                    <span style="color: #cccc00;">Formatted: </span>
+                    <strong id="outputLanguage">HTML</strong>
+                </div>
+                <textarea id="codeOutput" placeholder="Formatted code will appear here..." readonly></textarea>
+                <div id="validationResult"></div>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="charCount">0</div>
+                        <div class="stat-label">Characters</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="lineCount">0</div>
+                        <div class="stat-label">Lines</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="savedPercent">0%</div>
+                        <div class="stat-label">Saved</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="sizeKB">0 KB</div>
+                        <div class="stat-label">Size</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="examples">
+            <h2>Code Examples</h2>
+            <p style="color: #cccc00; margin-bottom: 15px;">Try these examples to test the formatter:</p>
+            <div class="example-buttons">
+                <button class="example-btn" onclick="loadExample('html')">HTML Example</button>
+                <button class="example-btn" onclick="loadExample('css')">CSS Example</button>
+                <button class="example-btn" onclick="loadExample('javascript')">JavaScript Example</button>
+                <button class="example-btn" onclick="loadExample('json')">JSON Example</button>
+                <button class="example-btn" onclick="loadExample('xml')">XML Example</button>
+                <button class="example-btn" onclick="loadExample('python')">Python Example</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let originalSize = 0;
+        
+        function changeLanguage() {
+            const language = document.getElementById('language').value;
+            document.getElementById('currentLanguage').textContent = language.toUpperCase();
+            document.getElementById('outputLanguage').textContent = language.toUpperCase();
+            updatePlaceholder();
+        }
+        
+        function updatePlaceholder() {
+            const language = document.getElementById('language').value;
+            const placeholders = {
+                html: 'Paste your HTML code here...\nExample: <div class="container"><h1>Title</h1></div>',
+                css: 'Paste your CSS code here...\nExample: body { margin: 0; padding: 20px; }',
+                javascript: 'Paste your JavaScript code here...\nExample: function test() { return "hello"; }',
+                json: 'Paste your JSON code here...\nExample: {"name": "John", "age": 30}',
+                xml: 'Paste your XML code here...\nExample: <root><item>value</item></root>',
+                php: 'Paste your PHP code here...\nExample: <?php echo "Hello World"; ?>',
+                python: 'Paste your Python code here...\nExample: def hello():\n    return "world"'
+            };
+            document.getElementById('codeInput').placeholder = placeholders[language] || 'Paste your code here...';
+        }
+        
+        function beautifyCode() {
+            const input = document.getElementById('codeInput').value;
+            const language = document.getElementById('language').value;
+            const indentSize = parseInt(document.getElementById('indentSize').value) || 2;
+            const resultDiv = document.getElementById('validationResult');
+            
+            if (!input.trim()) {
+                resultDiv.innerHTML = '<div style="color: #FF4444; padding: 10px; background: #331111; border-radius: 5px;">Please enter some code</div>';
+                return;
+            }
+            
+            try {
+                let formatted = '';
+                
+                switch(language) {
+                    case 'html':
+                        formatted = formatHTML(input, indentSize);
+                        break;
+                    case 'css':
+                        formatted = formatCSS(input, indentSize);
+                        break;
+                    case 'javascript':
+                        formatted = formatJavaScript(input, indentSize);
+                        break;
+                    case 'json':
+                        formatted = formatJSON(input, indentSize);
+                        break;
+                    case 'xml':
+                        formatted = formatXML(input, indentSize);
+                        break;
+                    case 'php':
+                        formatted = formatPHP(input, indentSize);
+                        break;
+                    case 'python':
+                        formatted = formatPython(input, indentSize);
+                        break;
+                    default:
+                        formatted = input;
+                }
+                
+                document.getElementById('codeOutput').value = formatted;
+                resultDiv.innerHTML = '<div style="color: #00FF00; padding: 10px; background: #113311; border-radius: 5px;">✅ Code formatted successfully!</div>';
+                updateStats();
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<div style="color: #FF4444; padding: 10px; background: #331111; border-radius: 5px;">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        function minifyCode() {
+            const input = document.getElementById('codeInput').value;
+            const language = document.getElementById('language').value;
+            const resultDiv = document.getElementById('validationResult');
+            
+            if (!input.trim()) {
+                resultDiv.innerHTML = '<div style="color: #FF4444; padding: 10px; background: #331111; border-radius: 5px;">Please enter some code</div>';
+                return;
+            }
+            
+            try {
+                let minified = '';
+                
+                switch(language) {
+                    case 'html':
+                        minified = input.replace(/\s+/g, ' ').replace(/>\s+</g, '><').trim();
+                        break;
+                    case 'css':
+                        minified = input.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').replace(/\s*([{};:,])\s*/g, '$1').trim();
+                        break;
+                    case 'javascript':
+                        minified = input.replace(/\/\/.*$/gm, '').replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').trim();
+                        break;
+                    case 'json':
+                        minified = JSON.stringify(JSON.parse(input));
+                        break;
+                    case 'xml':
+                        minified = input.replace(/\s+/g, ' ').replace(/>\s+</g, '><').trim();
+                        break;
+                    default:
+                        minified = input.replace(/\s+/g, ' ').trim();
+                }
+                
+                document.getElementById('codeOutput').value = minified;
+                resultDiv.innerHTML = '<div style="color: #00FF00; padding: 10px; background: #113311; border-radius: 5px;">✅ Code minified successfully!</div>';
+                updateStats();
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<div style="color: #FF4444; padding: 10px; background: #331111; border-radius: 5px;">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        function validateCode() {
+            const input = document.getElementById('codeInput').value;
+            const language = document.getElementById('language').value;
+            const resultDiv = document.getElementById('validationResult');
+            
+            if (!input.trim()) {
+                resultDiv.innerHTML = '<div style="color: #FF4444; padding: 10px; background: #331111; border-radius: 5px;">Please enter some code</div>';
+                return;
+            }
+            
+            try {
+                let isValid = true;
+                let message = '✅ Valid code';
+                
+                switch(language) {
+                    case 'json':
+                        JSON.parse(input);
+                        break;
+                    case 'javascript':
+                        // Basic JS validation
+                        Function(input);
+                        break;
+                    case 'xml':
+                        new DOMParser().parseFromString(input, "text/xml");
+                        break;
+                }
+                
+                resultDiv.innerHTML = `<div style="color: #00FF00; padding: 10px; background: #113311; border-radius: 5px;">${message}</div>`;
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<div style="color: #FF4444; padding: 10px; background: #331111; border-radius: 5px;">❌ Validation Error: ${error.message}</div>`;
+            }
+        }
+        
+        function clearCode() {
+            document.getElementById('codeInput').value = '';
+            document.getElementById('codeOutput').value = '';
+            document.getElementById('validationResult').innerHTML = '';
+            updateStats();
+        }
+        
+        // Formatting functions
+        function formatHTML(html, indentSize) {
+            // Simple HTML formatting
+            let formatted = '';
+            let level = 0;
+            const indent = ' '.repeat(indentSize);
+            
+            html = html.replace(/>\s+</g, '><');
+            
+            const lines = html.split('><');
+            lines.forEach((line, index) => {
+                if (index > 0) line = '<' + line;
+                if (index < lines.length - 1) line = line + '>';
+                
+                line = line.trim();
+                if (!line) return;
+                
+                if (line.startsWith('</')) {
+                    level--;
+                }
+                
+                formatted += indent.repeat(level) + line + '\n';
+                
+                if (line.startsWith('<') && !line.startsWith('</') && !line.endsWith('/>') && !line.includes('</')) {
+                    level++;
+                }
+            });
+            
+            return formatted;
+        }
+        
+        function formatCSS(css, indentSize) {
+            // Simple CSS formatting
+            const indent = ' '.repeat(indentSize);
+            return css
+                .replace(/\s*{\s*/g, ' {\n')
+                .replace(/;\s*/g, ';\n')
+                .replace(/}\s*/g, '\n}\n\n')
+                .replace(/\n\s*\n/g, '\n')
+                .split('\n')
+                .map(line => {
+                    if (line.trim().endsWith('{')) {
+                        return indent.repeat(0) + line;
+                    } else if (line.trim().startsWith('}')) {
+                        return indent.repeat(0) + line;
+                    } else if (line.trim()) {
+                        return indent.repeat(1) + line;
+                    }
+                    return line;
+                })
+                .join('\n')
+                .trim();
+        }
+        
+        function formatJavaScript(js, indentSize) {
+            // Simple JS formatting
+            const indent = ' '.repeat(indentSize);
+            return js
+                .replace(/\s*{\s*/g, ' {\n')
+                .replace(/;\s*/g, ';\n')
+                .replace(/}\s*/g, '\n}\n')
+                .replace(/\n\s*\n/g, '\n')
+                .split('\n')
+                .map(line => {
+                    const trimmed = line.trim();
+                    if (trimmed.endsWith('{') || trimmed.endsWith('(')) {
+                        return indent.repeat(0) + line;
+                    } else if (trimmed.startsWith('}') || trimmed.startsWith(')')) {
+                        return indent.repeat(0) + line;
+                    } else if (trimmed) {
+                        return indent.repeat(1) + line;
+                    }
+                    return line;
+                })
+                .join('\n')
+                .trim();
+        }
+        
+        function formatJSON(json, indentSize) {
+            return JSON.stringify(JSON.parse(json), null, indentSize);
+        }
+        
+        function formatXML(xml, indentSize) {
+            return formatHTML(xml, indentSize);
+        }
+        
+        function formatPHP(php, indentSize) {
+            return formatJavaScript(php, indentSize);
+        }
+        
+        function formatPython(python, indentSize) {
+            // Python already uses indentation, just clean it up
+            return python
+                .replace(/\t/g, ' '.repeat(indentSize))
+                .split('\n')
+                .map(line => line.trim() ? line : '')
+                .join('\n')
+                .trim();
+        }
+        
+        function updateStats() {
+            const input = document.getElementById('codeInput').value;
+            const output = document.getElementById('codeOutput').value;
+            
+            const inputChars = input.length;
+            const outputChars = output.length;
+            const inputLines = input.split('\n').length;
+            const outputLines = output.split('\n').length;
+            
+            const savedPercent = inputChars > 0 ? Math.round((1 - outputChars / inputChars) * 100) : 0;
+            const sizeKB = (new Blob([output || input]).size / 1024).toFixed(2);
+            
+            document.getElementById('charCount').textContent = outputChars || inputChars;
+            document.getElementById('lineCount').textContent = outputLines || inputLines;
+            document.getElementById('savedPercent').textContent = (savedPercent > 0 ? '-' : '') + Math.abs(savedPercent) + '%';
+            document.getElementById('sizeKB').textContent = sizeKB + ' KB';
+        }
+        
+        function loadExample(type) {
+            const examples = {
+                html: `<div class="container"><header><h1>Welcome</h1><nav><ul><li><a href="#">Home</a></li><li><a href="#">About</a></li></ul></nav></header><main><section><p>Hello world!</p></section></main></div>`,
+                
+                css: `body{margin:0;padding:20px;font-family:Arial,sans-serif}.container{max-width:1200px;margin:0 auto}.header{background:#333;color:white;padding:1rem}.btn{padding:10px 20px;background:blue;color:white;border:none;border-radius:5px}`,
+                
+                javascript: `function calculateTotal(items){let total=0;for(let i=0;i<items.length;i++){total+=items[i].price*items[i].quantity}return total}const user={name:"John",age:30,hobbies:["reading","gaming"]}`,
+                
+                json: `{"users":[{"id":1,"name":"John","email":"john@example.com","active":true},{"id":2,"name":"Jane","email":"jane@example.com","active":false}],"total":2}`,
+                
+                xml: `<?xml version="1.0"?><catalog><book id="1"><title>Book One</title><author>Author One</author></book><book id="2"><title>Book Two</title><author>Author Two</author></book></catalog>`,
+                
+                python: `def factorial(n):\nif n==0:\nreturn 1\nelse:\nreturn n*factorial(n-1)\nclass Person:\ndef __init__(self,name,age):\nself.name=name\nself.age=age`
+            };
+            
+            document.getElementById('codeInput').value = examples[type];
+            document.getElementById('codeOutput').value = '';
+            document.getElementById('validationResult').innerHTML = '';
+            
+            // Set language based on example
+            const languageMap = {
+                'html': 'html', 'css': 'css', 'javascript': 'javascript', 
+                'json': 'json', 'xml': 'xml', 'python': 'python'
+            };
+            document.getElementById('language').value = languageMap[type];
+            changeLanguage();
+            updateStats();
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updatePlaceholder();
+            updateStats();
+            
+            document.getElementById('codeInput').addEventListener('input', updateStats);
+            document.getElementById('codeOutput').addEventListener('input', updateStats);
+        });
+    </script>
+</body>
+</html>
