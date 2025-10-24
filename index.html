@@ -962,85 +962,80 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>ONLINE WEBTOOL</h3>
-                    <p>Your one-stop destination for free online tools</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li><a href="tools/qr-generator.html">QR Code Generator</a></li>
-                        <li><a href="tools/url-shortener.html">URL Shortener</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Popular Tools</h4>
-                    <ul>
-                        <li><a href="tools/password-generator.html">Password Generator</a></li>
-                        <li><a href="tools/base64-converter.html">Base64 Converter</a></li>
-                        <li><a href="tools/color-picker.html">Color Picker</a></li>
-                        <li><a href="tools/word-counter.html">Word Counter</a></li>
-                        <li><a href="tools/calculator.html">Calculator</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Connect With Us</h4>
-                    <div class="social-icons">
-                        <a href="https://facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="https://twitter.com" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                        <a href="https://youtube.com" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
-                        <a href="https://github.com" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
+   <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>ONLINE WEBTOOL</h3>
+                <p>Your one-stop destination for free online tools</p>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
+
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="https://onlinewebtool.live/index.html">Home</a></li>
+                    <li><a href="https://onlinewebtool.live/about.html">About Us</a></li>
+                    <li><a href="https://onlinewebtool.live/blog.html">Blog</a></li>
+                    <li><a href="https://onlinewebtool.live/privacy.html">Privacy Policy</a></li>
+                    <li><a href="https://onlinewebtool.live/terms.html">Terms of Service</a></li>
+                    <li><a href="https://onlinewebtool.live/contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Popular Tools</h4>
+                <ul>
+                    <li><a href="https://onlinewebtool.live/tools/password-generator.html">Password Generator</a></li>
+                    <li><a href="https://onlinewebtool.live/tools/qr-generator.html">QR Code Generator</a></li>
+                    <li><a href="https://onlinewebtool.live/tools/color-picker.html">Color Picker</a></li>
+                    <li><a href="https://onlinewebtool.live/tools/base64-converter.html">Base64 Converter</a></li>
+                    <li><a href="https://onlinewebtool.live/tools/word-counter.html">Word Counter</a></li>
+                    <li><a href="https://onlinewebtool.live/tools/calculator.html">Calculator</a></li>
+                    <li><a href="https://onlinewebtool.live/tools/url-shortener.html">URL Shortener</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Connect With Us</h4>
+                <div class="social-icons">
+                    <a href="https://facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="https://twitter.com" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://youtube.com" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://github.com" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                </div>
             </div>
         </div>
-    </footer>
 
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    
-    <!-- Live Clock Script -->
-    <script>
-        function updateClock() {
-            const now = new Date();
-            
-            // Format time
-            let hours = now.getHours();
-            let minutes = now.getMinutes();
-            let seconds = now.getSeconds();
-            const ampm = hours >= 12 ? 'PM' : 'AM';
-            
-            hours = hours % 12;
-            hours = hours ? hours : 12; // the hour '0' should be '12'
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            seconds = seconds < 10 ? '0' + seconds : seconds;
-            
-            const timeString = `${hours}:${minutes}:${seconds} ${ampm}`;
-            
-            // Format date
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            const dateString = now.toLocaleDateString('en-US', options);
-            
-            // Update the clock elements
-            document.getElementById('clock-time').textContent = timeString;
-            document.getElementById('clock-date').textContent = dateString;
-        }
-        
-        // Update the clock immediately and then every second
-        updateClock();
-        setInterval(updateClock, 1000);
-    </script>
-</body>
-</html>
+        <div class="footer-bottom">
+            <p>&copy; 2025 ONLINE WEBTOOL. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Font Awesome for icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+
+<!-- Live Clock Script -->
+<script>
+    function updateClock() {
+        const now = new Date();
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        let seconds = now.getSeconds();
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        const timeString = `${hours}:${minutes}:${seconds} ${ampm}`;
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const dateString = now.toLocaleDateString('en-US', options);
+        document.getElementById('clock-time').textContent = timeString;
+        document.getElementById('clock-date').textContent = dateString;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+</script>
