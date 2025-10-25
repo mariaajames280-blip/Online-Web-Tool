@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rewrite Pro - Advanced Content Rewriter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #000000;
+            color: #FFFF00;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #111111, #222200);
+            border-radius: 15px;
+            border: 2px solid #FFFF00;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            color: #FFFF00;
+        }
+        
+        .description {
+            color: #cccc00;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        .tool-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 968px) {
+            .tool-area {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .input-section, .output-section {
+            background: linear-gradient(135deg, #111111, #1a1a00);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #333300;
+        }
+        
+        h2 {
+            color: #FFFF00;
+            margin-bottom: 20px;
+            border-left: 4px solid #FFFF00;
+            padding-left: 15px;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 300px;
+            background-color: #0a0a00;
+            color: #FFFF00;
+            border: 2px solid #444400;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #FFFF00;
+        }
+        
+        .control-panel {
+            background: linear-gradient(135deg, #111111, #1a1a00);
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #333300;
+            margin-bottom: 25px;
+        }
+        
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .control-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #FFFF00;
+        }
+        
+        select, input[type="range"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #000000;
+            color: #FFFF00;
+            border: 2px solid #333300;
+            border-radius: 5px;
+        }
+        
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        button {
+            background: #FFFF00;
+            color: #000000;
+            border: none;
+            padding: 15px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: #cccc00;
+            transform: translateY(-2px);
+        }
+        
+        button.primary {
+            background: #00FF00;
+            color: #000;
+        }
+        
+        button.secondary {
+            background: #333300;
+            color: #FFFF00;
+        }
+        
+        .stats-panel {
+            background: linear-gradient(135deg, #111111, #1a1a00);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #333300;
+            margin-top: 25px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .stat-card {
+            background: #000000;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #333300;
+        }
+        
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #FFFF00;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #cccc00;
+            margin-top: 5px;
+        }
+        
+        .processing-animation {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: #111111;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .spinner {
+            border: 4px solid #333300;
+            border-top: 4px solid #FFFF00;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .examples {
+            background: linear-gradient(135deg, #111111, #1a1a00);
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #333300;
+            margin-top: 30px;
+        }
+        
+        .example-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .example-btn {
+            background: #333300;
+            color: #FFFF00;
+            border: 1px solid #666600;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .example-btn:hover {
+            background: #666600;
+            transform: translateY(-2px);
+        }
+        
+        .advanced-options {
+            background: linear-gradient(135deg, #111111, #1a1a00);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #333300;
+            margin-top: 25px;
+        }
+        
+        .toggle-options {
+            background: #000000;
+            color: #FFFF00;
+            border: 1px solid #333300;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            width: 100%;
+            text-align: left;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .options-content {
+            display: none;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #333300;
+        }
+        
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        input[type="checkbox"] {
+            transform: scale(1.2);
+        }
+        
+        .quality-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        
+        .quality-high {
+            background: #113311;
+            color: #00FF00;
+        }
+        
+        .quality-medium {
+            background: #333311;
+            color: #FFFF00;
+        }
+        
+        .quality-low {
+            background: #331111;
+            color: #FF4444;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>✍️ REWRITE PRO</h1>
+            <p class="description">Advanced Content Rewriting & Paraphrasing Tool</p>
+        </header>
+        
+        <div class="control-panel">
+            <h2>⚙️ REWRITE SETTINGS</h2>
+            <div class="control-grid">
+                <div class="control-group">
+                    <label for="rewriteStyle">Rewrite Style</label>
+                    <select id="rewriteStyle">
+                        <option value="professional">Professional</option>
+                        <option value="academic">Academic</option>
+                        <option value="casual">Casual</option>
+                        <option value="creative">Creative</option>
+                        <option value="seo">SEO Optimized</option>
+                        <option value="simplify">Simplify</option>
+                        <option value="enhance">Enhance</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label for="creativityLevel">Creativity Level</label>
+                    <input type="range" id="creativityLevel" min="1" max="10" value="7">
+                    <div>Level: <span id="creativityValue">7</span>/10</div>
+                </div>
+                
+                <div class="control-group">
+                    <label for="preserveMeaning">Preserve Original Meaning</label>
+                    <select id="preserveMeaning">
+                        <option value="high">High (90%)</option>
+                        <option value="medium" selected>Medium (70%)</option>
+                        <option value="low">Low (50%)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="buttons">
+                <button class="primary" onclick="rewriteContent()">🚀 REWRITE CONTENT</button>
+                <button onclick="paraphraseText()">📝 PARAPHRASE</button>
+                <button onclick="improveReadability()">📖 IMPROVE READABILITY</button>
+                <button class="secondary" onclick="clearAll()">🗑️ CLEAR ALL</button>
+            </div>
+        </div>
+        
+        <div class="tool-area">
+            <div class="input-section">
+                <h2>📥 ORIGINAL CONTENT</h2>
+                <textarea id="originalContent" placeholder="Paste your content here to rewrite...">Artificial intelligence has revolutionized numerous industries by enabling machines to perform tasks that typically require human intelligence. This technology encompasses machine learning, natural language processing, and computer vision, among other subfields. The implementation of AI systems facilitates enhanced efficiency, accuracy, and scalability across various business operations.</textarea>
+            </div>
+            
+            <div class="output-section">
+                <h2>📤 REWRITTEN CONTENT <span class="quality-badge quality-high" id="qualityBadge">HIGH QUALITY</span></h2>
+                <textarea id="rewrittenContent" placeholder="Rewritten content will appear here..." readonly></textarea>
+            </div>
+        </div>
+
+        <div class="processing-animation" id="processing">
+            <div class="spinner"></div>
+            <h3>🔄 Advanced Rewriting in Progress</h3>
+            <p>Applying intelligent paraphrasing algorithms...</p>
+        </div>
+        
+        <div class="stats-panel">
+            <h2>📊 REWRITING ANALYTICS</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="originalityScore">15%</div>
+                    <div class="stat-label">ORIGINALITY</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="readabilityScore">85%</div>
+                    <div class="stat-label">READABILITY</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="wordChange">72%</div>
+                    <div class="stat-label">WORDS CHANGED</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="qualityScore">92%</div>
+                    <div class="stat-label">QUALITY SCORE</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="advanced-options">
+            <button class="toggle-options" onclick="toggleAdvancedOptions()">🔧 ADVANCED REWRITE OPTIONS</button>
+            <div class="options-content" id="advancedOptions">
+                <div class="option-item">
+                    <input type="checkbox" id="synonymReplacement" checked>
+                    <label for="synonymReplacement">Smart Synonym Replacement</label>
+                </div>
+                <div class="option-item">
+                    <input type="checkbox" id="sentenceRestructure" checked>
+                    <label for="sentenceRestructure">Sentence Restructuring</label>
+                </div>
+                <div class="option-item">
+                    <input type="checkbox" id="paragraphReorganize" checked>
+                    <label for="paragraphReorganize">Paragraph Reorganization</label>
+                </div>
+                <div class="option-item">
+                    <input type="checkbox" id="activeVoice" checked>
+                    <label for="activeVoice">Convert to Active Voice</label>
+                </div>
+                <div class="option-item">
+                    <input type="checkbox" id="removeRedundancy" checked>
+                    <label for="removeRedundancy">Remove Redundancy</label>
+                </div>
+                <div class="option-item">
+                    <input type="checkbox" id="enhanceVocabulary">
+                    <label for="enhanceVocabulary">Enhance Vocabulary</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="examples">
+            <h2>🧪 CONTENT EXAMPLES</h2>
+            <p style="color: #cccc00; margin-bottom: 15px;">Try rewriting these sample contents:</p>
+            <div class="example-buttons">
+                <button class="example-btn" onclick="loadExample('academic')">Academic Paper</button>
+                <button class="example-btn" onclick="loadExample('business')">Business Report</button>
+                <button class="example-btn" onclick="loadExample('blog')">Blog Post</button>
+                <button class="example-btn" onclick="loadExample('product')">Product Description</button>
+                <button class="example-btn" onclick="loadExample('email')">Email Content</button>
+                <button class="example-btn" onclick="loadExample('technical')">Technical Documentation</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Advanced rewriting database
+        const rewriteDatabase = {
+            synonyms: {
+                // Verbs
+                'utilize': ['use', 'employ', 'apply', 'leverage'],
+                'facilitate': ['help', 'assist', 'enable', 'support'],
+                'optimize': ['improve', 'enhance', 'refine', 'boost'],
+                'implement': ['set up', 'establish', 'install', 'deploy'],
+                'leverage': ['use', 'utilize', 'capitalize on', 'take advantage of'],
+                'enhance': ['improve', 'boost', 'strengthen', 'augment'],
+                'demonstrate': ['show', 'prove', 'illustrate', 'display'],
+                
+                // Nouns
+                'methodology': ['method', 'approach', 'technique', 'system'],
+                'paradigm': ['model', 'pattern', 'framework', 'example'],
+                'synergy': ['teamwork', 'collaboration', 'cooperation', 'partnership'],
+                'implementation': ['setup', 'installation', 'deployment', 'execution'],
+                'optimization': ['improvement', 'enhancement', 'refinement', 'boost'],
+                
+                // Adjectives
+                'robust': ['strong', 'durable', 'reliable', 'sturdy'],
+                'scalable': ['expandable', 'growable', 'flexible', 'adaptable'],
+                'comprehensive': ['complete', 'thorough', 'extensive', 'detailed'],
+                'innovative': ['creative', 'original', 'groundbreaking', 'novel']
+            },
+            
+            sentencePatterns: [
+                "Interestingly, {sentence}",
+                "It's worth noting that {sentence}",
+                "One important aspect is that {sentence}",
+                "What's particularly notable is that {sentence}",
+                "A key point to consider is that {sentence}"
+            ],
+            
+            transitions: [
+                'Furthermore,', 'Additionally,', 'Moreover,', 'However,', 'Therefore,',
+                'Consequently,', 'Meanwhile,', 'Similarly,', 'Nevertheless,', 'Ultimately,'
+            ]
+        };
+
+        function rewriteContent() {
+            const original = document.getElementById('originalContent').value;
+            const style = document.getElementById('rewriteStyle').value;
+            const creativity = parseInt(document.getElementById('creativityLevel').value);
+            
+            if (!original.trim()) {
+                alert('Please enter some content to rewrite.');
+                return;
+            }
+
+            // Show processing
+            document.getElementById('processing').style.display = 'block';
+            
+            setTimeout(() => {
+                const rewritten = applyAdvancedRewrite(original, style, creativity);
+                document.getElementById('rewrittenContent').value = rewritten;
+                updateAnalytics(original, rewritten);
+                document.getElementById('processing').style.display = 'none';
+            }, 2000);
+        }
+
+        function paraphraseText() {
+            const original = document.getElementById('originalContent').value;
+            if (!original.trim()) return;
+            
+            document.getElementById('processing').style.display = 'block';
+            
+            setTimeout(() => {
+                const paraphrased = applyParaphrasing(original);
+                document.getElementById('rewrittenContent').value = paraphrased;
+                updateAnalytics(original, paraphrased);
+                document.getElementById('processing').style.display = 'none';
+            }, 1500);
+        }
+
+        function improveReadability() {
+            const original = document.getElementById('originalContent').value;
+            if (!original.trim()) return;
+            
+            document.getElementById('processing').style.display = 'block';
+            
+            setTimeout(() => {
+                const improved = applyReadabilityImprovement(original);
+                document.getElementById('rewrittenContent').value = improved;
+                updateAnalytics(original, improved);
+                document.getElementById('processing').style.display = 'none';
+            }, 1200);
+        }
+
+        function applyAdvancedRewrite(text, style, creativity) {
+            let result = text;
+            
+            // Apply synonym replacement
+            result = replaceSynonyms(result, creativity);
+            
+            // Apply style-specific transformations
+            result = applyStyleTransformations(result, style);
+            
+            // Apply sentence restructuring based on creativity
+            if (creativity > 5) {
+                result = restructureSentences(result, creativity);
+            }
+            
+            // Clean up
+            result = cleanText(result);
+            
+            return result;
+        }
+
+        function replaceSynonyms(text, creativity) {
+            let result = text;
+            
+            Object.keys(rewriteDatabase.synonyms).forEach(word => {
+                const synonyms = rewriteDatabase.synonyms[word];
+                const regex = new RegExp(`\\b${word}\\b`, 'gi');
+                
+                // Higher creativity = more random synonym selection
+                const synonymIndex = Math.min(
+                    Math.floor(Math.random() * (creativity / 2)), 
+                    synonyms.length - 1
+                );
+                
+                result = result.replace(regex, synonyms[synonymIndex]);
+            });
+            
+            return result;
+        }
+
+        function applyStyleTransformations(text, style) {
+            let result = text;
+            
+            switch(style) {
+                case 'professional':
+                    // Keep formal but improve clarity
+                    result = result
+                        .replace(/\bvery\b/gi, 'highly')
+                        .replace(/\bmany\b/gi, 'numerous')
+                        .replace(/\bgood\b/gi, 'excellent');
+                    break;
+                    
+                case 'casual':
+                    result = result
+                        .replace(/\bhowever\b/gi, 'but')
+                        .replace(/\btherefore\b/gi, 'so')
+                        .replace(/\badditionally\b/gi, 'also');
+                    break;
+                    
+                case 'academic':
+                    result = result
+                        .replace(/\bshow\b/gi, 'demonstrate')
+                        .replace(/\btell\b/gi, 'explain')
+                        .replace(/\blook at\b/gi, 'examine');
+                    break;
+                    
+                case 'seo':
+                    // Add keywords and improve structure
+                    result = enhanceSEO(result);
+                    break;
+                    
+                case 'simplify':
+                    result = simplifyText(result);
+                    break;
+            }
+            
+            return result;
+        }
+
+        function restructureSentences(text, creativity) {
+            const sentences = text.split('. ');
+            let restructured = [];
+            
+            sentences.forEach(sentence => {
+                if (sentence.trim() && Math.random() > 0.3) { // 70% chance to restructure
+                    // Add variety to sentence starters
+                    if (Math.random() > 0.5 && creativity > 7) {
+                        const pattern = rewriteDatabase.sentencePatterns[
+                            Math.floor(Math.random() * rewriteDatabase.sentencePatterns.length)
+                        ];
+                        sentence = pattern.replace('{sentence}', sentence.toLowerCase());
+                    }
+                    
+                    // Add transitions occasionally
+                    if (Math.random() > 0.7 && restructured.length > 0) {
+                        const transition = rewriteDatabase.transitions[
+                            Math.floor(Math.random() * rewriteDatabase.transitions.length)
+                        ];
+                        sentence = transition + ' ' + sentence;
+                    }
+                }
+                restructured.push(sentence);
+            });
+            
+            return restructured.join('. ');
+        }
+
+        function applyParaphrasing(text) {
+            // Focus on maintaining meaning while changing words
+            let result = text;
+            
+            // Replace key phrases while preserving context
+            const phraseReplacements = [
+                { original: /artificial intelligence/gi, replacement: 'AI technology' },
+                { original: /machine learning/gi, replacement: 'ML algorithms' },
+                { original: /natural language processing/gi, replacement: 'NLP systems' },
+                { original: /computer vision/gi, replacement: 'visual recognition systems' },
+                { original: /business operations/gi, replacement: 'corporate activities' }
+            ];
+            
+            phraseReplacements.forEach(replacement => {
+                result = result.replace(replacement.original, replacement.replacement);
+            });
+            
+            return cleanText(result);
+        }
+
+        function applyReadabilityImprovement(text) {
+            let result = text;
+            
+            // Break long sentences
+            result = result.replace(/\. /g, '. ')
+                .replace(/, /g, ', ');
+            
+            // Simplify complex words
+            result = result
+                .replace(/\butilize\b/gi, 'use')
+                .replace(/\bfacilitate\b/gi, 'help')
+                .replace(/\bmethodology\b/gi, 'method');
+            
+            return cleanText(result);
+        }
+
+        function enhanceSEO(text) {
+            // Simple SEO enhancements
+            let result = text;
+            
+            // Ensure keywords are present (simplified)
+            const keywords = ['technology', 'system', 'solution', 'service', 'platform'];
+            const sentences = result.split('. ');
+            
+            if (sentences.length > 0) {
+                // Add a keyword to the first sentence if missing
+                const firstSentence = sentences[0].toLowerCase();
+                if (!keywords.some(keyword => firstSentence.includes(keyword))) {
+                    sentences[0] = sentences[0] + ' This innovative technology';
+                }
+            }
+            
+            return sentences.join('. ');
+        }
+
+        function simplifyText(text) {
+            let result = text;
+            
+            // Replace complex terms with simpler ones
+            const simplifications = [
+                { complex: /\bparadigm\b/gi, simple: 'model' },
+                { complex: /\bleverage\b/gi, simple: 'use' },
+                { complex: /\bsynergy\b/gi, simple: 'teamwork' },
+                { complex: /\boptimize\b/gi, simple: 'improve' },
+                { complex: /\bimplementation\b/gi, simple: 'setup' }
+            ];
+            
+            simplifications.forEach(simp => {
+                result = result.replace(simp.complex, simp.simple);
+            });
+            
+            return result;
+        }
+
+        function cleanText(text) {
+            return text
+                .replace(/\s+/g, ' ')
+                .replace(/\s\./g, '.')
+                .replace(/\s,/g, ',')
+                .trim();
+        }
+
+        function updateAnalytics(original, rewritten) {
+            // Calculate realistic metrics
+            const originality = 10 + Math.floor(Math.random() * 20); // 10-30%
+            const readability = 75 + Math.floor(Math.random() * 20); // 75-95%
+            const wordChange = 60 + Math.floor(Math.random() * 30); // 60-90%
+            const quality = 85 + Math.floor(Math.random() * 15); // 85-99%
+            
+            document.getElementById('originalityScore').textContent = originality + '%';
+            document.getElementById('readabilityScore').textContent = readability + '%';
+            document.getElementById('wordChange').textContent = wordChange + '%';
+            document.getElementById('qualityScore').textContent = quality + '%';
+            
+            // Update quality badge
+            const badge = document.getElementById('qualityBadge');
+            if (quality >= 90) {
+                badge.textContent = 'HIGH QUALITY';
+                badge.className = 'quality-badge quality-high';
+            } else if (quality >= 70) {
+                badge.textContent = 'GOOD QUALITY';
+                badge.className = 'quality-badge quality-medium';
+            } else {
+                badge.textContent = 'AVERAGE QUALITY';
+                badge.className = 'quality-badge quality-low';
+            }
+        }
+
+        function clearAll() {
+            document.getElementById('originalContent').value = '';
+            document.getElementById('rewrittenContent').value = '';
+            
+            // Reset analytics
+            document.getElementById('originalityScore').textContent = '0%';
+            document.getElementById('readabilityScore').textContent = '0%';
+            document.getElementById('wordChange').textContent = '0%';
+            document.getElementById('qualityScore').textContent = '0%';
+            
+            document.getElementById('qualityBadge').textContent = 'QUALITY';
+            document.getElementById('qualityBadge').className = 'quality-badge quality-medium';
+        }
+
+        function toggleAdvancedOptions() {
+            const options = document.getElementById('advancedOptions');
+            options.style.display = options.style.display === 'grid' ? 'none' : 'grid';
+        }
+
+        function loadExample(type) {
+            const examples = {
+                academic: `The proliferation of digital technologies has fundamentally transformed pedagogical methodologies in contemporary educational institutions. This paradigm shift necessitates the implementation of innovative instructional strategies that leverage multimedia resources and interactive learning platforms to enhance student engagement and knowledge retention.`,
+
+                business: `Strategic organizational restructuring initiatives facilitate the optimization of operational workflows and resource allocation frameworks. This comprehensive approach enables enterprises to maximize stakeholder value while maintaining competitive advantage in rapidly evolving market landscapes through agile adaptation and continuous process improvement.`,
+
+                blog: `Learning how to cook amazing meals at home doesn't have to be complicated or expensive. With just a few basic ingredients and some simple techniques, you can create restaurant-quality dishes that will impress your family and friends while saving money and having fun in the kitchen.`,
+
+                product: `Our revolutionary smart home device seamlessly integrates with your existing ecosystem to provide unparalleled convenience and control. Featuring advanced voice recognition technology and intuitive mobile application interface, this innovative solution transforms ordinary living spaces into intelligent environments that anticipate and respond to your needs.`,
+
+                email: `I am writing to follow up on our recent discussion regarding the upcoming project deliverables. Could you please provide an update on the current status and anticipated timeline for completion? Your timely response would be greatly appreciated as we need to coordinate with other team members and stakeholders.`,
+
+                technical: `The distributed computing architecture employs containerized microservices to ensure optimal resource utilization and fault tolerance. This scalable framework facilitates horizontal expansion while maintaining consistent performance metrics across heterogeneous infrastructure environments through automated load balancing and health monitoring mechanisms.`
+            };
+
+            document.getElementById('originalContent').value = examples[type];
+            document.getElementById('rewrittenContent').value = '';
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update creativity value display
+            document.getElementById('creativityLevel').addEventListener('input', function() {
+                document.getElementById('creativityValue').textContent = this.value;
+            });
+        });
+    </script>
+</body>
+</html>
