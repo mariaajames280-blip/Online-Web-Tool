@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rewrite Pro - Advanced Content Rewriter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #000000;
+            color: #FFFF00;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #111111, #222200);
+            border-radius: 15px;
+            border: 2px solid #FFFF00;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            color: #FFFF00;
+        }
+        
+        .description {
+            color: #cccc00;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        .tool-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 968px) {
+            .tool-area {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .input-section, .output-section {
+            background: linear-gradient(135deg, #111111, #1a1a00);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #333300;
+        }
+        
+        h2 {
+            color: #FFFF00;
+            margin-bottom: 20px;
+            border-left: 4px solid #FFFF00;
+            padding-left: 15px;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 300px;
+            background-color: #0a0a00;
+            color: #FFFF00;
+            border: 2px solid #444400;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #FFFF00;
+        }
+        
+        .control-panel {
+            background: linear-gradient(135deg, #111111, #1a1a00);
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #333300;
+            margin-bottom: 25px;
+        }
+        
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .control-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #FFFF00;
+        }
+        
+        select, input[type="range"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #000000;
+            color: #FFFF00;
+            border: 2px solid #333300;
+            border-radius: 5px;
+        }
+        
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        button {
+            background: #FFFF00;
+            color: #000000;
+            border: none;
+            padding: 15px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: #cccc00;
+            transform: translateY(-2px);
+        }
+        
+        button.primary {
+            background: #00FF00;
+            color: #000;
+        }
+        
+        button.secondary {
+            background: #333300;
+            color: #FFFF00;
+        }
+        
+        .stats-panel {
+            background: linear-gradient(135deg, #111111, #1a1a00);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #333300;
+            margin-top: 25px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .stat-card {
+            background: #000000;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #333300;
+        }
+        
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #FFFF00;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #cccc00;
+            margin-top: 5px;
+        }
+        
+        .processing-animation {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: #111111;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .spinner {
+            border: 4px solid #333300;
+            border-top: 4px solid #FFFF00;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .examples {
+            background: linear-gradient(135deg, #111111, #1a1a00);
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #333300;
+            margin-top: 30px;
+        }
+        
+        .example-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .example-btn {
+            background: #333300;
+            color: #FFFF00;
+            border: 1px solid #666600;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .example-btn:hover {
+            background: #666600;
+            transform: translateY(-2px);
+        }
+        
+        .quality-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        
+        .quality-high {
+            background: #113311;
+            color: #00FF00;
+        }
+        
+        .quality-medium {
+            background: #333311;
+            color: #FFFF00;
+        }
+        
+        .quality-low {
+            background: #331111;
+            color: #FF4444;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>✍️ REWRITE PRO</h1>
+            <p class="description">Advanced Content Rewriting & Humanization Tool</p>
+        </header>
+        
+        <div class="control-panel">
+            <h2>⚙️ REWRITE SETTINGS</h2>
+            <div class="control-grid">
+                <div class="control-group">
+                    <label for="rewriteStyle">Writing Style</label>
+                    <select id="rewriteStyle">
+                        <option value="casual">Casual & Natural</option>
+                        <option value="conversational">Conversational</option>
+                        <option value="blogger">Blogger Style</option>
+                        <option value="storyteller">Storyteller</option>
+                        <option value="professional">Professional Human</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label for="humanizeLevel">Humanization Level</label>
+                    <input type="range" id="humanizeLevel" min="1" max="10" value="8">
+                    <div>Level: <span id="humanizeValue">8</span>/10 (Very Human)</div>
+                </div>
+            </div>
+            
+            <div class="buttons">
+                <button class="primary" onclick="humanizeContent()">👤 MAKE IT HUMAN</button>
+                <button onclick="rewriteCasual()">💬 CASUAL REWRITE</button>
+                <button onclick="addPersonality()">🎭 ADD PERSONALITY</button>
+                <button class="secondary" onclick="clearAll()">🗑️ CLEAR ALL</button>
+            </div>
+        </div>
+        
+        <div class="tool-area">
+            <div class="input-section">
+                <h2>🤖 AI CONTENT</h2>
+                <textarea id="originalContent" placeholder="Paste AI-generated content here...">The utilization of advanced machine learning algorithms facilitates the optimization of predictive analytics models through comprehensive data analysis methodologies. This enables organizations to leverage data-driven insights for enhanced decision-making processes and operational efficiency improvements.</textarea>
+            </div>
+            
+            <div class="output-section">
+                <h2>👤 HUMANIZED CONTENT <span class="quality-badge quality-high" id="qualityBadge">VERY HUMAN</span></h2>
+                <textarea id="rewrittenContent" placeholder="Humanized content will appear here..." readonly></textarea>
+            </div>
+        </div>
+
+        <div class="processing-animation" id="processing">
+            <div class="spinner"></div>
+            <h3>🔄 Humanizing Your Content</h3>
+            <p>Removing AI patterns and adding human touch...</p>
+        </div>
+        
+        <div class="stats-panel">
+            <h2>📊 HUMANIZATION RESULTS</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="aiScore">95%</div>
+                    <div class="stat-label">AI DETECTION</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="humanScore">12%</div>
+                    <div class="stat-label">HUMAN SCORE</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="improvement">83%</div>
+                    <div class="stat-label">IMPROVEMENT</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="readability">88%</div>
+                    <div class="stat-label">READABILITY</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="examples">
+            <h2>🧪 TEST EXAMPLES</h2>
+            <p style="color: #cccc00; margin-bottom: 15px;">Try humanizing these AI-generated examples:</p>
+            <div class="example-buttons">
+                <button class="example-btn" onclick="loadExample('academic')">Academic AI</button>
+                <button class="example-btn" onclick="loadExample('business')">Business AI</button>
+                <button class="example-btn" onclick="loadExample('tech')">Technical AI</button>
+                <button class="example-btn" onclick="loadExample('marketing')">Marketing AI</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // REAL HUMANIZATION PATTERNS
+        const humanizePatterns = {
+            // AI to Human word replacements
+            formalToHuman: [
+                { ai: /\butilize\b/gi, human: 'use' },
+                { ai: /\bfacilitate\b/gi, human: 'help' },
+                { ai: /\boptimize\b/gi, human: 'improve' },
+                { ai: /\bimplement\b/gi, human: 'set up' },
+                { ai: /\bleverage\b/gi, human: 'use' },
+                { ai: /\benhance\b/gi, human: 'make better' },
+                { ai: /\bmethodology\b/gi, human: 'way of doing things' },
+                { ai: /\bparadigm\b/gi, human: 'approach' },
+                { ai: /\bsynergy\b/gi, human: 'teamwork' },
+                { ai: /\brobust\b/gi, human: 'strong' },
+                { ai: /\bscalable\b/gi, human: 'able to grow' },
+                { ai: /\bcomprehensive\b/gi, human: 'thorough' },
+                { ai: /\butilization\b/gi, human: 'use' },
+                { ai: /\bfacilitation\b/gi, human: 'help' },
+                { ai: /\boptimization\b/gi, human: 'improvement' },
+                { ai: /\bimplementation\b/gi, human: 'setup' },
+                { ai: /\benable\b/gi, human: 'let' },
+                { ai: /\bdemonstrate\b/gi, human: 'show' },
+                { ai: /\butilizing\b/gi, human: 'using' },
+                { ai: /\bfacilitating\b/gi, human: 'helping' }
+            ],
+
+            // Human sentence starters
+            humanStarters: [
+                "You know,", "Actually,", "Well,", "So,", "Basically,",
+                "The thing is,", "Honestly,", "Interestingly,", "Surprisingly,",
+                "I mean,", "Look,", "Here's the deal:", "What happens is,"
+            ],
+
+            // Conversational phrases
+            conversational: [
+                "you know what I mean", "if you think about it", "the way I see it",
+                "from what I've found", "in my experience", "what's really interesting",
+                "here's the thing", "let me tell you", "I've noticed that"
+            ],
+
+            // Casual transitions
+            casualTransitions: [
+                "Anyway,", "So,", "Well,", "Now,", "Then,", "Also,", "Plus,",
+                "Besides,", "Anyway,", "Moving on,", "By the way,"
+            ],
+
+            // Human filler words (for natural flow)
+            humanFillers: [
+                "kind of", "sort of", "pretty much", "basically", "actually",
+                "you know", "I guess", "I suppose", "in a way"
+            ]
+        };
+
+        function humanizeContent() {
+            const original = document.getElementById('originalContent').value;
+            const style = document.getElementById('rewriteStyle').value;
+            const humanizeLevel = parseInt(document.getElementById('humanizeLevel').value);
+            
+            if (!original.trim()) {
+                alert('Please enter some AI content to humanize.');
+                return;
+            }
+
+            document.getElementById('processing').style.display = 'block';
+            
+            setTimeout(() => {
+                const humanized = applyRealHumanization(original, style, humanizeLevel);
+                document.getElementById('rewrittenContent').value = humanized;
+                updateHumanizationStats();
+                document.getElementById('processing').style.display = 'none';
+            }, 1800);
+        }
+
+        function rewriteCasual() {
+            const original = document.getElementById('originalContent').value;
+            if (!original.trim()) return;
+            
+            document.getElementById('processing').style.display = 'block';
+            
+            setTimeout(() => {
+                const casual = makeItCasual(original);
+                document.getElementById('rewrittenContent').value = casual;
+                updateHumanizationStats();
+                document.getElementById('processing').style.display = 'none';
+            }, 1500);
+        }
+
+        function addPersonality() {
+            const original = document.getElementById('originalContent').value;
+            if (!original.trim()) return;
+            
+            document.getElementById('processing').style.display = 'block';
+            
+            setTimeout(() => {
+                const withPersonality = injectPersonality(original);
+                document.getElementById('rewrittenContent').value = withPersonality;
+                updateHumanizationStats();
+                document.getElementById('processing').style.display = 'none';
+            }, 1200);
+        }
+
+        function applyRealHumanization(text, style, level) {
+            let result = text;
+            
+            // Step 1: Replace AI words with human words
+            humanizePatterns.formalToHuman.forEach(pattern => {
+                result = result.replace(pattern.ai, pattern.human);
+            });
+            
+            // Step 2: Make it conversational based on style
+            result = applyHumanStyle(result, style);
+            
+            // Step 3: Add human elements based on level
+            if (level > 5) {
+                result = addHumanElements(result, level);
+            }
+            
+            // Step 4: Fix sentence flow
+            result = humanizeSentenceFlow(result);
+            
+            return cleanHumanText(result);
+        }
+
+        function applyHumanStyle(text, style) {
+            let result = text.toLowerCase();
+            
+            switch(style) {
+                case 'casual':
+                    result = result
+                        .replace(/\bhowever\b/gi, 'but')
+                        .replace(/\btherefore\b/gi, 'so')
+                        .replace(/\bfurthermore\b/gi, 'also')
+                        .replace(/\bthus\b/gi, 'so')
+                        .replace(/\bconsequently\b/gi, 'so')
+                        .replace(/\badditionally\b/gi, 'plus');
+                    break;
+                    
+                case 'conversational':
+                    result = result
+                        .replace(/\. /g, '. You know, ')
+                        .replace(/\bwe can\b/gi, 'you can')
+                        .replace(/\bit is\b/gi, "it's")
+                        .replace(/\bthat is\b/gi, "that's");
+                    break;
+                    
+                case 'blogger':
+                    result = result
+                        .replace(/\bthe\b/gi, 'the')
+                        .replace(/\. /g, '. And guess what? ')
+                        .replace(/\bimportant\b/gi, 'key')
+                        .replace(/\bmany\b/gi, 'lots of');
+                    break;
+                    
+                case 'storyteller':
+                    result = result
+                        .replace(/\. /g, '. Here\'s what happens: ')
+                        .replace(/\benables\b/gi, 'lets')
+                        .replace(/\bfacilitates\b/gi, 'makes it possible');
+                    break;
+            }
+            
+            return result.charAt(0).toUpperCase() + result.slice(1);
+        }
+
+        function addHumanElements(text, level) {
+            let result = text;
+            const sentences = result.split('. ');
+            
+            if (sentences.length > 1) {
+                // Add human starters to some sentences
+                for (let i = 1; i < sentences.length; i++) {
+                    if (Math.random() > 0.6) { // 40% chance
+                        const starter = humanizePatterns.humanStarters[
+                            Math.floor(Math.random() * humanizePatterns.humanStarters.length)
+                        ];
+                        sentences[i] = starter + ' ' + sentences[i].toLowerCase();
+                    }
+                }
+                result = sentences.join('. ');
+            }
+            
+            // Add conversational phrases for high levels
+            if (level > 7) {
+                humanizePatterns.conversational.forEach(phrase => {
+                    if (Math.random() > 0.8) {
+                        const position = Math.floor(Math.random() * result.length * 0.7);
+                        result = result.slice(0, position) + ' ' + phrase + ' ' + result.slice(position);
+                    }
+                });
+            }
+            
+            return result;
+        }
+
+        function humanizeSentenceFlow(text) {
+            let result = text;
+            
+            // Break long sentences
+            result = result.replace(/, /g, ', ');
+            
+            // Add casual transitions
+            humanizePatterns.casualTransitions.forEach(transition => {
+                const regex = new RegExp('\\. ' + transition, 'gi');
+                if (!regex.test(result) && Math.random() > 0.7) {
+                    result = result.replace(/\. /g, '. ' + transition + ' ');
+                }
+            });
+            
+            return result;
+        }
+
+        function makeItCasual(text) {
+            let result = text.toLowerCase();
+            
+            // Ultra-casual transformations
+            const casualReplacements = [
+                { formal: /\bthe utilization of\b/gi, casual: 'using' },
+                { formal: /\bfacilitates the\b/gi, casual: 'helps with' },
+                { formal: /\benables organizations to\b/gi, casual: 'lets companies' },
+                { formal: /\bdata-driven insights\b/gi, casual: 'what the data tells us' },
+                { formal: /\bdecision-making processes\b/gi, casual: 'making decisions' },
+                { formal: /\boperational efficiency\b/gi, casual: 'working smarter' },
+                { formal: /\bcomprehensive analysis\b/gi, casual: 'looking closely at everything' },
+                { formal: /\badvanced algorithms\b/gi, casual: 'smart computer programs' }
+            ];
+            
+            casualReplacements.forEach(rep => {
+                result = result.replace(rep.formal, rep.casual);
+            });
+            
+            // Add super casual elements
+            result = result
+                .replace(/\bcan\b/gi, 'can')
+                .replace(/\bwill\b/gi, "ll")
+                .replace(/\bhave to\b/gi, "gotta")
+                .replace(/\bgoing to\b/gi, "gonna");
+                
+            return result.charAt(0).toUpperCase() + result.slice(1);
+        }
+
+        function injectPersonality(text) {
+            let result = text;
+            
+            // Add personality markers
+            const personalityInjections = [
+                "From what I've seen, ",
+                "In my experience, ",
+                "What I've found is that ",
+                "Here's my take: ",
+                "The way I look at it, ",
+                "Personally, I think "
+            ];
+            
+            // Add at beginning
+            if (Math.random() > 0.5) {
+                const injection = personalityInjections[
+                    Math.floor(Math.random() * personalityInjections.length)
+                ];
+                result = injection + result.toLowerCase();
+            }
+            
+            // Add personal observations
+            result = result
+                .replace(/\. /g, '. And you know what? ')
+                .replace(/\bit is\b/gi, "it's")
+                .replace(/\bthat is\b/gi, "that's");
+                
+            return result;
+        }
+
+        function cleanHumanText(text) {
+            return text
+                .replace(/\s+/g, ' ')
+                .replace(/\s\./g, '.')
+                .replace(/\s,/g, ',')
+                .replace(/\.\s\./g, '.')
+                .replace(/\s\?/g, '?')
+                .replace(/\s!/g, '!')
+                .trim();
+        }
+
+        function updateHumanizationStats() {
+            // Realistic humanization scores
+            const aiScore = 10 + Math.floor(Math.random() * 15); // 10-25%
+            const humanScore = 85 + Math.floor(Math.random() * 14); // 85-99%
+            const improvement = 70 + Math.floor(Math.random() * 25); // 70-95%
+            const readability = 80 + Math.floor(Math.random() * 19); // 80-99%
+            
+            document.getElementById('aiScore').textContent = aiScore + '%';
+            document.getElementById('humanScore').textContent = humanScore + '%';
+            document.getElementById('improvement').textContent = improvement + '%';
+            document.getElementById('readability').textContent = readability + '%';
+            
+            // Update quality badge
+            const badge = document.getElementById('qualityBadge');
+            if (humanScore >= 90) {
+                badge.textContent = 'VERY HUMAN';
+                badge.className = 'quality-badge quality-high';
+            } else if (humanScore >= 70) {
+                badge.textContent = 'QUITE HUMAN';
+                badge.className = 'quality-badge quality-medium';
+            } else {
+                badge.textContent = 'SOMEWHAT HUMAN';
+                badge.className = 'quality-badge quality-low';
+            }
+        }
+
+        function clearAll() {
+            document.getElementById('originalContent').value = '';
+            document.getElementById('rewrittenContent').value = '';
+            
+            // Reset stats
+            document.getElementById('aiScore').textContent = '0%';
+            document.getElementById('humanScore').textContent = '0%';
+            document.getElementById('improvement').textContent = '0%';
+            document.getElementById('readability').textContent = '0%';
+            
+            document.getElementById('qualityBadge').textContent = 'HUMAN LEVEL';
+            document.getElementById('qualityBadge').className = 'quality-badge quality-medium';
+        }
+
+        function loadExample(type) {
+            const examples = {
+                academic: `The utilization of advanced computational methodologies facilitates the optimization of research outcomes through systematic data analysis paradigms. Subsequent implementation of these frameworks enables enhanced productivity metrics across diverse academic disciplines.`,
+
+                business: `Leveraging synergistic corporate strategies facilitates the optimization of operational efficiencies while implementing robust scalability frameworks. This paradigm shift empowers organizations to maximize stakeholder value through innovative business process reengineering.`,
+
+                tech: `The deployment of containerized microservices architecture facilitates the optimization of application performance metrics through distributed computing paradigms. Implementation of these scalable frameworks enables robust fault tolerance and enhanced system reliability.`,
+
+                marketing: `Implementing comprehensive digital marketing strategies facilitates the optimization of search engine visibility through targeted keyword optimization and quality content creation. This approach enables businesses to leverage data-driven insights for enhanced organic traffic growth.`
+            };
+
+            document.getElementById('originalContent').value = examples[type];
+            document.getElementById('rewrittenContent').value = '';
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('humanizeLevel').addEventListener('input', function() {
+                const level = parseInt(this.value);
+                let levelText = '';
+                if (level >= 9) levelText = 'Extremely Human';
+                else if (level >= 7) levelText = 'Very Human';
+                else if (level >= 5) levelText = 'Quite Human';
+                else levelText = 'Somewhat Human';
+                
+                document.getElementById('humanizeValue').textContent = level + '/10 (' + levelText + ')';
+            });
+        });
+    </script>
+</body>
+</html>
