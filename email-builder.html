@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Template Builder - Professional Email Designer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #000000;
+            color: #FFFF00;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #111111, #222200);
+            border-radius: 15px;
+            border: 2px solid #FFFF00;
+        }
+        
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            color: #FFFF00;
+        }
+        
+        .description {
+            color: #cccc00;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        .builder-area {
+            display: grid;
+            grid-template-columns: 300px 1fr 350px;
+            gap: 20px;
+            margin-bottom: 30px;
+            min-height: 800px;
+        }
+        
+        @media (max-width: 1200px) {
+            .builder-area {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .components-panel, .preview-panel, .settings-panel {
+            background: linear-gradient(135deg, #111111, #1a1a00);
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #333300;
+        }
+        
+        h2 {
+            color: #FFFF00;
+            margin-bottom: 20px;
+            border-left: 4px solid #FFFF00;
+            padding-left: 15px;
+        }
+        
+        h3 {
+            color: #FFFF00;
+            margin-bottom: 15px;
+        }
+        
+        .components-grid {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .component-item {
+            background: #000000;
+            padding: 15px;
+            border: 2px solid #333300;
+            border-radius: 8px;
+            cursor: grab;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .component-item:hover {
+            border-color: #FFFF00;
+            transform: translateY(-2px);
+        }
+        
+        .component-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: #FFFF00;
+        }
+        
+        .email-preview {
+            background: white;
+            min-height: 700px;
+            border: 2px solid #444400;
+            border-radius: 8px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            color: #000000;
+            font-family: Arial, sans-serif;
+        }
+        
+        .email-section {
+            border: 2px dashed #cccc00;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            position: relative;
+        }
+        
+        .section-controls {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            display: none;
+        }
+        
+        .email-section:hover .section-controls {
+            display: block;
+        }
+        
+        .control-btn {
+            background: #FFFF00;
+            color: #000000;
+            border: none;
+            padding: 5px 10px;
+            margin-left: 5px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .settings-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #FFFF00;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            background-color: #000000;
+            color: #FFFF00;
+            border: 2px solid #333300;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #FFFF00;
+        }
+        
+        .color-picker {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .color-box {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #333300;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        button {
+            background: #FFFF00;
+            color: #000000;
+            border: none;
+            padding: 15px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: #cccc00;
+            transform: translateY(-2px);
+        }
+        
+        button.primary {
+            background: #00FF00;
+            color: #000;
+        }
+        
+        .template-preview {
+            background: #f8f8f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+        
+        .template-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .template-item:hover {
+            border-color: #FFFF00;
+        }
+        
+        .code-preview {
+            background: #1a1a1a;
+            color: #00FF00;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #333300;
+        }
+        
+        .tab-btn {
+            background: transparent;
+            color: #FFFF00;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .tab-btn.active {
+            border-bottom-color: #FFFF00;
+            color: #FFFF00;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📧 Email Template Builder</h1>
+            <p class="description">Create professional, responsive email templates in minutes</p>
+        </header>
+        
+        <div class="builder-area">
+            <!-- Components Panel -->
+            <div class="components-panel">
+                <h2>📦 Email Components</h2>
+                <p style="color: #cccc00; margin-bottom: 20px;">Drag and drop components to build your email</p>
+                
+                <div class="components-grid">
+                    <div class="component-item" draggable="true" data-type="header">
+                        <div class="component-icon">🏢</div>
+                        <div>Header</div>
+                    </div>
+                    
+                    <div class="component-item" draggable="true" data-type="hero">
+                        <div class="component-icon">🎯</div>
+                        <div>Hero Section</div>
+                    </div>
+                    
+                    <div class="component-item" draggable="true" data-type="text">
+                        <div class="component-icon">📝</div>
+                        <div>Text Content</div>
+                    </div>
+                    
+                    <div class="component-item" draggable="true" data-type="image">
+                        <div class="component-icon">🖼️</div>
+                        <div>Image</div>
+                    </div>
+                    
+                    <div class="component-item" draggable="true" data-type="button">
+                        <div class="component-icon">🔘</div>
+                        <div>Button</div>
+                    </div>
+                    
+                    <div class="component-item" draggable="true" data-type="features">
+                        <div class="component-icon">⭐</div>
+                        <div>Features Grid</div>
+                    </div>
+                    
+                    <div class="component-item" draggable="true" data-type="testimonial">
+                        <div class="component-icon">💬</div>
+                        <div>Testimonial</div>
+                    </div>
+                    
+                    <div class="component-item" draggable="true" data-type="footer">
+                        <div class="component-icon">📄</div>
+                        <div>Footer</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <h3>💾 Quick Templates</h3>
+                    <div class="template-preview">
+                        <div class="template-item" data-template="newsletter">
+                            📰 Newsletter Template
+                        </div>
+                        <div class="template-item" data-template="promotional">
+                            🎁 Promotional Email
+                        </div>
+                        <div class="template-item" data-template="welcome">
+                            👋 Welcome Email
+                        </div>
+                        <div class="template-item" data-template="notification">
+                            🔔 Notification Email
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Preview Panel -->
+            <div class="preview-panel">
+                <h2>👀 Email Preview</h2>
+                <div class="email-preview">
+                    <div class="email-container" id="emailContainer">
+                        <!-- Email content will be built here -->
+                        <div style="text-align: center; padding: 50px; color: #666;">
+                            <h3>Your email template will appear here</h3>
+                            <p>Drag components from the left panel to start building</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="buttons">
+                    <button onclick="previewEmail()">👁️ Preview Email</button>
+                    <button class="primary" onclick="generateCode()">💻 Generate HTML</button>
+                </div>
+                
+                <div class="code-preview" id="codePreview">
+                    <!-- Generated HTML code will appear here -->
+                </div>
+            </div>
+            
+            <!-- Settings Panel -->
+            <div class="settings-panel">
+                <h2>⚙️ Design Settings</h2>
+                
+                <div class="tab-buttons">
+                    <button class="tab-btn active" onclick="openTab('layout-tab')">Layout</button>
+                    <button class="tab-btn" onclick="openTab('colors-tab')">Colors</button>
+                    <button class="tab-btn" onclick="openTab('typography-tab')">Typography</button>
+                </div>
+                
+                <div id="layout-tab" class="tab-content active">
+                    <div class="settings-group">
+                        <label for="emailWidth">Email Width</label>
+                        <input type="number" id="emailWidth" value="600" min="400" max="800">
+                    </div>
+                    
+                    <div class="settings-group">
+                        <label for="containerPadding">Container Padding</label>
+                        <input type="number" id="containerPadding" value="20" min="0" max="50">
+                    </div>
+                    
+                    <div class="settings-group">
+                        <label for="fontFamily">Font Family</label>
+                        <select id="fontFamily">
+                            <option value="Arial, sans-serif">Arial</option>
+                            <option value="Helvetica, sans-serif">Helvetica</option>
+                            <option value="Georgia, serif">Georgia</option>
+                            <option value="'Times New Roman', serif">Times New Roman</option>
+                            <option value="Verdana, sans-serif">Verdana</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="colors-tab" class="tab-content">
+                    <div class="settings-group">
+                        <label>Background Color</label>
+                        <div class="color-picker">
+                            <input type="color" id="bgColor" value="#ffffff">
+                            <div class="color-box" style="background-color: #ffffff;" onclick="document.getElementById('bgColor').click()"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-group">
+                        <label>Text Color</label>
+                        <div class="color-picker">
+                            <input type="color" id="textColor" value="#333333">
+                            <div class="color-box" style="background-color: #333333;" onclick="document.getElementById('textColor').click()"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-group">
+                        <label>Primary Color</label>
+                        <div class="color-picker">
+                            <input type="color" id="primaryColor" value="#007bff">
+                            <div class="color-box" style="background-color: #007bff;" onclick="document.getElementById('primaryColor').click()"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="typography-tab" class="tab-content">
+                    <div class="settings-group">
+                        <label for="fontSize">Base Font Size</label>
+                        <input type="number" id="fontSize" value="16" min="12" max="24">
+                    </div>
+                    
+                    <div class="settings-group">
+                        <label for="lineHeight">Line Height</label>
+                        <input type="number" id="lineHeight" value="1.6" step="0.1" min="1" max="2">
+                    </div>
+                </div>
+                
+                <div class="buttons">
+                    <button onclick="resetDesign()">🔄 Reset Design</button>
+                    <button class="primary" onclick="exportTemplate()">📤 Export Template</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let emailComponents = [];
+        let currentSectionId = 0;
+
+        // Initialize drag and drop
+        document.querySelectorAll('.component-item').forEach(item => {
+            item.addEventListener('dragstart', handleDragStart);
+        });
+
+        document.getElementById('emailContainer').addEventListener('dragover', handleDragOver);
+        document.getElementById('emailContainer').addEventListener('drop', handleDrop);
+
+        function handleDragStart(e) {
+            e.dataTransfer.setData('text/plain', e.target.getAttribute('data-type'));
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            const componentType = e.dataTransfer.getData('text/plain');
+            addComponentToEmail(componentType, e.clientX, e.clientY);
+        }
+
+        function addComponentToEmail(type, x, y) {
+            currentSectionId++;
+            const sectionId = 'section-' + currentSectionId;
+            
+            let componentHTML = '';
+            let componentData = { id: sectionId, type: type };
+
+            switch(type) {
+                case 'header':
+                    componentHTML = `
+                        <div class="email-section" id="${sectionId}">
+                            <div class="section-controls">
+                                <button class="control-btn" onclick="editSection('${sectionId}')">Edit</button>
+                                <button class="control-btn" onclick="deleteSection('${sectionId}')">Delete</button>
+                            </div>
+                            <div style="text-align: center; padding: 20px; background: #f8f9fa;">
+                                <h1 style="color: #333; margin: 0;">Your Company Logo</h1>
+                                <p style="color: #666; margin: 5px 0 0 0;">Your company tagline</p>
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                case 'hero':
+                    componentHTML = `
+                        <div class="email-section" id="${sectionId}">
+                            <div class="section-controls">
+                                <button class="control-btn" onclick="editSection('${sectionId}')">Edit</button>
+                                <button class="control-btn" onclick="deleteSection('${sectionId}')">Delete</button>
+                            </div>
+                            <div style="text-align: center; padding: 40px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                                <h2 style="margin: 0 0 15px 0;">Amazing Headline Here</h2>
+                                <p style="margin: 0 0 20px 0; font-size: 18px;">Compelling subheading that describes your offer</p>
+                                <a href="#" style="display: inline-block; background: #FFD700; color: #000; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold;">Get Started</a>
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                case 'text':
+                    componentHTML = `
+                        <div class="email-section" id="${sectionId}">
+                            <div class="section-controls">
+                                <button class="control-btn" onclick="editSection('${sectionId}')">Edit</button>
+                                <button class="control-btn" onclick="deleteSection('${sectionId}')">Delete</button>
+                            </div>
+                            <div style="padding: 30px 20px;">
+                                <h3>Engaging Content Heading</h3>
+                                <p>This is where you put your main content. You can describe your products, services, or share important information with your subscribers.</p>
+                                <p>Make sure your content is valuable and relevant to your audience to increase engagement and conversions.</p>
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                case 'button':
+                    componentHTML = `
+                        <div class="email-section" id="${sectionId}">
+                            <div class="section-controls">
+                                <button class="control-btn" onclick="editSection('${sectionId}')">Edit</button>
+                                <button class="control-btn" onclick="deleteSection('${sectionId}')">Delete</button>
+                            </div>
+                            <div style="text-align: center; padding: 20px;">
+                                <a href="#" style="display: inline-block; background: #007bff; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px;">Call to Action</a>
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                case 'footer':
+                    componentHTML = `
+                        <div class="email-section" id="${sectionId}">
+                            <div class="section-controls">
+                                <button class="control-btn" onclick="editSection('${sectionId}')">Edit</button>
+                                <button class="control-btn" onclick="deleteSection('${sectionId}')">Delete</button>
+                            </div>
+                            <div style="text-align: center; padding: 30px 20px; background: #f8f9fa; color: #666; font-size: 14px;">
+                                <p>© 2024 Your Company. All rights reserved.</p>
+                                <p>123 Business Street, City, State 12345</p>
+                                <p>
+                                    <a href="#" style="color: #007bff; text-decoration: none;">Unsubscribe</a> | 
+                                    <a href="#" style="color: #007bff; text-decoration: none;">Privacy Policy</a>
+                                </p>
+                            </div>
+                        </div>
+                    `;
+                    break;
+            }
+
+            // Add to email container
+            document.getElementById('emailContainer').innerHTML = componentHTML;
+            
+            // Store component data
+            componentData.html = componentHTML;
+            emailComponents.push(componentData);
+        }
+
+        function deleteSection(sectionId) {
+            document.getElementById(sectionId).remove();
+            emailComponents = emailComponents.filter(comp => comp.id !== sectionId);
+        }
+
+        function editSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            alert('Edit functionality would open a modal with section-specific settings');
+            // In a full implementation, this would open a rich text editor or settings modal
+        }
+
+        function previewEmail() {
+            const emailHTML = document.getElementById('emailContainer').innerHTML;
+            const previewWindow = window.open('', '_blank');
+            previewWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Email Preview</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+                        .email-preview { max-width: 600px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+                    </style>
+                </head>
+                <body>
+                    <div class="email-preview">${emailHTML}</div>
+                </body>
+                </html>
+            `);
+            previewWindow.document.close();
+        }
+
+        function generateCode() {
+            const emailHTML = document.getElementById('emailContainer').innerHTML;
+            const fullEmailTemplate = `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Template</title>
+    <style>
+        body { margin: 0; padding: 0; background: #f5f5f5; font-family: Arial, sans-serif; }
+        .email-container { max-width: 600px; margin: 0 auto; background: white; }
+        @media only screen and (max-width: 620px) {
+            .email-container { width: 100% !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        ${emailHTML}
+    </div>
+</body>
+</html>`;
+
+            document.getElementById('codePreview').style.display = 'block';
+            document.getElementById('codePreview').textContent = fullEmailTemplate;
+        }
+
+        function exportTemplate() {
+            generateCode();
+            const code = document.getElementById('codePreview').textContent;
+            const blob = new Blob([code], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'email-template.html';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function resetDesign() {
+            if (confirm('Are you sure you want to reset the email template? This cannot be undone.')) {
+                document.getElementById('emailContainer').innerHTML = `
+                    <div style="text-align: center; padding: 50px; color: #666;">
+                        <h3>Your email template will appear here</h3>
+                        <p>Drag components from the left panel to start building</p>
+                    </div>
+                `;
+                emailComponents = [];
+                currentSectionId = 0;
+                document.getElementById('codePreview').style.display = 'none';
+            }
+        }
+
+        function openTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show the selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Activate the clicked tab button
+            event.currentTarget.classList.add('active');
+        }
+
+        // Template loading
+        document.querySelectorAll('.template-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const templateType = this.getAttribute('data-template');
+                loadTemplate(templateType);
+            });
+        });
+
+        function loadTemplate(templateType) {
+            let templateHTML = '';
+            
+            switch(templateType) {
+                case 'newsletter':
+                    templateHTML = `
+                        <div class="email-section" id="section-1">
+                            <div style="text-align: center; padding: 20px; background: #f8f9fa;">
+                                <h1 style="color: #333; margin: 0;">Monthly Newsletter</h1>
+                                <p style="color: #666; margin: 5px 0 0 0;">Stay updated with our latest news</p>
+                            </div>
+                        </div>
+                        <div class="email-section" id="section-2">
+                            <div style="padding: 30px 20px;">
+                                <h3>Featured Article</h3>
+                                <p>Welcome to our monthly newsletter! Here are the latest updates and insights from our team.</p>
+                                <p>We're excited to share new developments and opportunities with you.</p>
+                            </div>
+                        </div>
+                        <div class="email-section" id="section-3">
+                            <div style="text-align: center; padding: 20px;">
+                                <a href="#" style="display: inline-block; background: #007bff; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold;">Read More</a>
+                            </div>
+                        </div>
+                        <div class="email-section" id="section-4">
+                            <div style="text-align: center; padding: 30px 20px; background: #f8f9fa; color: #666; font-size: 14px;">
+                                <p>© 2024 Company Name. All rights reserved.</p>
+                                <p><a href="#" style="color: #007bff; text-decoration: none;">Unsubscribe</a></p>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'promotional':
+                    templateHTML = `
+                        <div class="email-section" id="section-1">
+                            <div style="text-align: center; padding: 40px 20px; background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white;">
+                                <h2 style="margin: 0 0 15px 0;">Special Offer Inside! 🎁</h2>
+                                <p style="margin: 0 0 20px 0; font-size: 18px;">Limited time discount on our premium products</p>
+                            </div>
+                        </div>
+                        <div class="email-section" id="section-2">
+                            <div style="text-align: center; padding: 30px 20px;">
+                                <h3>Don't Miss This Opportunity</h3>
+                                <p>Get exclusive access to our best deals and save big on your favorite products.</p>
+                                <p style="font-size: 24px; color: #ff6b6b; font-weight: bold;">50% OFF</p>
+                            </div>
+                        </div>
+                        <div class="email-section" id="section-3">
+                            <div style="text-align: center; padding: 20px;">
+                                <a href="#" style="display: inline-block; background: #ff6b6b; color: white; padding: 15px 40px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 18px;">Shop Now</a>
+                            </div>
+                        </div>
+                    `;
+                    break;
+            }
+            
+            document.getElementById('emailContainer').innerHTML = templateHTML;
+            document.getElementById('codePreview').style.display = 'none';
+        }
+
+        // Initialize color pickers
+        document.querySelectorAll('input[type="color"]').forEach(picker => {
+            picker.addEventListener('input', function() {
+                const colorBox = this.parentNode.querySelector('.color-box');
+                colorBox.style.backgroundColor = this.value;
+                applyDesignSettings();
+            });
+        });
+
+        function applyDesignSettings() {
+            const bgColor = document.getElementById('bgColor').value;
+            const textColor = document.getElementById('textColor').value;
+            const primaryColor = document.getElementById('primaryColor').value;
+            const fontSize = document.getElementById('fontSize').value + 'px';
+            const fontFamily = document.getElementById('fontFamily').value;
+            
+            document.getElementById('emailContainer').style.backgroundColor = bgColor;
+            document.getElementById('emailContainer').style.color = textColor;
+            document.getElementById('emailContainer').style.fontFamily = fontFamily;
+            document.getElementById('emailContainer').style.fontSize = fontSize;
+            
+            // Update buttons and links with primary color
+            document.querySelectorAll('#emailContainer a').forEach(link => {
+                if (link.style.backgroundColor) {
+                    link.style.backgroundColor = primaryColor;
+                }
+            });
+        }
+
+        // Apply settings when they change
+        document.getElementById('fontSize').addEventListener('input', applyDesignSettings);
+        document.getElementById('fontFamily').addEventListener('change', applyDesignSettings);
+        document.getElementById('emailWidth').addEventListener('input', function() {
+            document.getElementById('emailContainer').style.maxWidth = this.value + 'px';
+        });
+        document.getElementById('containerPadding').addEventListener('input', function() {
+            document.getElementById('emailContainer').style.padding = this.value + 'px';
+        });
+    </script>
+</body>
+</html>
