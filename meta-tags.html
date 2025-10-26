@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta Tag Generator - OnlineWebTool.Live</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000000;
+            min-height: 100vh;
+            padding: 20px;
+            color: #FFD700;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.1);
+            overflow: hidden;
+            border: 2px solid #FFD700;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #000000, #333333);
+            color: #FFD700;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(255, 215, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            color: #ffd54f;
+        }
+
+        .tool-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .tool-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .input-section {
+            background: #2d2d2d;
+            padding: 25px;
+            border-radius: 10px;
+            border: 2px solid #444444;
+        }
+
+        .output-section {
+            background: #2d2d2d;
+            padding: 25px;
+            border-radius: 10px;
+            border: 2px solid #444444;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #FFD700;
+        }
+
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #555555;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #333333;
+            color: #FFD700;
+        }
+
+        input[type="text"]:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #FFD700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        textarea {
+            height: 120px;
+            resize: vertical;
+            font-family: monospace;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #FFD700;
+        }
+
+        .checkbox-group label {
+            margin-bottom: 0;
+            color: #ffd54f;
+        }
+
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        button {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-generate {
+            background: linear-gradient(135deg, #FFD700, #fbc02d);
+            color: #000000;
+            border: 2px solid #FFD700;
+        }
+
+        .btn-generate:hover {
+            background: linear-gradient(135deg, #fbc02d, #f9a825);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-copy {
+            background: linear-gradient(135deg, #333333, #000000);
+            color: #FFD700;
+            border: 2px solid #FFD700;
+        }
+
+        .btn-copy:hover {
+            background: linear-gradient(135deg, #000000, #333333);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-reset {
+            background: linear-gradient(135deg, #d32f2f, #b71c1c);
+            color: white;
+            grid-column: span 2;
+            border: 2px solid #ff5252;
+        }
+
+        .btn-reset:hover {
+            background: linear-gradient(135deg, #b71c1c, #8b0000);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 82, 82, 0.4);
+        }
+
+        .code-output {
+            background: #000000;
+            border: 2px solid #FFD700;
+            border-radius: 8px;
+            padding: 20px;
+            height: 400px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #00ff00;
+        }
+
+        .meta-tag {
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+
+        .meta-comment {
+            color: #888888;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #000000;
+            color: #FFD700;
+            margin-top: 30px;
+            border-top: 2px solid #FFD700;
+        }
+
+        .preview-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #333333;
+            border-radius: 8px;
+            border: 1px solid #555555;
+        }
+
+        .preview-section h4 {
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔖 Meta Tag Generator</h1>
+            <p>Generate SEO-optimized meta tags for your website</p>
+        </div>
+
+        <div class="tool-container">
+            <div class="input-section">
+                <div class="form-group">
+                    <label for="pageTitle">Page Title</label>
+                    <input type="text" id="pageTitle" placeholder="My Awesome Website - Homepage">
+                </div>
+
+                <div class="form-group">
+                    <label for="pageDescription">Meta Description</label>
+                    <textarea id="pageDescription" placeholder="Enter a compelling description of your page (150-160 characters recommended)"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="keywords">Keywords (comma separated)</label>
+                    <input type="text" id="keywords" placeholder="web tools, free tools, online utilities">
+                </div>
+
+                <div class="form-group">
+                    <label for="pageUrl">Canonical URL</label>
+                    <input type="text" id="pageUrl" placeholder="https://yoursite.com/page-url">
+                </div>
+
+                <div class="form-group">
+                    <label for="author">Author</label>
+                    <input type="text" id="author" placeholder="Your Name">
+                </div>
+
+                <h4 style="color: #FFD700; margin: 20px 0 15px 0;">Additional Meta Tags</h4>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="viewportTag" checked>
+                    <label for="viewportTag">Viewport Tag (Mobile responsive)</label>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="charsetTag" checked>
+                    <label for="charsetTag">Charset UTF-8</label>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="robotsTag" checked>
+                    <label for="robotsTag">Robots Meta Tag</label>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="ogTags">
+                    <label for="ogTags">Open Graph Tags (Social media)</label>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="twitterTags">
+                    <label for="twitterTags">Twitter Card Tags</label>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-generate" onclick="generateMetaTags()">Generate Meta Tags</button>
+                    <button class="btn-copy" onclick="copyToClipboard()" id="copyBtn">Copy Code</button>
+                    <button class="btn-reset" onclick="resetTool()">Reset Tool</button>
+                </div>
+            </div>
+
+            <div class="output-section">
+                <h4 style="color: #FFD700; margin-bottom: 15px;">Generated Meta Tags</h4>
+                <div class="code-output" id="codeOutput">
+                    <div class="meta-comment">&lt;!-- Generated by OnlineWebTool.Live --&gt;</div>
+                    <div class="meta-comment">&lt;!-- Paste this code in your HTML &lt;head&gt; section --&gt;</div>
+                    <br>
+                    <div class="meta-comment">&lt;!-- Fill in your details and click Generate --&gt;</div>
+                </div>
+
+                <div class="preview-section">
+                    <h4>📱 Google Search Preview</h4>
+                    <div id="searchPreview" style="color: #cccccc; font-size: 14px;">
+                        Your Google search result preview will appear here...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Tools Section -->
+        <section class="related-tools">
+            <h3>🔧 More Useful Tools</h3>
+            <div class="tool-links">
+                <a href="/image-resizer.html" class="tool-btn">🖼️ Image Resizer</a>
+                <a href="/pdf-to-word.html" class="tool-btn">📄 PDF to Word</a>
+                <a href="/youtube-mp3.html" class="tool-btn">🎵 YouTube to MP3</a>
+                <a href="/color-palette.html" class="tool-btn">🎨 Color Palette</a>
+                <a href="/code-beautifier.html" class="tool-btn">💻 Code Beautifier</a>
+                <a href="/grammar-checker.html" class="tool-btn">✍️ Grammar Checker</a>
+            </div>
+        </section>
+
+        <div class="footer">
+            <p>© 2024 OnlineWebTool.Live - Free Meta Tag Generator</p>
+        </div>
+    </div>
+
+    <script>
+        function generateMetaTags() {
+            const title = document.getElementById('pageTitle').value || 'Your Website Title';
+            const description = document.getElementById('pageDescription').value || 'Website description';
+            const keywords = document.getElementById('keywords').value;
+            const url = document.getElementById('pageUrl').value;
+            const author = document.getElementById('author').value;
+            
+            const viewport = document.getElementById('viewportTag').checked;
+            const charset = document.getElementById('charsetTag').checked;
+            const robots = document.getElementById('robotsTag').checked;
+            const ogTags = document.getElementById('ogTags').checked;
+            const twitterTags = document.getElementById('twitterTags').checked;
+
+            let metaTags = '<!-- Generated by OnlineWebTool.Live -->\n';
+            metaTags += '<!-- Paste this code in your HTML <head> section -->\n\n';
+
+            // Basic meta tags
+            if (charset) {
+                metaTags += '<meta charset="UTF-8">\n';
+            }
+            
+            if (viewport) {
+                metaTags += '<meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
+            }
+            
+            metaTags += `<title>${title}</title>\n`;
+            
+            if (description) {
+                metaTags += `<meta name="description" content="${description}">\n`;
+            }
+            
+            if (keywords) {
+                metaTags += `<meta name="keywords" content="${keywords}">\n`;
+            }
+            
+            if (author) {
+                metaTags += `<meta name="author" content="${author}">\n`;
+            }
+            
+            if (robots) {
+                metaTags += '<meta name="robots" content="index, follow">\n';
+            }
+
+            if (url) {
+                metaTags += `<link rel="canonical" href="${url}">\n`;
+            }
+
+            // Open Graph Tags
+            if (ogTags) {
+                metaTags += '\n<!-- Open Graph Tags -->\n';
+                metaTags += `<meta property="og:title" content="${title}">\n`;
+                if (description) {
+                    metaTags += `<meta property="og:description" content="${description}">\n`;
+                }
+                if (url) {
+                    metaTags += `<meta property="og:url" content="${url}">\n`;
+                }
+                metaTags += '<meta property="og:type" content="website">\n';
+                metaTags += '<meta property="og:site_name" content="Your Site Name">\n';
+            }
+
+            // Twitter Card Tags
+            if (twitterTags) {
+                metaTags += '\n<!-- Twitter Card Tags -->\n';
+                metaTags += '<meta name="twitter:card" content="summary_large_image">\n';
+                metaTags += `<meta name="twitter:title" content="${title}">\n`;
+                if (description) {
+                    metaTags += `<meta name="twitter:description" content="${description}">\n`;
+                }
+                metaTags += '<meta name="twitter:site" content="@yourtwitterhandle">\n';
+            }
+
+            // Update output
+            document.getElementById('codeOutput').innerHTML = metaTags.replace(/\n/g, '<br>').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+            // Update search preview
+            updateSearchPreview(title, description);
+        }
+
+        function updateSearchPreview(title, description) {
+            const preview = document.getElementById('searchPreview');
+            const truncatedTitle = title.length > 60 ? title.substring(0, 57) + '...' : title;
+            const truncatedDesc = description.length > 160 ? description.substring(0, 157) + '...' : description;
+            
+            preview.innerHTML = `
+                <div style="color: #1a0dab; font-size: 18px; margin-bottom: 5px;">${truncatedTitle}</div>
+                <div style="color: #006621; font-size: 14px; margin-bottom: 5px;">https://yourwebsite.com/example-page</div>
+                <div style="color: #545454; font-size: 14px;">${truncatedDesc}</div>
+            `;
+        }
+
+        function copyToClipboard() {
+            const codeOutput = document.getElementById('codeOutput');
+            const text = codeOutput.innerText.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/<br>/g, '\n');
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.getElementById('copyBtn');
+                btn.textContent = 'Copied!';
+                setTimeout(() => {
+                    btn.textContent = 'Copy Code';
+                }, 2000);
+            });
+        }
+
+        function resetTool() {
+            document.getElementById('pageTitle').value = '';
+            document.getElementById('pageDescription').value = '';
+            document.getElementById('keywords').value = '';
+            document.getElementById('pageUrl').value = '';
+            document.getElementById('author').value = '';
+            
+            document.getElementById('viewportTag').checked = true;
+            document.getElementById('charsetTag').checked = true;
+            document.getElementById('robotsTag').checked = true;
+            document.getElementById('ogTags').checked = false;
+            document.getElementById('twitterTags').checked = false;
+            
+            document.getElementById('codeOutput').innerHTML = `
+                <div class="meta-comment">&lt;!-- Generated by OnlineWebTool.Live --&gt;</div>
+                <div class="meta-comment">&lt;!-- Paste this code in your HTML &lt;head&gt; section --&gt;</div>
+                <br>
+                <div class="meta-comment">&lt;!-- Fill in your details and click Generate --&gt;</div>
+            `;
+            
+            document.getElementById('searchPreview').innerHTML = 'Your Google search result preview will appear here...';
+        }
+
+        // Initialize with example
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('pageTitle').value = 'OnlineWebTool.Live - Free Web Tools Collection';
+            document.getElementById('pageDescription').value = 'Discover 40+ free online tools for developers, designers, and content creators. Image resizer, PDF converters, code formatters, and more!';
+            document.getElementById('keywords').value = 'free web tools, online utilities, image resizer, PDF converter, code formatter';
+            document.getElementById('pageUrl').value = 'https://onlinewebtool.live';
+            document.getElementById('author').value = 'OnlineWebTool Team';
+        });
+    </script>
+</body>
+</html>
