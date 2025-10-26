@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Design Assistant - OnlineWebTool.Live</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000000;
+            min-height: 100vh;
+            padding: 20px;
+            color: #FFD700;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.1);
+            overflow: hidden;
+            border: 2px solid #FFD700;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #000000, #333333);
+            color: #FFD700;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(255, 215, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            color: #ffd54f;
+        }
+
+        .main-container {
+            display: grid;
+            grid-template-columns: 300px 1fr 300px;
+            gap: 20px;
+            padding: 20px;
+            height: 70vh;
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+        }
+
+        .sidebar {
+            background: #2d2d2d;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #444444;
+            overflow-y: auto;
+        }
+
+        .workspace {
+            background: #2d2d2d;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #444444;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preview-panel {
+            background: #2d2d2d;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #444444;
+            overflow-y: auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #FFD700;
+        }
+
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #555555;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: #333333;
+            color: #FFD700;
+        }
+
+        input[type="text"]:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #FFD700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        textarea {
+            height: 80px;
+            resize: vertical;
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .template-card {
+            background: #333;
+            border: 2px solid #555;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .template-card:hover {
+            border-color: #FFD700;
+            transform: translateY(-2px);
+        }
+
+        .template-card.active {
+            border-color: #FFD700;
+            background: #444;
+        }
+
+        .ai-prompt-box {
+            background: #333;
+            border: 2px solid #555;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .ai-prompt-box textarea {
+            height: 60px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FFD700, #fbc02d);
+            color: #000000;
+            border: 2px solid #FFD700;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #fbc02d, #f9a825);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #333333, #000000);
+            color: #FFD700;
+            border: 2px solid #FFD700;
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #000000, #333333);
+            transform: translateY(-2px);
+        }
+
+        .design-canvas {
+            flex: 1;
+            background: #000;
+            border: 2px dashed #555;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            min-height: 300px;
+        }
+
+        .design-preview {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .preview-item {
+            background: #333;
+            border: 1px solid #555;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .preview-item:hover {
+            border-color: #FFD700;
+            transform: translateX(5px);
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 5px;
+            margin: 10px 0;
+        }
+
+        .color-box {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            border: 2px solid #555;
+            cursor: pointer;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #000000;
+            color: #FFD700;
+            border-top: 2px solid #FFD700;
+        }
+
+        .ai-suggestions {
+            background: #333;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .suggestion-item {
+            background: #444;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            border-left: 3px solid #FFD700;
+        }
+
+        .tab-container {
+            display: flex;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #444;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            border-bottom: 3px solid #FFD700;
+            color: #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 AI Design Assistant</h1>
+            <p>Create stunning designs with AI-powered suggestions</p>
+        </div>
+
+        <div class="main-container">
+            <!-- Left Sidebar - Design Controls -->
+            <div class="sidebar">
+                <div class="tab-container">
+                    <div class="tab active" onclick="switchTab('content')">Content</div>
+                    <div class="tab" onclick="switchTab('design')">Design</div>
+                </div>
+
+                <div id="content-tab">
+                    <div class="form-group">
+                        <label for="headline">Headline</label>
+                        <input type="text" id="headline" placeholder="Enter your main headline" value="Amazing Offer!">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subheadline">Subheadline</label>
+                        <input type="text" id="subheadline" placeholder="Enter subheadline" value="Limited Time Only">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" placeholder="Enter description">Get started today and unlock amazing benefits with our exclusive offer!</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ctaText">Call to Action</label>
+                        <input type="text" id="ctaText" placeholder="Button text" value="Get Started Now">
+                    </div>
+
+                    <div class="ai-prompt-box">
+                        <label>AI Design Prompt</label>
+                        <textarea id="aiPrompt" placeholder="Describe the design you want...">Create a modern, professional banner with gold accents</textarea>
+                        <button class="btn-primary" onclick="generateAIDesign()">🎨 Generate Design</button>
+                    </div>
+                </div>
+
+                <div id="design-tab" style="display: none;">
+                    <div class="form-group">
+                        <label>Template Style</label>
+                        <div class="template-grid">
+                            <div class="template-card active" onclick="selectTemplate('modern')">
+                                <div>🔄</div>
+                                <div>Modern</div>
+                            </div>
+                            <div class="template-card" onclick="selectTemplate('professional')">
+                                <div>💼</div>
+                                <div>Professional</div>
+                            </div>
+                            <div class="template-card" onclick="selectTemplate('creative')">
+                                <div>🎨</div>
+                                <div>Creative</div>
+                            </div>
+                            <div class="template-card" onclick="selectTemplate('minimal')">
+                                <div>⚪</div>
+                                <div>Minimal</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Color Palette</label>
+                        <div class="color-palette">
+                            <div class="color-box" style="background: #000000;" onclick="setPrimaryColor('#000000')"></div>
+                            <div class="color-box" style="background: #FFD700;" onclick="setPrimaryColor('#FFD700')"></div>
+                            <div class="color-box" style="background: #1a1a1a;" onclick="setPrimaryColor('#1a1a1a')"></div>
+                            <div class="color-box" style="background: #333333;" onclick="setPrimaryColor('#333333')"></div>
+                            <div class="color-box" style="background: #4CAF50;" onclick="setPrimaryColor('#4CAF50')"></div>
+                            <div class="color-box" style="background: #2196F3;" onclick="setPrimaryColor('#2196F3')"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fontFamily">Font Family</label>
+                        <select id="fontFamily" onchange="updateDesign()">
+                            <option value="Arial, sans-serif">Arial</option>
+                            <option value="'Segoe UI', Tahoma" selected>Segoe UI</option>
+                            <option value="'Helvetica Neue', Helvetica">Helvetica</option>
+                            <option value="Georgia, serif">Georgia</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center Workspace -->
+            <div class="workspace">
+                <div class="design-canvas">
+                    <div class="design-preview" id="designPreview">
+                        <h1 id="previewHeadline" style="color: #FFD700; font-size: 2.5em; margin-bottom: 10px;">Amazing Offer!</h1>
+                        <h2 id="previewSubheadline" style="color: #ffd54f; font-size: 1.5em; margin-bottom: 15px;">Limited Time Only</h2>
+                        <p id="previewDescription" style="color: #cccccc; font-size: 1.1em; margin-bottom: 20px;">Get started today and unlock amazing benefits with our exclusive offer!</p>
+                        <button style="background: #FFD700; color: #000; border: none; padding: 12px 30px; border-radius: 5px; font-weight: bold; font-size: 1.1em;" id="previewCTA">Get Started Now</button>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn-primary" onclick="downloadDesign()">💾 Download Design</button>
+                    <button class="btn-secondary" onclick="shareDesign()">📤 Share Design</button>
+                </div>
+            </div>
+
+            <!-- Right Sidebar - AI Suggestions -->
+            <div class="preview-panel">
+                <h4 style="color: #FFD700; margin-bottom: 15px;">🤖 AI Suggestions</h4>
+                
+                <div class="ai-suggestions">
+                    <div class="suggestion-item" onclick="applySuggestion('Try a more compelling headline')">
+                        💡 Try a more compelling headline
+                    </div>
+                    <div class="suggestion-item" onclick="applySuggestion('Add urgency to your call-to-action')">
+                        ⏰ Add urgency to your call-to-action
+                    </div>
+                    <div class="suggestion-item" onclick="applySuggestion('Use contrasting colors for better visibility')">
+                        🎨 Use contrasting colors for better visibility
+                    </div>
+                    <div class="suggestion-item" onclick="applySuggestion('Simplify the message for clarity')">
+                        ✨ Simplify the message for clarity
+                    </div>
+                </div>
+
+                <h4 style="color: #FFD700; margin: 20px 0 10px 0;">Design Previews</h4>
+                
+                <div class="preview-item" onclick="loadPreview('social')">
+                    📱 Social Media Post
+                </div>
+                <div class="preview-item" onclick="loadPreview('banner')">
+                    �️ Website Banner
+                </div>
+                <div class="preview-item" onclick="loadPreview('ad')">
+                    📢 Advertisement
+                </div>
+                <div class="preview-item" onclick="loadPreview('email')">
+                    📧 Email Header
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Tools Section -->
+        <section class="related-tools">
+            <h3>🔧 More Creative Tools</h3>
+            <div class="tool-links">
+                <a href="/image-resizer.html" class="tool-btn">🖼️ Image Resizer</a>
+                <a href="/meta-tags.html" class="tool-btn">🔖 Meta Tag Generator</a>
+                <a href="/color-palette.html" class="tool-btn">🎨 Color Palette</a>
+                <a href="/gradient-generator.html" class="tool-btn">🌈 Gradient Generator</a>
+                <a href="/font-pairing.html" class="tool-btn">🔤 Font Pairing</a>
+                <a href="/qr-generator.html" class="tool-btn">📱 QR Generator</a>
+            </div>
+        </section>
+
+        <div class="footer">
+            <p>© 2024 OnlineWebTool.Live - AI Design Assistant</p>
+        </div>
+    </div>
+
+    <script>
+        let currentTemplate = 'modern';
+        let primaryColor = '#FFD700';
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('[id$="-tab"]').forEach(tab => tab.style.display = 'none');
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName + '-tab').style.display = 'block';
+        }
+
+        function selectTemplate(template) {
+            document.querySelectorAll('.template-card').forEach(card => card.classList.remove('active'));
+            event.target.classList.add('active');
+            currentTemplate = template;
+            updateDesign();
+        }
+
+        function setPrimaryColor(color) {
+            primaryColor = color;
+            updateDesign();
+        }
+
+        function updateDesign() {
+            const headline = document.getElementById('headline').value || 'Your Headline';
+            const subheadline = document.getElementById('subheadline').value || 'Your Subheadline';
+            const description = document.getElementById('description').value || 'Your description text here';
+            const ctaText = document.getElementById('ctaText').value || 'Click Here';
+            const fontFamily = document.getElementById('fontFamily').value;
+
+            document.getElementById('previewHeadline').textContent = headline;
+            document.getElementById('previewSubheadline').textContent = subheadline;
+            document.getElementById('previewDescription').textContent = description;
+            document.getElementById('previewCTA').textContent = ctaText;
+
+            // Apply template styles
+            const preview = document.getElementById('designPreview');
+            preview.style.fontFamily = fontFamily;
+            
+            switch(currentTemplate) {
+                case 'modern':
+                    preview.style.background = 'linear-gradient(135deg, #1a1a1a, #000000)';
+                    break;
+                case 'professional':
+                    preview.style.background = '#000000';
+                    break;
+                case 'creative':
+                    preview.style.background = 'linear-gradient(45deg, #1a1a1a, #333333)';
+                    break;
+                case 'minimal':
+                    preview.style.background = '#0d0d0d';
+                    break;
+            }
+
+            // Apply primary color
+            document.getElementById('previewHeadline').style.color = primaryColor;
+            document.getElementById('previewCTA').style.background = primaryColor;
+        }
+
+        function generateAIDesign() {
+            const prompt = document.getElementById('aiPrompt').value;
+            alert(`🤖 AI is generating design based on: "${prompt}"\n\nThis would connect to an AI API in a real implementation.`);
+            
+            // Simulate AI design variations
+            const designs = [
+                { template: 'modern', color: '#FFD700' },
+                { template: 'professional', color: '#4CAF50' },
+                { template: 'creative', color: '#2196F3' }
+            ];
+            
+            const randomDesign = designs[Math.floor(Math.random() * designs.length)];
+            currentTemplate = randomDesign.template;
+            primaryColor = randomDesign.color;
+            
+            updateDesign();
+        }
+
+        function applySuggestion(suggestion) {
+            alert(`Applying suggestion: "${suggestion}"`);
+            // In a real app, this would intelligently modify the design
+        }
+
+        function loadPreview(type) {
+            const designs = {
+                social: {
+                    headline: "Follow Us for Updates!",
+                    subheadline: "Join our community",
+                    description: "Stay connected and get the latest news and offers delivered to you.",
+                    cta: "Follow Now"
+                },
+                banner: {
+                    headline: "Welcome to Our Site",
+                    subheadline: "Discover Amazing Tools",
+                    description: "Explore our collection of free web tools and utilities.",
+                    cta: "Explore Tools"
+                },
+                ad: {
+                    headline: "Special Offer!",
+                    subheadline: "50% Off Today",
+                    description: "Don't miss this limited time opportunity to save big!",
+                    cta: "Shop Now"
+                },
+                email: {
+                    headline: "Newsletter",
+                    subheadline: "Monthly Updates",
+                    description: "Get the latest tips, tricks, and industry insights.",
+                    cta: "Subscribe"
+                }
+            };
+
+            const design = designs[type];
+            document.getElementById('headline').value = design.headline;
+            document.getElementById('subheadline').value = design.subheadline;
+            document.getElementById('description').value = design.description;
+            document.getElementById('ctaText').value = design.cta;
+            
+            updateDesign();
+        }
+
+        function downloadDesign() {
+            alert('📥 Download functionality would be implemented here!\nThis would generate and download the design as PNG/PDF.');
+        }
+
+        function shareDesign() {
+            alert('📤 Share functionality would be implemented here!\nThis would allow sharing to social media or generating a shareable link.');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDesign();
+            
+            // Add event listeners for real-time updates
+            ['headline', 'subheadline', 'description', 'ctaText'].forEach(id => {
+                document.getElementById(id).addEventListener('input', updateDesign);
+            });
+        });
+    </script>
+</body>
+</html>
