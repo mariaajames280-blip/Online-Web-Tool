@@ -3471,3 +3471,48 @@ footer {
         flex-direction: column;
     }
 }
+/* ===============================
+   Related Tools Section
+   =============================== */
+.related-tools {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 15px;
+    border: 2px solid var(--text-color);
+    margin: 40px 0;
+}
+
+.related-tools h3 {
+    color: var(--text-color);
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.tool-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    justify-content: center;
+}
+
+.tool-btn {
+    display: block;
+    padding: 15px 20px;
+    background: var(--secondary-color);
+    color: var(--text-color);
+    text-decoration: none;
+    border: 2px solid #333;
+    border-radius: 10px;
+    text-align: center;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.tool-btn:hover {
+    background: var(--hover-color);
+    color: var(--primary-color);
+    border-color: var(--hover-color);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px var(--shadow);
+}
