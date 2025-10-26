@@ -389,27 +389,34 @@
                         <div id="placeholderText" style="color: #888;">Your resized image will appear here</div>
                     </div>
                     
-                    <div class="image-info">
-                        <div class="info-item">
-                            <span>Original Size:</span>
-                            <span id="originalSize">-</span>
-                        </div>
-                        <div class="info-item">
-                            <span>New Size:</span>
-                            <span id="newSize">-</span>
-                        </div>
-                        <div class="info-item">
-                            <span>File Type:</span>
-                            <span id="fileType">-</span>
-                        </div>
-                        <div class="info-item">
-                            <span>Reduction:</span>
-                            <span id="reduction">-</span>
-                        </div>
+     <div class="image-info-container">
+    <!-- Original Image Info -->
+    <div class="info-box original-info">
+        <h4>📁 Original Image</h4>
+        <div class="info-item">
+            <span>Size:</span>
+            <span id="originalSize">-</span>
+        </div>
+        <div class="info-item">
+            <span>File Type:</span>
+            <span id="fileType">-</span>
+        </div>
+    </div>
+
+                         <!-- Resized Image Info -->
+                         <div class="info-box resized-info">
+                         <h4>🔄 Resized Image</h4>
+                         <div class="info-item">
+                         <span>New Size:</span>
+                         <span id="newSize">-</span>
+                         </div>
+                         <div class="info-item">
+                         <span>Reduction:</span>
+                         <span id="reduction">-</span>
                     </div>
                 </div>
-            </div>
-        </div>
+           </div>
+        
 
         <div class="footer">
             <p>© 2024 OnlineWebTool.Live - Free Online Image Resizer Tool</p>
