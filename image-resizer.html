@@ -417,199 +417,199 @@
     </div>
 
     <script>
-        let originalImage = null;
-        let resizedImage = null;
-        let originalFile = null;
+    let originalImage = null;
+    let resizedImage = null;
+    let originalFile = null;
 
-        function handleImageUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+    function handleImageUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
 
-            if (!file.type.match('image.*')) {
-                alert('Please upload an image file (JPG, PNG, GIF, WebP)');
-                return;
-            }
-
-            originalFile = file;
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                originalImage = new Image();
-                originalImage.onload = function() {
-                    document.getElementById('widthInput').value = this.width;
-                    document.getElementById('heightInput').value = this.height;
-                    document.getElementById('previewImage').src = e.target.result;
-                    document.getElementById('previewImage').classList.remove('hidden');
-                    document.getElementById('placeholderText').classList.add('hidden');
-                    
-                    updateImageInfo(this.width, this.height, file.size, file.type);
-                };
-                originalImage.src = e.target.result;
-            };
-            
-            reader.readAsDataURL(file);
+        if (!file.type.match('image.*')) {
+            alert('Please upload an image file (JPG, PNG, GIF, WebP)');
+            return;
         }
 
-        function updateImageInfo(width, height, size, type) {
-            document.getElementById('originalSize').textContent = `${width} × ${height}px`;
-            document.getElementById('fileType').textContent = type.split('/')[1].toUpperCase();
-            
-            const sizeKB = (size / 1024).toFixed(2);
-            document.getElementById('newSize').textContent = `${sizeKB} KB`;
-        }
-
-        function applyPreset() {
-            const preset = document.getElementById('presetSelect').value;
-            const maintainAspect = document.getElementById('maintainAspect').checked;
-            
-            if (preset === 'custom') return;
-            
-            let width, height;
-            
-            switch(preset) {
-                case 'facebook':
-                    width = 1200; height = 630;
-                    break;
-                case 'instagram':
-                    width = 1080; height = 1080;
-                    break;
-                case 'twitter':
-                    width = 1500; height = 500;
-                    break;
-                case 'youtube':
-                    width = 1280; height = 720;
-                    break;
-                case 'linkedin':
-                    width = 1200; height = 627;
-                    break;
-                case 'pinterest':
-                    width = 1000; height = 1500;
-                    break;
-            }
-            
-            if (maintainAspect && originalImage) {
-                const ratio = originalImage.width / originalImage.height;
-                if (width / height > ratio) {
-                    width = Math.round(height * ratio);
-                } else {
-                    height = Math.round(width / ratio);
-                }
-            }
-            
-            document.getElementById('widthInput').value = width;
-            document.getElementById('heightInput').value = height;
-        }
-
-        function resizeImage() {
-            if (!originalImage) {
-                alert('Please upload an image first');
-                return;
-            }
-
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            
-            let newWidth = parseInt(document.getElementById('widthInput').value) || originalImage.width;
-            let newHeight = parseInt(document.getElementById('heightInput').value) || originalImage.height;
-            
-            const maintainAspect = document.getElementById('maintainAspect').checked;
-            
-            if (maintainAspect) {
-                const ratio = originalImage.width / originalImage.height;
-                if (newWidth && !newHeight) {
-                    newHeight = Math.round(newWidth / ratio);
-                } else if (newHeight && !newWidth) {
-                    newWidth = Math.round(newHeight * ratio);
-                } else if (newWidth && newHeight) {
-                    if (newWidth / newHeight > ratio) {
-                        newWidth = Math.round(newHeight * ratio);
-                    } else {
-                        newHeight = Math.round(newWidth / ratio);
-                    }
-                }
-            }
-            
-            canvas.width = newWidth;
-            canvas.height = newHeight;
-            
-            ctx.drawImage(originalImage, 0, 0, newWidth, newHeight);
-            
-            const quality = parseFloat(document.getElementById('qualitySelect').value);
-            resizedImage = canvas.toDataURL(originalFile.type, quality);
-            
-            document.getElementById('previewImage').src = resizedImage;
-            document.getElementById('downloadBtn').disabled = false;
-            
-            // Update size info
-            const newSizeKB = (resizedImage.length / 1024).toFixed(2);
-            const originalSizeKB = (originalFile.size / 1024).toFixed(2);
-            const reduction = ((1 - (parseFloat(newSizeKB) / parseFloat(originalSizeKB))) * 100).toFixed(1);
-            
-            document.getElementById('newSize').textContent = `${newWidth} × ${newHeight}px | ${newSizeKB} KB`;
-            document.getElementById('reduction').textContent = `${reduction}% smaller`;
-        }
-
-        function downloadImage() {
-            if (!resizedImage) {
-                alert('Please resize an image first');
-                return;
-            }
-
-            const link = document.createElement('a');
-            link.download = `resized-${originalFile.name}`;
-            link.href = resizedImage;
-            link.click();
-        }
-
-        function resetTool() {
-            document.getElementById('fileInput').value = '';
-            document.getElementById('widthInput').value = '';
-            document.getElementById('heightInput').value = '';
-            document.getElementById('presetSelect').value = 'custom';
-            document.getElementById('qualitySelect').value = '1.0';
-            document.getElementById('maintainAspect').checked = true;
-            document.getElementById('downloadBtn').disabled = true;
-            
-            document.getElementById('previewImage').src = '';
-            document.getElementById('previewImage').classList.add('hidden');
-            document.getElementById('placeholderText').classList.remove('hidden');
-            
-            document.getElementById('originalSize').textContent = '-';
-            document.getElementById('newSize').textContent = '-';
-            document.getElementById('fileType').textContent = '-';
-            document.getElementById('reduction').textContent = '-';
-            
-            originalImage = null;
-            resizedImage = null;
-            originalFile = null;
-        }
-
-        // Drag and drop functionality
-        const uploadArea = document.querySelector('.upload-area');
+        originalFile = file;
+        const reader = new FileReader();
         
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadArea.style.background = '#444444';
-            uploadArea.style.borderColor = '#ffd54f';
-        });
+        reader.onload = function(e) {
+            originalImage = new Image();
+            originalImage.onload = function() {
+                document.getElementById('widthInput').value = this.width;
+                document.getElementById('heightInput').value = this.height;
+                document.getElementById('previewImage').src = e.target.result;
+                document.getElementById('previewImage').classList.remove('hidden');
+                document.getElementById('placeholderText').classList.add('hidden');
+                
+                updateImageInfo(this.width, this.height, file.size, file.type);
+            };
+            originalImage.src = e.target.result;
+        };
+        
+        reader.readAsDataURL(file);
+    }
 
-        uploadArea.addEventListener('dragleave', () => {
-            uploadArea.style.background = '#333333';
-            uploadArea.style.borderColor = '#ffeb3b';
-        });
+    function updateImageInfo(width, height, size, type) {
+        document.getElementById('originalSize').textContent = `${width} × ${height}px`;
+        document.getElementById('fileType').textContent = type.split('/')[1].toUpperCase();
+        
+        const sizeKB = (size / 1024).toFixed(2);
+        // REMOVED the problematic line that was causing the bug
+    }
 
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadArea.style.background = '#333333';
-            uploadArea.style.borderColor = '#ffeb3b';
-            
-            const file = e.dataTransfer.files[0];
-            if (file) {
-                const event = { target: { files: [file] } };
-                handleImageUpload(event);
+    function applyPreset() {
+        const preset = document.getElementById('presetSelect').value;
+        const maintainAspect = document.getElementById('maintainAspect').checked;
+        
+        if (preset === 'custom') return;
+        
+        let width, height;
+        
+        switch(preset) {
+            case 'facebook':
+                width = 1200; height = 630;
+                break;
+            case 'instagram':
+                width = 1080; height = 1080;
+                break;
+            case 'twitter':
+                width = 1500; height = 500;
+                break;
+            case 'youtube':
+                width = 1280; height = 720;
+                break;
+            case 'linkedin':
+                width = 1200; height = 627;
+                break;
+            case 'pinterest':
+                width = 1000; height = 1500;
+                break;
+        }
+        
+        if (maintainAspect && originalImage) {
+            const ratio = originalImage.width / originalImage.height;
+            if (width / height > ratio) {
+                width = Math.round(height * ratio);
+            } else {
+                height = Math.round(width / ratio);
             }
-        });
-    </script>
+        }
+        
+        document.getElementById('widthInput').value = width;
+        document.getElementById('heightInput').value = height;
+    }
+
+    function resizeImage() {
+        if (!originalImage) {
+            alert('Please upload an image first');
+            return;
+        }
+
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let newWidth = parseInt(document.getElementById('widthInput').value) || originalImage.width;
+        let newHeight = parseInt(document.getElementById('heightInput').value) || originalImage.height;
+        
+        const maintainAspect = document.getElementById('maintainAspect').checked;
+        
+        if (maintainAspect) {
+            const ratio = originalImage.width / originalImage.height;
+            if (newWidth && !newHeight) {
+                newHeight = Math.round(newWidth / ratio);
+            } else if (newHeight && !newWidth) {
+                newWidth = Math.round(newHeight * ratio);
+            } else if (newWidth && newHeight) {
+                if (newWidth / newHeight > ratio) {
+                    newWidth = Math.round(newHeight * ratio);
+                } else {
+                    newHeight = Math.round(newWidth / ratio);
+                }
+            }
+        }
+        
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+        
+        ctx.drawImage(originalImage, 0, 0, newWidth, newHeight);
+        
+        const quality = parseFloat(document.getElementById('qualitySelect').value);
+        resizedImage = canvas.toDataURL(originalFile.type, quality);
+        
+        document.getElementById('previewImage').src = resizedImage;
+        document.getElementById('downloadBtn').disabled = false;
+        
+        // Update size info - FIXED VERSION
+        const newSizeKB = (resizedImage.length / 1024).toFixed(2);
+        const originalSizeKB = (originalFile.size / 1024).toFixed(2);
+        const reduction = ((1 - (parseFloat(newSizeKB) / parseFloat(originalSizeKB))) * 100).toFixed(1);
+        
+        document.getElementById('newSize').textContent = `${newWidth} × ${newHeight}px | ${newSizeKB} KB`;
+        document.getElementById('reduction').textContent = `${reduction}% smaller`;
+    }
+
+    function downloadImage() {
+        if (!resizedImage) {
+            alert('Please resize an image first');
+            return;
+        }
+
+        const link = document.createElement('a');
+        link.download = `resized-${originalFile.name}`;
+        link.href = resizedImage;
+        link.click();
+    }
+
+    function resetTool() {
+        document.getElementById('fileInput').value = '';
+        document.getElementById('widthInput').value = '';
+        document.getElementById('heightInput').value = '';
+        document.getElementById('presetSelect').value = 'custom';
+        document.getElementById('qualitySelect').value = '1.0';
+        document.getElementById('maintainAspect').checked = true;
+        document.getElementById('downloadBtn').disabled = true;
+        
+        document.getElementById('previewImage').src = '';
+        document.getElementById('previewImage').classList.add('hidden');
+        document.getElementById('placeholderText').classList.remove('hidden');
+        
+        document.getElementById('originalSize').textContent = '-';
+        document.getElementById('newSize').textContent = '-';
+        document.getElementById('fileType').textContent = '-';
+        document.getElementById('reduction').textContent = '-';
+        
+        originalImage = null;
+        resizedImage = null;
+        originalFile = null;
+    }
+
+    // Drag and drop functionality
+    const uploadArea = document.querySelector('.upload-area');
+    
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.style.background = '#444444';
+        uploadArea.style.borderColor = '#ffd54f';
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.style.background = '#333333';
+        uploadArea.style.borderColor = '#ffeb3b';
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.style.background = '#333333';
+        uploadArea.style.borderColor = '#ffeb3b';
+        
+        const file = e.dataTransfer.files[0];
+        if (file) {
+            const event = { target: { files: [file] } };
+            handleImageUpload(event);
+        }
+    });
+</script>
         });
     </script>
 
