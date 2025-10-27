@@ -1,216 +1,518 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Free QR Code Generator - Create custom QR codes instantly">
-    <title>QR Code Generator - ONLINE WEBTOOL</title>
-    <link rel="stylesheet" href="style.css">
+    <title>QR Code Generator Pro - OnlineWebTool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        /* Header */
+        .header {
+            background-color: #000;
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo::before {
+            content: "⚡";
+            color: #00d4ff;
+            font-size: 28px;
+        }
+
+        .logo-text {
+            background: linear-gradient(90deg, #00d4ff, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: #00d4ff;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .qr-generator-box {
+            background: rgba(40, 40, 40, 0.9);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+        }
+
+        .input-section {
+            margin-bottom: 30px;
+        }
+
+        .input-section label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            background: #2a2a2a;
+            border: 2px solid #444;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            transition: border-color 0.3s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #00d4ff;
+        }
+
+        /* Color Scheme Section */
+        .color-section {
+            margin-bottom: 30px;
+        }
+
+        .color-section label {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .color-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .color-option {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .color-option:hover {
+            transform: translateY(-5px);
+        }
+
+        .color-option input[type="radio"] {
+            display: none;
+        }
+
+        .color-box {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 10px;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .color-option input[type="radio"]:checked + .color-box {
+            border-color: #ffd700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .color-label {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Color Styles */
+        .color-blue {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+        }
+
+        .color-red {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+        }
+
+        .color-green {
+            background: linear-gradient(135deg, #51cf66 0%, #37b24d 100%);
+        }
+
+        .color-purple {
+            background: linear-gradient(135deg, #9775fa 0%, #845ef7 100%);
+        }
+
+        .color-orange {
+            background: linear-gradient(135deg, #ff922b 0%, #fd7e14 100%);
+        }
+
+        .color-pink {
+            background: linear-gradient(135deg, #ff6ec7 0%, #e64980 100%);
+        }
+
+        .color-yellow {
+            background: linear-gradient(135deg, #ffd43b 0%, #fab005 100%);
+        }
+
+        .color-teal {
+            background: linear-gradient(135deg, #20c997 0%, #12b886 100%);
+        }
+
+        /* Generate Button */
+        .generate-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(90deg, #00d4ff 0%, #0099cc 100%);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.4);
+        }
+
+        .generate-btn:active {
+            transform: translateY(0);
+        }
+
+        /* QR Code Display */
+        .qr-result {
+            background: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .qr-result.hidden {
+            display: none;
+        }
+
+        #qrcode {
+            margin: 20px 0;
+            display: inline-block;
+        }
+
+        #qrcode img,
+        #qrcode canvas {
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .success-message {
+            color: #51cf66;
+            font-size: 16px;
+            font-weight: 500;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .success-message::before {
+            content: "✓";
+            font-size: 20px;
+        }
+
+        /* Download Button */
+        .download-btn {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: linear-gradient(90deg, #51cf66 0%, #37b24d 100%);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(81, 207, 102, 0.4);
+        }
+
+        .placeholder {
+            color: #999;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .container {
+                margin: 30px auto;
+                padding: 15px;
+            }
+
+            .qr-generator-box {
+                padding: 25px;
+            }
+
+            .color-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">
-                    <h1><i class="fas fa-tools"></i> ONLINE WEBTOOL</h1>
-                </div>
-                <ul class="nav-menu">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../about.html">About Us</a></li>
-                    <li><a href="../contact.html">Contact</a></li>
-                </ul>
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </nav>
+    <header class="header">
+        <div class="logo">
+            <span class="logo-text">OnlineWebTool</span>
         </div>
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">All Tools</a></li>
+                <li><a href="#" class="active">QR Generator</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <!-- Tool Page -->
-    <div class="tool-page">
-        <div class="container">
-            <div class="tool-container">
-                <div class="tool-header">
-                    <h1><i class="fas fa-qrcode"></i> QR Code Generator</h1>
-                    <p>Generate QR codes instantly for URLs, text, and more</p>
-                </div>
+    <!-- Main Container -->
+    <div class="container">
+        <div class="qr-generator-box">
+            <!-- Input Section -->
+            <div class="input-section">
+                <label for="qrInput">Enter Text or URL:</label>
+                <textarea 
+                    id="qrInput" 
+                    class="input-field" 
+                    rows="4" 
+                    placeholder="https://www.onlinewebtoolstack.site"
+                ></textarea>
+            </div>
 
-                <div class="tool-content">
-                    <div class="form-group">
-                        <label for="qrText">Enter Text or URL *</label>
-                        <textarea id="qrText" placeholder="Enter text, URL, or any content you want to encode..." rows="4"></textarea>
+            <!-- Color Scheme Section -->
+            <div class="color-section">
+                <label>Choose Color Scheme:</label>
+                <div class="color-options">
+                    <div class="color-option">
+                        <input type="radio" name="color" id="blue" value="#00d4ff" checked>
+                        <label for="blue">
+                            <div class="color-box color-blue"></div>
+                            <div class="color-label">Blue</div>
+                        </label>
                     </div>
-
-                    <div class="form-group">
-                        <label for="qrSize">QR Code Size</label>
-                        <select id="qrSize">
-                            <option value="128">128x128 px</option>
-                            <option value="256" selected>256x256 px</option>
-                            <option value="512">512x512 px</option>
-                            <option value="1024">1024x1024 px</option>
-                        </select>
+                    <div class="color-option">
+                        <input type="radio" name="color" id="red" value="#ff6b6b">
+                        <label for="red">
+                            <div class="color-box color-red"></div>
+                            <div class="color-label">Red</div>
+                        </label>
                     </div>
-
-                    <div class="button-group">
-                        <button class="btn-action btn-generate" onclick="generateQR()">
-                            <i class="fas fa-qrcode"></i> Generate QR Code
-                        </button>
-                        <button class="btn-action btn-reset" onclick="resetQR()">
-                            <i class="fas fa-redo"></i> Reset
-                        </button>
-                        <button class="btn-action btn-download" onclick="downloadQR()" id="downloadBtn" style="display:none;">
-                            <i class="fas fa-download"></i> Download QR Code
-                        </button>
+                    <div class="color-option">
+                        <input type="radio" name="color" id="green" value="#51cf66">
+                        <label for="green">
+                            <div class="color-box color-green"></div>
+                            <div class="color-label">Green</div>
+                        </label>
                     </div>
-
-                    <div class="result-section hidden" id="resultSection">
-                        <div id="qrcode"></div>
+                    <div class="color-option">
+                        <input type="radio" name="color" id="purple" value="#9775fa">
+                        <label for="purple">
+                            <div class="color-box color-purple"></div>
+                            <div class="color-label">Purple</div>
+                        </label>
+                    </div>
+                    <div class="color-option">
+                        <input type="radio" name="color" id="orange" value="#ff922b">
+                        <label for="orange">
+                            <div class="color-box color-orange"></div>
+                            <div class="color-label">Orange</div>
+                        </label>
+                    </div>
+                    <div class="color-option">
+                        <input type="radio" name="color" id="pink" value="#ff6ec7">
+                        <label for="pink">
+                            <div class="color-box color-pink"></div>
+                            <div class="color-label">Pink</div>
+                        </label>
+                    </div>
+                    <div class="color-option">
+                        <input type="radio" name="color" id="yellow" value="#ffd43b">
+                        <label for="yellow">
+                            <div class="color-box color-yellow"></div>
+                            <div class="color-label">Yellow</div>
+                        </label>
+                    </div>
+                    <div class="color-option">
+                        <input type="radio" name="color" id="teal" value="#20c997">
+                        <label for="teal">
+                            <div class="color-box color-teal"></div>
+                            <div class="color-label">Teal</div>
+                        </label>
                     </div>
                 </div>
             </div>
 
-            <!-- AdSense Placeholder -->
-            <div class="ad-container">
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-                     data-ad-slot="XXXXXXXXXX"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
+            <!-- Generate Button -->
+            <button class="generate-btn" onclick="generateQRCode()">Generate QR Code</button>
+
+            <!-- QR Code Display -->
+            <div class="qr-result" id="qrResult">
+                <div id="qrcode"></div>
+                <div class="success-message" id="successMsg" style="display: none;">
+                    QR code generated successfully!
+                </div>
+                <button class="download-btn" id="downloadBtn" style="display: none;" onclick="downloadQR()">
+                    Download QR Code
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>ONLINE WEBTOOL</h3>
-                    <p>Your one-stop destination for free online tools</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="../index.html">Home</a></li>
-                        <li><a href="../about.html">About Us</a></li>
-                        <li><a href="../contact.html">Contact</a></li>
-                        <li><a href="qr-generator.html">QR Code Generator</a></li>
-                        <li><a href="url-shortener.html">URL Shortener</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Popular Tools</h4>
-                    <ul>
-                        <li><a href="password-generator.html">Password Generator</a></li>
-                        <li><a href="base64-converter.html">Base64 Converter</a></li>
-                        <li><a href="color-picker.html">Color Picker</a></li>
-                        <li><a href="word-counter.html">Word Counter</a></li>
-                        <li><a href="calculator.html">Calculator</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Connect With Us</h4>
-                    <div class="social-icons">
-                        <a href="https://facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="https://twitter.com" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                        <a href="https://youtube.com" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
-                        <a href="https://github.com" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 ONLINE WEBTOOL. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="../js/main.js"></script>
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
     <script>
-        let qrCode = null;
+        let qrCodeInstance = null;
 
-        function generateQR() {
-            const text = document.getElementById('qrText').value.trim();
-            const size = parseInt(document.getElementById('qrSize').value);
-            const resultSection = document.getElementById('resultSection');
-            const downloadBtn = document.getElementById('downloadBtn');
+        function generateQRCode() {
+            const input = document.getElementById('qrInput').value.trim();
+            const selectedColor = document.querySelector('input[name="color"]:checked').value;
             const qrcodeDiv = document.getElementById('qrcode');
+            const successMsg = document.getElementById('successMsg');
+            const downloadBtn = document.getElementById('downloadBtn');
 
-            if (!text) {
-                showMessage('Please enter text or URL to generate QR code', 'error');
+            // Validate input
+            if (!input) {
+                alert('Please enter text or URL to generate QR code!');
                 return;
             }
 
             // Clear previous QR code
             qrcodeDiv.innerHTML = '';
+            successMsg.style.display = 'none';
+            downloadBtn.style.display = 'none';
 
             // Generate new QR code
             try {
-                qrCode = new QRCode(qrcodeDiv, {
-                    text: text,
-                    width: size,
-                    height: size,
-                    colorDark: "#000000",
+                qrCodeInstance = new QRCode(qrcodeDiv, {
+                    text: input,
+                    width: 256,
+                    height: 256,
+                    colorDark: selectedColor,
                     colorLight: "#ffffff",
                     correctLevel: QRCode.CorrectLevel.H
                 });
 
-                resultSection.classList.remove('hidden');
-                downloadBtn.style.display = 'inline-block';
-                showMessage('QR Code generated successfully!', 'success');
-            } catch (error) {
-                showMessage('Error generating QR code. Please try again.', 'error');
-            }
-        }
+                // Show success message and download button
+                setTimeout(() => {
+                    successMsg.style.display = 'flex';
+                    downloadBtn.style.display = 'inline-block';
+                }, 500);
 
-        function resetQR() {
-            document.getElementById('qrText').value = '';
-            document.getElementById('qrSize').value = '256';
-            document.getElementById('qrcode').innerHTML = '';
-            document.getElementById('resultSection').classList.add('hidden');
-            document.getElementById('downloadBtn').style.display = 'none';
-            qrCode = null;
-            showMessage('Form reset successfully', 'info');
+            } catch (error) {
+                alert('Error generating QR code. Please try again.');
+                console.error(error);
+            }
         }
 
         function downloadQR() {
-            const qrcodeDiv = document.getElementById('qrcode');
-            const canvas = qrcodeDiv.querySelector('canvas');
+            const canvas = document.querySelector('#qrcode canvas');
             
-            if (!canvas) {
-                showMessage('Please generate a QR code first', 'error');
-                return;
-            }
-
-            try {
-                const url = canvas.toDataURL('image/png');
-                const link = document.createElement('a');
-                link.download = 'qrcode.png';
-                link.href = url;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                showMessage('QR Code downloaded successfully!', 'success');
-            } catch (error) {
-                showMessage('Error downloading QR code. Please try again.', 'error');
+            if (canvas) {
+                // Convert canvas to blob and download
+                canvas.toBlob(function(blob) {
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.download = 'qrcode.png';
+                    link.href = url;
+                    link.click();
+                    URL.revokeObjectURL(url);
+                });
+            } else {
+                // Fallback for image element
+                const img = document.querySelector('#qrcode img');
+                if (img) {
+                    const link = document.createElement('a');
+                    link.download = 'qrcode.png';
+                    link.href = img.src;
+                    link.click();
+                }
             }
         }
 
-        // Allow Enter key to generate
-        document.getElementById('qrText').addEventListener('keypress', function(e) {
+        // Allow Enter key to generate QR code
+        document.getElementById('qrInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
-                generateQR();
+                generateQRCode();
             }
+        });
+
+        // Auto-generate on color change if input has value
+        document.querySelectorAll('input[name="color"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const input = document.getElementById('qrInput').value.trim();
+                if (input && qrCodeInstance) {
+                    generateQRCode();
+                }
+            });
         });
     </script>
 </body>
