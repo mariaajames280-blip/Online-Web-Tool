@@ -636,47 +636,47 @@
                 });
             }
             
-            function updateHistoryList() {
-                historyList.innerHTML = '';
-                
-                if (testHistory.length === 0) {
-                    const li = document.createElement('li');
-                    li.className = 'history-item';
-                    li.textContent = 'No tests yet. Check a website to see history.';
-                    historyList.appendChild(li);
-                    return;
-                }
-                
-                testHistory.forEach(test => {
-                    const li = document.createElement('li');
-                    li.className = 'history-item';
-                    
-                    const urlDiv = document.createElement('div');
-                    urlDiv.className = 'history-url';
-                    urlDiv.textContent = test.url;
-                    
-                    const detailsDiv = document.createElement('div');
-                    detailsDiv.className = 'history-details';
-                    
-                    const scoreSpan = document.createElement('span');
-                    scoreSpan.textContent = `Score: ${test.score}`;
-                    scoreSpan.style.color = test.score >= 90 ? '#00cc66' : test.score >= 70 ? '#ffcc00' : test.score >= 50 ? '#ff9900' : '#ff3333';
-                    scoreSpan.style.marginRight = '10px';
-                    scoreSpan.style.fontWeight = 'bold';
-                    
-                    const timeSpan = document.createElement('span');
-                    timeSpan.className = 'history-time';
-                    timeSpan.textContent = `${test.time} • ${test.date}`;
-                    
-                    detailsDiv.appendChild(scoreSpan);
-                    detailsDiv.appendChild(timeSpan);
-                    
-                    li.appendChild(urlDiv);
-                    li.appendChild(detailsDiv);
-                    
-                    historyList.appendChild(li);
-                });
-            }
+           function updateHistoryList() {
+    historyList.innerHTML = '';
+    
+    if (testHistory.length === 0) {
+        const li = document.createElement('li');
+        li.className = 'history-item';
+        li.textContent = 'No tests yet. Check a website to see history.';
+        historyList.appendChild(li);
+        return;
+    }
+    
+    testHistory.forEach(test => {
+        const li = document.createElement('li');
+        li.className = 'history-item';
+        
+        const urlDiv = document.createElement('div');
+        urlDiv.className = 'history-url';
+        urlDiv.textContent = test.url;
+        
+        const detailsDiv = document.createElement('div');
+        detailsDiv.className = 'history-details';
+        
+        const scoreSpan = document.createElement('span');
+        scoreSpan.textContent = `Score: ${test.score}`;
+        scoreSpan.style.color = getScoreColor(test.score);
+        scoreSpan.style.marginRight = '10px';
+        scoreSpan.style.fontWeight = 'bold';
+        
+        const timeSpan = document.createElement('span');
+        timeSpan.className = 'history-time';
+        timeSpan.textContent = ` • ${test.time} • ${test.date}`; // Added bullet separator
+        
+        detailsDiv.appendChild(scoreSpan);
+        detailsDiv.appendChild(timeSpan);
+        
+        li.appendChild(urlDiv);
+        li.appendChild(detailsDiv);
+        
+        historyList.appendChild(li);
+    });
+      }
         });
     </script>
 </body>
