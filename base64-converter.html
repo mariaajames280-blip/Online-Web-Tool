@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Base64 Encoder/Decoder Pro</title>
+    <title>Base64 Encoder/Decoder - OnlineWebTool</title>
     <style>
         * {
             margin: 0;
@@ -367,7 +367,11 @@
                         id="inputText" 
                         placeholder="Type or paste your text here..."
                         oninput="updateCharCount()"
-                    ></textarea>
+                    >That floats on high o'er vales and hills,
+When all at once I saw a crowd,
+A host, of golden daffodils;
+Beside the lake, beneath the trees,
+Fluttering and dancing in the breeze.</textarea>
                     <span class="char-count" id="charCount">0 chars</span>
                 </div>
             </div>
@@ -487,8 +491,10 @@
             try {
                 let result;
                 if (currentMode === 'encode') {
+                    // Proper UTF-8 encoding
                     result = btoa(unescape(encodeURIComponent(input)));
                 } else {
+                    // Proper UTF-8 decoding
                     result = decodeURIComponent(escape(atob(input)));
                 }
 
@@ -589,6 +595,13 @@
                 indicator.classList.remove('show');
             }, 2000);
         }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCharCount();
+            // Auto-convert the sample text
+            setTimeout(convert, 500);
+        });
 
         // Keyboard shortcuts
         document.addEventListener('keydown', function(e) {
