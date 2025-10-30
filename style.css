@@ -282,6 +282,11 @@ nav {
     color: var(--accent-color);
     box-shadow: 0 0 20px var(--shadow);
 }
+/* ✅ Fix Reset Button Alignment */
+.btn-reset {
+    align-self: center;
+    margin-top: 5px;
+}
 
 .result-section {
     margin-top: 2rem;
