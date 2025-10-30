@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InsightSpark - Traffic Intelligence Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border: 2px solid #FFD700;
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.3);
+        }
+
+        .logo {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            color: #FFD700;
+            font-size: 1.2em;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        /* Section Container */
+        .section {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 2px solid #333;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #FFD700 0%, #FFA500 100%);
+        }
+
+        .section:hover {
+            border-color: #FFD700;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        /* Section Header */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #FFD700;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-emoji {
+            font-size: 1.5em;
+        }
+
+        .score-badge {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.4em;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Status Indicator */
+        .status-indicator {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-size: 1.2em;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        /* Card */
+        .card {
+            background: rgba(255, 215, 0, 0.05);
+            border: 1px solid #333;
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: #FFD700;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            color: #FFD700;
+            font-weight: bold;
+        }
+
+        .card-content {
+            color: #e0e0e0;
+            line-height: 1.8;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            color: #aaa;
+        }
+
+        .metric-value {
+            color: #FFD700;
+            font-weight: bold;
+        }
+
+        /* Celebration Box */
+        .celebration {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 165, 0, 0.1) 100%);
+            border-left: 5px solid #FFD700;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .celebration-title {
+            color: #FFD700;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        /* Action Box */
+        .action-box {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            border: 2px solid #FFD700;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .action-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .action-title {
+            color: #FFD700;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .priority-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .priority-high {
+            background: #ff4444;
+            color: white;
+        }
+
+        .priority-medium {
+            background: #ffaa00;
+            color: black;
+        }
+
+        .priority-low {
+            background: #44ff44;
+            color: black;
+        }
+
+        .action-content {
+            color: #e0e0e0;
+            margin-bottom: 10px;
+        }
+
+        .impact {
+            color: #FFD700;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: #1a1a1a;
+            border-radius: 10px;
+            height: 20px;
+            margin: 10px 0;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #FFD700 0%, #FFA500 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            font-weight: bold;
+            color: #000;
+            transition: width 0.5s ease;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #333;
+        }
+
+        /* Source Grid */
+        .source-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .source-card {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            border: 2px solid #333;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .source-card:hover {
+            border-color: #FFD700;
+            transform: scale(1.05);
+        }
+
+        .source-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .source-name {
+            color: #FFD700;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .source-percentage {
+            font-size: 2em;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .source-label {
+            color: #aaa;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        /* Content Items */
+        .content-items {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .content-item {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .content-item:hover {
+            border-color: #FFD700;
+            background: rgba(255, 215, 0, 0.05);
+        }
+
+        .content-info {
+            flex: 1;
+        }
+
+        .content-title {
+            color: #FFD700;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .content-stats {
+            color: #aaa;
+            font-size: 0.9em;
+        }
+
+        .content-badge {
+            background: #FFD700;
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #aaa;
+            margin-top: 40px;
+        }
+
+        .footer-logo {
+            color: #FFD700;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2em;
+            }
+            
+            .section-title {
+                font-size: 1.4em;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .source-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Traffic Light System */
+        .traffic-light {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .light-green {
+            background: #44ff44;
+            box-shadow: 0 0 10px #44ff44;
+        }
+
+        .light-yellow {
+            background: #ffff44;
+            box-shadow: 0 0 10px #ffff44;
+        }
+
+        .light-red {
+            background: #ff4444;
+            box-shadow: 0 0 10px #ff4444;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">⚡ InsightSpark</div>
+            <div class="tagline">Transform overwhelming analytics into 5 clear insights that actually matter</div>
+            <p style="color: #aaa; margin-top: 15px;">Analyzing Period: January 1 - January 31, 2025</p>
+        </div>
+
+        <!-- Section 1: Audience Heartbeat -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">
+                    <span class="section-emoji">❤️</span>
+                    <span>AUDIENCE HEARTBEAT</span>
+                </div>
+                <div class="score-badge">9.2/10</div>
+            </div>
+
+            <div class="status-indicator">
+                <span class="traffic-light light-green"></span>
+                <span>Excellent Performance</span>
+            </div>
+
+            <div class="celebration">
+                <div class="celebration-title">🎉 CELEBRATION</div>
+                <p>Your Loyalty Score is 9.2/10 🏆 - People absolutely LOVE your content and keep coming back for more! Your returning visitor rate of 68% is phenomenal - that's 2.5x better than industry average!</p>
+            </div>
+
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <span>👥</span>
+                        <span>Loyalty Score</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="metric">
+                            <span class="metric-label">Returning Visitors</span>
+                            <span class="metric-value">68%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">New Visitors</span>
+                            <span class="metric-value">32%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Visit Frequency</span>
+                            <span class="metric-value">4.2x/month</span>
+                        </div>
+                    </div>
+                    <div class="progress-container" style="margin-top: 15px;">
+                        <div class="progress-bar" style="width: 92%;">92%</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span>🔥</span>
+                        <span>Engagement Temperature</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="metric">
+                            <span class="metric-label">Avg. Session Duration</span>
+                            <span class="metric-value">5:37 min</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Pages per Visit</span>
+                            <span class="metric-value">6.8</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Bounce Rate</span>
+                            <span class="metric-value">23% 🎯</span>
+                        </div>
+                    </div>
+                    <div class="progress-container" style="margin-top: 15px;">
+                        <div class="progress-bar" style="width: 88%;">Hot! 88%</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span>📈</span>
+                        <span>Audience Pulse</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="metric">
+                            <span class="metric-label">Month-over-Month</span>
+                            <span class="metric-value">+34% ⬆️</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Total Sessions</span>
+                            <span class="metric-value">47,283</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Unique Visitors</span>
+                            <span class="metric-value">28,917</span>
+                        </div>
+                    </div>
+                    <div class="progress-container" style="margin-top: 15px;">
+                        <div class="progress-bar" style="width: 95%;">Growing! 95%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-box">
+                <div class="action-header">
+                    <div class="action-title">⚡ ACTION ITEM</div>
+                    <div class="priority-badge priority-high">HIGH PRIORITY</div>
+                </div>
+                <div class="action-content">
+                    Create a "Welcome Back!" personalized message for returning visitors and survey your loyal audience about what they love most about your content.
+                </div>
+                <div class="impact">
+                    <span>💎</span>
+                    <span>Expected Impact: Better content direction + deeper audience connection + 15% increase in email subscribers</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Traffic Source Map -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">
+                    <span class="section-emoji">🗺️</span>
+                    <span>TRAFFIC SOURCE MAP</span>
+                </div>
+                <div class="score-badge">8.7/10</div>
+            </div>
+
+            <div class="status-indicator">
+                <span class="traffic-light light-green"></span>
+                <span>Strong Diversification</span>
+            </div>
+
+            <div class="celebration">
+                <div class="celebration-title">🎉 CELEBRATION</div>
+                <p>Your True Fans (74% direct traffic) are your superpower! 🎯 This means you've built genuine brand recognition - people type your URL directly because they trust and value your content!</p>
+            </div>
+
+            <div class="source-grid">
+                <div class="source-card">
+                    <div class="source-icon">👑</div>
+                    <div class="source-name">True Fans</div>
+                    <div class="source-percentage">74%</div>
+                    <div class="source-label">Direct Traffic</div>
+                    <div class="progress-container" style="margin-top: 15px;">
+                        <div class="progress-bar" style="width: 74%;">Excellent</div>
+                    </div>
+                    <div style="margin-top: 15px; color: #aaa; font-size: 0.9em;">
+                        Avg. Session: 6:23 min<br>
+                        Conversion Rate: 8.2%
+                    </div>
+                </div>
+
+                <div class="source-card">
+                    <div class="source-icon">🔍</div>
+                    <div class="source-name">Discovery Engine</div>
+                    <div class="source-percentage">15%</div>
+                    <div class="source-label">Organic Search</div>
+                    <div class="progress-container" style="margin-top: 15px;">
+                        <div class="progress-bar" style="width: 15%;">Growing</div>
+                    </div>
+                    <div style="margin-top: 15px; color: #aaa; font-size: 0.9em;">
+                        Top Keywords: 28<br>
+                        Featured Snippets: 12
+                    </div>
+                </div>
+
+                <div class="source-card">
+                    <div class="source-icon">🤝</div>
+                    <div class="source-name">Word-of-Mouth</div>
+                    <div class="source-percentage">7%</div>
+                    <div class="source-label">Referral Traffic</div>
+                    <div class="progress-container" style="margin-top: 15px;">
+                        <div class="progress-bar" style="width: 70%;">Quality</div>
+                    </div>
+                    <div style="margin-top: 15px; color: #aaa; font-size: 0.9em;">
+                        Referral Sites: 43<br>
+                        Engagement: 5:12 min
+                    </div>
+                </div>
+
+                <div class="source-card">
+                    <div class="source-icon">📢</div>
+                    <div class="source-name">Social Buzz</div>
+                    <div class="source-percentage">4%</div>
+                    <div class="source-label">Social Media</div>
+                    <div class="progress-container" style="margin-top: 15px;">
+                        <div class="progress-bar" style="width: 40%;">Opportunity</div>
+                    </div>
+                    <div style="margin-top: 15px; color: #aaa; font-size: 0.9em;">
+                        Top Platform: LinkedIn<br>
+                        Avg. Session: 3:45 min
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-box">
+                <div class="action-header">
+                    <div class="action-title">⚡ ACTION ITEM</div>
+                    <div class="priority-badge priority-medium">MEDIUM PRIORITY</div>
+                </div>
+                <div class="action-content">
+                    Thank and nurture your top 10 referral sources with personalized outreach. Consider guest posting opportunities and collaboration partnerships.
+                </div>
+                <div class="impact">
+                    <span>💎</span>
+                    <span>Expected Impact: Strengthen referral relationships + potential 50% increase in referral traffic + new partnership opportunities</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Content Gold Mine -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">
+                    <span class="section-emoji">💎</span>
+                    <span>CONTENT GOLD MINE</span>
+                </div>
+                <div class="score-badge">8.9/10</div>
+            </div>
+
+            <div class="status-indicator">
+                <span class="traffic-light light-green"></span>
+                <span>Outstanding Content Performance</span>
+            </div>
+
+            <div class="celebration">
+                <div class="celebration-title">🎉 CELEBRATION</div>
+                <p>Double down on Advanced Guides - your audience spends 45+ minutes on them! ⏱️ These deep-dive pieces are your content superpower and generate 3x more engagement than average!</p>
+            </div>
+
+            <div class="content-items">
+                <div class="content-item">
+                    <div class="content-info">
+                        <div class="content-title">👑 Complete SEO Strategy Guide 2025</div>
+                        <div class="content-stats">
+                            8,734 views • 47:23 avg. time • 12.3 pages/session • 9.2% conversion
+                        </div>
+                    </div>
+                    <div class="content-badge">Crown Jewel</div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-info">
+                        <div class="content-title">💎 Advanced Analytics Deep Dive</div>
+                        <div class="content-stats">
+                            2,183 views • 38:15 avg. time • 8.7 pages/session • 11.4% conversion
+                        </div>
+                    </div>
+                    <div class="content-badge">Hidden Gem</div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-info">
+                        <div class="content-title">👑 Content Marketing Blueprint</div>
+                        <div class="content-stats">
+                            6,892 views • 42:08 avg. time • 10.1 pages/session • 8.7% conversion
+                        </div>
+                    </div>
+                    <div class="content-badge">Crown Jewel</div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-info">
+                        <div class="content-title">⚠️ Quick Tips: 10 SEO Hacks</div>
+                        <div class="content-stats">
+                            15,283 views • 2:18 avg. time • 1.3 pages/session • 1.2% conversion
+                        </div>
+                    </div>
+                    <div class="content-badge" style="background: #ffaa00;">Missed Opportunity</div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-info">
+                        <div class="content-title">💎 Technical SEO Masterclass</div>
+                        <div class="content-stats">
+                            1,547 views • 51:42 avg. time • 14.2 pages/session • 13.8% conversion
+                        </div>
+                    </div>
+                    <div class="content-badge">Hidden Gem</div>
+                </div>
+            </div>
+
+            <div class="content-grid" style="margin-top: 30px;">
+                <div class="card">
+                    <div class="card-header">
+                        <span>📊</span>
+                        <span>Content Insights</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="metric">
+                            <span class="metric-label">Top Category</span>
+                            <span class="metric-value">Advanced Guides</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Best Format</span>
+                            <span class="metric-value">Long-form (3000+ words)</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Engagement Sweet Spot</span>
+                            <span class="metric-value">40-50 min read time</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span>🎯</span>
+                        <span>Content Strategy</span>
+                    </div>
+                    <div class="card-content">
+                        <p><strong>What's Working:</strong> Comprehensive, actionable guides with real examples and case studies. Your audience loves depth!</p>
+                        <p style="margin-top: 10px;"><strong>Opportunity:</strong> Transform "Quick Tips" into deeper content to match audience preferences.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-box">
+                <div class="action-header">
+                    <div class="action-title">⚡ ACTION ITEM</div>
+                    <div class="priority-badge priority-high">HIGH PRIORITY</div>
+                </div>
+                <div class="action-content">
+                    Create 2 more "Hidden Gem" style deep-dives this month. Expand "Quick Tips" into comprehensive guides. Promote your Technical SEO Masterclass to a wider audience.
+                </div>
+                <div class="impact">
+                    <span>💎</span>
+                    <span>Expected Impact: 40% increase in organic traffic + establish authority + higher conversion rates on expanded content</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Conversion Compass -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">
+                    <span class="section-emoji">🧭</span>
+                    <span>CONVERSION COMPASS</span>
+                </div>
+                <div class="score-badge">7.8/10</div>
+            </div>
+
+            <div class="status-indicator">
+                <span class="traffic-light light-yellow"></span>
+                <span>Good with Room for Optimization</span>
+            </div>
+
+            <div class="celebration">
+                <div class="celebration-title">🎉 CELEBRATION</div>
+                <p>Your email signup conversion rate of 7.2% is solid! 🎯 You're already doing better than 70% of similar sites. Now let's unlock the next level!</p>
+            </div>
+
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <span>🎯</span>
+                        <span>Goal Achievement</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="metric">
+                            <span class="metric-label">Email Signups</span>
+                            <span class="metric-value">7.2%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Resource Downloads</span>
+                            <span class="metric-value">4.8%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Contact Form</span>
+                            <span class="metric-value">2.3%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Overall Conversion</span>
+                            <span class="metric-value">14.3%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span>✨</span>
+                        <span>Magic Moments</span>
+                    </div>
+                    <div class="card-content">
+                        <p><strong>Best Converting Pages:</strong></p>
+                        <div class="metric">
+                            <span class="metric-label">SEO Guide Landing</span>
+                            <span class="metric-value">18.7%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Analytics Deep Dive</span>
+                            <span class="metric-value">15.2%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Resource Library</span>
+                            <span class="metric-value">12.9%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span>🚧</span>
+                        <span>Friction Points</span>
+                    </div>
+                    <div class="card-content">
+                        <p><strong>Drop-off Locations:</strong></p>
+                        <div class="metric">
+                            <span class="metric-label">Blog Category Pages</span>
+                            <span class="metric-value">62% exit</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">About Page</span>
+                            <span class="metric-value">54% exit</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Quick Tips Articles</span>
+                            <span class="metric-value">71% exit</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h3 style="color: #FFD700; margin-bottom: 15px;">Conversion Funnel Visualization</h3>
+                <div style="color: #aaa;">
+                    <div style="margin-bottom: 15px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <span>Landing Page Views</span>
+                            <span>47,283 visitors (100%)</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 100%;">100%</div>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <span>Engaged with Content (3+ pages)</span>
+                            <span>28,432 visitors (60%)</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 60%;">60%</div>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <span>Viewed Conversion Page</span>
+                            <span>14,189 visitors (30%)</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 30%;">30%</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <span>Completed Goal</span>
+                            <span>6,761 visitors (14.3%)</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 14.3%;">14.3%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-box">
+                <div class="action-header">
+                    <div class="action-title">⚡ ACTION ITEM</div>
+                    <div class="priority-badge priority-high">HIGH PRIORITY</div>
+                </div>
+                <div class="action-content">
+                    Add strategic email capture CTAs to your category pages and "Quick Tips" content. Implement exit-intent popups with valuable lead magnets on high-traffic, low-conversion pages.
+                </div>
+                <div class="impact">
+                    <span>💎</span>
+                    <span>Expected Impact: 30% conversion lift + 2,800+ additional email subscribers per month + reduced bounce on friction points</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Opportunity Radar -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">
+                    <span class="section-emoji">📡</span>
+                    <span>OPPORTUNITY RADAR</span>
+                </div>
+                <div class="score-badge">Strategic</div>
+            </div>
+
+            <div class="status-indicator">
+                <span class="traffic-light light-green"></span>
+                <span>Multiple High-Impact Opportunities Detected</span>
+            </div>
+
+            <div class="celebration">
+                <div class="celebration-title">🎉 CELEBRATION</div>
+                <p>You're crushing it! 🚀 Your foundation is rock-solid, and we've identified 3 quick wins that could boost your results by 50%+ in the next 30 days!</p>
+            </div>
+
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <span>⚡</span>
+                        <span>Quick Wins (This Week)</span>
+                    </div>
+                    <div class="card-content">
+                        <p style="margin-bottom: 10px; color: #FFD700;"><strong>1. Optimize Meta Descriptions</strong></p>
+                        <p style="margin-bottom: 15px; color: #e0e0e0;">Your top 10 pages have generic descriptions. Custom ones could boost CTR by 25%.</p>
+                        
+                        <p style="margin-bottom: 10px; color: #FFD700;"><strong>2. Thank Referral Sources</strong></p>
+                        <p style="margin-bottom: 15px; color: #e0e0e0;">Personal outreach to top 10 referrers. Takes 2 hours, potential 50% referral increase.</p>
+                        
+                        <p style="margin-bottom: 10px; color: #FFD700;"><strong>3. Add Email Capture to Top Pages</strong></p>
+                        <p style="color: #e0e0e0;">Strategic placement on 5 highest-traffic pages. Potential 2,000+ new subscribers/month.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span>📊</span>
+                        <span>Growth Levers (This Month)</span>
+                    </div>
+                    <div class="card-content">
+                        <p style="margin-bottom: 10px; color: #FFD700;"><strong>1. Launch Content Upgrade Series</strong></p>
+                        <p style="margin-bottom: 15px; color: #e0e0e0;">Create downloadable resources for your Crown Jewels. Expected: 40% conversion boost.</p>
+                        
+                        <p style="margin-bottom: 10px; color: #FFD700;"><strong>2. Expand Hidden Gems</strong></p>
+                        <p style="margin-bottom: 15px; color: #e0e0e0;">Promote your low-traffic, high-engagement content. Untapped potential: 10,000+ new visitors.</p>
+                        
+                        <p style="margin-bottom: 10px; color: #FFD700;"><strong>3. Implement Internal Linking Strategy</strong></p>
+                        <p style="color: #e0e0e0;">Connect Crown Jewels to Hidden Gems. Increase pages/session by 30%.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span>🚨</span>
+                        <span>Warning Signals</span>
+                    </div>
+                    <div class="card-content">
+                        <p style="margin-bottom: 10px; color: #ff4444;"><strong>⚠️ Social Media Underperforming</strong></p>
+                        <p style="margin-bottom: 15px; color: #e0e0e0;">Only 4% traffic from social. Opportunity to 3x this channel with consistent posting.</p>
+                        
+                        <p style="margin-bottom: 10px; color: #ffaa00;"><strong>⚠️ Mobile Conversion Gap</strong></p>
+                        <p style="margin-bottom: 15px; color: #e0e0e0;">Mobile conversion 40% lower than desktop. Optimize mobile CTAs and forms.</p>
+                        
+                        <p style="margin-bottom: 10px; color: #ffaa00;"><strong>⚠️ Category Page Exits</strong></p>
+                        <p style="color: #e0e0e0;">62% exit rate on blog categories. Add featured content and better navigation.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-box" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); border: none;">
+                <div class="action-header">
+                    <div class="action-title" style="color: #000; font-size: 1.4em;">🎯 YOUR PRIORITY ACTION PLAN</div>
+                </div>
+                <div style="color: #000; font-size: 1.1em; line-height: 1.8;">
+                    <p style="margin-bottom: 15px;"><strong>This Week (5 hours total):</strong></p>
+                    <p style="margin-left: 20px; margin-bottom: 10px;">✅ Optimize meta descriptions for top 10 pages (2 hours)</p>
+                    <p style="margin-left: 20px; margin-bottom: 10px;">✅ Thank and engage with top 10 referral sources (2 hours)</p>
+                    <p style="margin-left: 20px; margin-bottom: 20px;">✅ Add email capture to 3 highest-traffic pages (1 hour)</p>
+                    
+                    <p style="margin-bottom: 15px;"><strong>This Month (Strategic Focus):</strong></p>
+                    <p style="margin-left: 20px; margin-bottom: 10px;">🎯 Create 2 new Hidden Gem deep-dive guides</p>
+                    <p style="margin-left: 20px; margin-bottom: 10px;">🎯 Launch content upgrade series for Crown Jewels</p>
+                    <p style="margin-left: 20px; margin-bottom: 10px;">🎯 Fix mobile conversion experience</p>
+                    
+                    <p style="margin-top: 20px; font-size: 1.2em; text-align: center;">
+                        <strong>🚀 Projected Impact: +50% traffic, +30% conversions, +5,000 email subscribers</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Dashboard -->
+        <div class="section" style="background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%); border: 3px solid #FFD700;">
+            <h2 style="text-align: center; color: #FFD700; font-size: 2em; margin-bottom: 30px;">
+                🎯 YOUR INSIGHTSPARK SCORECARD
+            </h2>
+            
+            <div class="source-grid">
+                <div class="source-card" style="border: 2px solid #FFD700;">
+                    <div style="font-size: 2.5em; margin-bottom: 10px;">❤️</div>
+                    <div class="source-name">Audience Heartbeat</div>
+                    <div class="source-percentage">9.2/10</div>
+                    <div class="status-indicator" style="justify-content: center; margin-top: 15px;">
+                        <span class="traffic-light light-green"></span>
+                        <span>Excellent</span>
+                    </div>
+                </div>
+
+                <div class="source-card" style="border: 2px solid #FFD700;">
+                    <div style="font-size: 2.5em; margin-bottom: 10px;">🗺️</div>
+                    <div class="source-name">Traffic Source Map</div>
+                    <div class="source-percentage">8.7/10</div>
+                    <div class="status-indicator" style="justify-content: center; margin-top: 15px;">
+                        <span class="traffic-light light-green"></span>
+                        <span>Strong</span>
+                    </div>
+                </div>
+
+                <div class="source-card" style="border: 2px solid #FFD700;">
+                    <div style="font-size: 2.5em; margin-bottom: 10px;">💎</div>
+                    <div class="source-name">Content Gold Mine</div>
+                    <div class="source-percentage">8.9/10</div>
+                    <div class="status-indicator" style="justify-content: center; margin-top: 15px;">
+                        <span class="traffic-light light-green"></span>
+                        <span>Outstanding</span>
+                    </div>
+                </div>
+
+                <div class="source-card" style="border: 2px solid #FFD700;">
+                    <div style="font-size: 2.5em; margin-bottom: 10px;">🧭</div>
+                    <div class="source-name">Conversion Compass</div>
+                    <div class="source-percentage">7.8/10</div>
+                    <div class="status-indicator" style="justify-content: center; margin-top: 15px;">
+                        <span class="traffic-light light-yellow"></span>
+                        <span>Good</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px; padding: 30px; background: rgba(255, 215, 0, 0.1); border-radius: 15px;">
+                <div style="font-size: 3em; color: #FFD700; font-weight: bold; margin-bottom: 15px;">8.7/10</div>
+                <div style="font-size: 1.5em; color: #fff; margin-bottom: 20px;">Overall Performance Score</div>
+                <div style="color: #aaa; font-size: 1.1em; line-height: 1.8;">
+                    You're building something truly special! 🎉<br>
+                    Your foundation is rock-solid with exceptional audience loyalty and content quality.<br>
+                    Focus on the quick wins identified above to unlock your next growth phase.
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-logo">⚡ InsightSpark</div>
+            <p>Transform overwhelming analytics into 5 clear insights that actually matter</p>
+            <p style="margin-top: 20px; color: #666;">Built with ❤️ for website owners who want clarity, not complexity</p>
+        </div>
+    </div>
+
+    <script>
+        // Add smooth scroll animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '0';
+                        entry.target.style.transform = 'translateY(20px)';
+                        
+                        setTimeout(() => {
+                            entry.target.style.transition = 'all 0.5s ease-out';
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }, 100);
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // Add interactive hover effects
+            const cards = document.querySelectorAll('.card, .source-card, .content-item');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+
+            // Animate progress bars on scroll
+            const progressBars = document.querySelectorAll('.progress-bar');
+            const progressObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const width = entry.target.style.width;
+                        entry.target.style.width = '0%';
+                        setTimeout(() => {
+                            entry.target.style.width = width;
+                        }, 200);
+                    }
+                });
+            }, observerOptions);
+
+            progressBars.forEach(bar => {
+                progressObserver.observe(bar);
+            });
+
+            // Add click event to action boxes for emphasis
+            const actionBoxes = document.querySelectorAll('.action-box');
+            actionBoxes.forEach(box => {
+                box.addEventListener('click', function() {
+                    this.style.transform = 'scale(1.02)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 200);
+                });
+            });
+
+            console.log('🚀 InsightSpark Dashboard Loaded!');
+            console.log('✨ Transform overwhelming analytics into clear insights');
+        });
+    </script>
+</body>
+</html>
