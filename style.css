@@ -18,7 +18,7 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: .button-group 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--primary-color);
     color: var(--text-color);
     line-height: 1.6;
@@ -3563,3 +3563,12 @@ footer {
     margin-bottom: 0;
     border-bottom: none;
 }
+/* Fix Reset Button Position */
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
