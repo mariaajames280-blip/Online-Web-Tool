@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image to Base64 Converter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #ffd700;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #000000;
+            border: 3px solid #ffd700;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffd700;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(255, 215, 0, 0.5);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #ffed4e;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .upload-area {
+            border: 3px dashed #ffd700;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            background: #1a1a1a;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+
+        .upload-area:hover {
+            background: #2d2d2d;
+            border-color: #ffed4e;
+            transform: translateY(-2px);
+        }
+
+        .upload-area.dragover {
+            background: #3d3d3d;
+            border-color: #ffed4e;
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+
+        .upload-text {
+            font-size: 1.2em;
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+
+        .upload-subtext {
+            color: #ffed4e;
+            font-size: 0.9em;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .preview-section {
+            display: none;
+            margin: 30px 0;
+        }
+
+        .preview-section.active {
+            display: block;
+        }
+
+        .preview-container {
+            background: #1a1a1a;
+            border: 2px solid #ffd700;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 400px;
+            border: 2px solid #ffd700;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .info-item {
+            background: #1a1a1a;
+            border: 2px solid #ffd700;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .info-label {
+            color: #ffed4e;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            color: #ffd700;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .output-section {
+            background: #1a1a1a;
+            border: 2px solid #ffd700;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .output-title {
+            font-size: 1.3em;
+            color: #ffd700;
+        }
+
+        .format-toggle {
+            display: flex;
+            gap: 10px;
+        }
+
+        .format-btn {
+            background: #2d2d2d;
+            border: 2px solid #ffd700;
+            color: #ffd700;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .format-btn:hover {
+            background: #ffd700;
+            color: #000000;
+        }
+
+        .format-btn.active {
+            background: #ffd700;
+            color: #000000;
+            font-weight: bold;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            background: #000000;
+            border: 2px solid #ffd700;
+            border-radius: 5px;
+            padding: 15px;
+            color: #ffd700;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            resize: vertical;
+            margin-top: 10px;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #ffed4e;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border: none;
+            color: #000000;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: #2d2d2d;
+            color: #ffd700;
+            border: 2px solid #ffd700;
+        }
+
+        .btn-secondary:hover {
+            background: #3d3d3d;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ffd700;
+            color: #000000;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
+            font-weight: bold;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+            display: none;
+        }
+
+        .notification.show {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #ffed4e;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ Image to Base64 Converter ⚡</h1>
+        <p class="subtitle">Convert your images to Base64 encoded strings</p>
+
+        <div class="upload-area" id="uploadArea">
+            <div class="upload-icon">📁</div>
+            <div class="upload-text">Click to upload or drag & drop</div>
+            <div class="upload-subtext">Supports: JPG, PNG, GIF, WebP, BMP, SVG</div>
+            <input type="file" id="fileInput" accept="image/*">
+        </div>
+
+        <div class="preview-section" id="previewSection">
+            <div class="preview-container">
+                <h3 style="color: #ffd700; margin-bottom: 10px;">📷 Image Preview</h3>
+                <img id="previewImage" class="preview-image" alt="Preview">
+            </div>
+
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">File Name</div>
+                    <div class="info-value" id="fileName">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">File Size</div>
+                    <div class="info-value" id="fileSize">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Dimensions</div>
+                    <div class="info-value" id="dimensions">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Base64 Size</div>
+                    <div class="info-value" id="base64Size">-</div>
+                </div>
+            </div>
+
+            <div class="output-section">
+                <div class="output-header">
+                    <div class="output-title">📋 Base64 Output</div>
+                    <div class="format-toggle">
+                        <button class="format-btn active" data-format="plain">Plain</button>
+                        <button class="format-btn" data-format="datauri">Data URI</button>
+                        <button class="format-btn" data-format="css">CSS</button>
+                        <button class="format-btn" data-format="html">HTML</button>
+                    </div>
+                </div>
+                <textarea id="base64Output" readonly></textarea>
+            </div>
+
+            <div class="button-group">
+                <button id="copyBtn">📋 Copy to Clipboard</button>
+                <button id="downloadBtn">💾 Download as .txt</button>
+                <button id="clearBtn" class="btn-secondary">🗑️ Clear</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            All processing is done locally in your browser. No data is uploaded to any server.
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const previewSection = document.getElementById('previewSection');
+        const previewImage = document.getElementById('previewImage');
+        const base64Output = document.getElementById('base64Output');
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+        const dimensions = document.getElementById('dimensions');
+        const base64Size = document.getElementById('base64Size');
+        const copyBtn = document.getElementById('copyBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const notification = document.getElementById('notification');
+        const formatBtns = document.querySelectorAll('.format-btn');
+
+        let currentBase64 = '';
+        let currentMimeType = '';
+        let currentFileName = '';
+
+        // Upload area click
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        // File input change
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) processFile(file);
+        });
+
+        // Drag and drop
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                processFile(file);
+            } else {
+                showNotification('Please drop an image file!');
+            }
+        });
+
+        // Process file
+        function processFile(file) {
+            currentFileName = file.name;
+            currentMimeType = file.type;
+            
+            fileName.textContent = file.name;
+            fileSize.textContent = formatFileSize(file.size);
+
+            const reader = new FileReader();
+            
+            reader.onload = (e) => {
+                const base64String = e.target.result.split(',')[1];
+                currentBase64 = base64String;
+                
+                // Update preview
+                previewImage.src = e.target.result;
+                
+                // Get dimensions
+                const img = new Image();
+                img.onload = () => {
+                    dimensions.textContent = `${img.width} × ${img.height}`;
+                };
+                img.src = e.target.result;
+                
+                // Calculate Base64 size
+                base64Size.textContent = formatFileSize(base64String.length);
+                
+                // Update output
+                updateOutput();
+                
+                // Show preview section
+                previewSection.classList.add('active');
+                
+                showNotification('Image converted successfully!');
+            };
+            
+            reader.readAsDataURL(file);
+        }
+
+        // Format file size
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+        }
+
+        // Format toggle
+        formatBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                formatBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                updateOutput();
+            });
+        });
+
+        // Update output based on format
+        function updateOutput() {
+            const activeFormat = document.querySelector('.format-btn.active').dataset.format;
+            const dataUri = `data:${currentMimeType};base64,${currentBase64}`;
+            
+            switch(activeFormat) {
+                case 'plain':
+                    base64Output.value = currentBase64;
+                    break;
+                case 'datauri':
+                    base64Output.value = dataUri;
+                    break;
+                case 'css':
+                    base64Output.value = `background-image: url('${dataUri}');`;
+                    break;
+                case 'html':
+                    base64Output.value = `<img src="${dataUri}" alt="${currentFileName}">`;
+                    break;
+            }
+        }
+
+        // Copy to clipboard
+        copyBtn.addEventListener('click', () => {
+            base64Output.select();
+            document.execCommand('copy');
+            showNotification('Copied to clipboard!');
+        });
+
+        // Download as text file
+        downloadBtn.addEventListener('click', () => {
+            const blob = new Blob([base64Output.value], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${currentFileName.split('.')[0]}_base64.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showNotification('Downloaded successfully!');
+        });
+
+        // Clear
+        clearBtn.addEventListener('click', () => {
+            fileInput.value = '';
+            previewSection.classList.remove('active');
+            currentBase64 = '';
+            currentMimeType = '';
+            currentFileName = '';
+            showNotification('Cleared!');
+        });
+
+        // Show notification
+        function showNotification(message) {
+            notification.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
