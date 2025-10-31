@@ -1,21 +1,20 @@
 {
-  "name": "insightspark-analytics",
+  "name": "web-tools-collection",
   "version": "1.0.0",
-  "description": "Transform overwhelming analytics into 5 clear insights that actually matter",
+  "description": "A collection of useful web tools including InsightSpark Analytics",
   "main": "backend/server.js",
   "scripts": {
     "start": "node backend/server.js",
     "dev": "nodemon backend/server.js",
-    "setup": "node scripts/setup.js",
+    "insightspark": "node backend/server.js",
     "test": "echo \"No tests specified\" && exit 0"
   },
   "keywords": [
+    "web-tools",
     "analytics",
-    "dashboard",
-    "google-analytics",
-    "insights",
     "seo",
-    "marketing"
+    "productivity",
+    "insightspark"
   ],
   "author": "Your Name",
   "license": "MIT",
