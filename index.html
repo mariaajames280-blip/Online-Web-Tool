@@ -69,6 +69,37 @@
       padding: 0 20px;
     }
     
+    /* Snow Animation */
+    .snow-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    
+    .snow {
+      position: absolute;
+      top: -10px;
+      color: #ffffff;
+      font-size: 1em;
+      opacity: 0.8;
+      animation: snowfall linear infinite;
+    }
+    
+    @keyframes snowfall {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(100vh) translateX(20px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    
     /* Floating Bubbles Animation - FIXED */
     .bubbles {
       position: fixed;
@@ -610,6 +641,9 @@
   </style>
 </head>
 <body>
+  <!-- Snow Animation -->
+  <div class="snow-container" id="snowContainer"></div>
+
   <!-- Floating Bubbles -->
   <div class="bubbles">
     <span></span>
@@ -1062,8 +1096,34 @@
     // Update clock immediately and then every second
     updateClock();
     setInterval(updateClock, 1000);
+
+    // Snow Falling Animation
+    function createSnow() {
+      const snowContainer = document.getElementById('snowContainer');
+      const snowflakes = ['❄', '❅', '❆', '•'];
+      
+      for (let i = 0; i < 50; i++) {
+        const snow = document.createElement('div');
+        snow.className = 'snow';
+        snow.innerHTML = snowflakes[Math.floor(Math.random() * snowflakes.length)];
+        
+        // Random properties for each snowflake
+        const size = Math.random() * 1.5 + 0.5;
+        const left = Math.random() * 100;
+        const animationDuration = Math.random() * 10 + 5;
+        const animationDelay = Math.random() * 5;
+        
+        snow.style.left = left + 'vw';
+        snow.style.fontSize = size + 'em';
+        snow.style.animationDuration = animationDuration + 's';
+        snow.style.animationDelay = animationDelay + 's';
+        
+        snowContainer.appendChild(snow);
+      }
+    }
+
+    // Initialize snow animation
+    createSnow();
   </script>
 </body>
 </html>
-
-
